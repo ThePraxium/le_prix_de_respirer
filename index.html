@@ -203,17 +203,17 @@
                 
                 <!-- Tab Buttons -->
                 <div class="flex flex-wrap justify-center gap-2 mb-6">
-                    <button id="tab-federal" class="tab-button px-4 py-2 rounded-lg font-medium transition-colors duration-200 bg-sky-600 text-white">
-                        Federal Taxes
+                    <button id="tab-federal" class="tab-button px-3 py-2 text-sm md:px-4 md:py-2 md:text-base rounded-lg font-medium transition-colors duration-200 bg-sky-600 text-white">
+                        Federal
                     </button>
-                    <button id="tab-maryland" class="tab-button px-4 py-2 rounded-lg font-medium transition-colors duration-200 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hidden">
-                        Maryland Taxes
+                    <button id="tab-maryland" class="tab-button px-3 py-2 text-sm md:px-4 md:py-2 md:text-base rounded-lg font-medium transition-colors duration-200 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hidden">
+                        Maryland
                     </button>
-                    <button id="tab-anne-arundel" class="tab-button px-4 py-2 rounded-lg font-medium transition-colors duration-200 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hidden">
-                        Anne Arundel County
+                    <button id="tab-anne-arundel" class="tab-button px-3 py-2 text-sm md:px-4 md:py-2 md:text-base rounded-lg font-medium transition-colors duration-200 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hidden">
+                        Anne Arundel
                     </button>
-                    <button id="tab-baseline" class="tab-button px-4 py-2 rounded-lg font-medium transition-colors duration-200 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
-                        Baseline Comparison
+                    <button id="tab-baseline" class="tab-button px-3 py-2 text-sm md:px-4 md:py-2 md:text-base rounded-lg font-medium transition-colors duration-200 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                        Baseline
                     </button>
                 </div>
 
@@ -762,12 +762,6 @@
 
             if (baselineCalculations) {
                 baselineCalculations.innerHTML = `
-                    <div class="text-center p-4 bg-blue-100 rounded-lg">
-                        <h4 class="font-bold text-blue-800">Baseline Calculation Test</h4>
-                        <p class="text-blue-600">Income: $${income.toLocaleString()}</p>
-                        <p class="text-blue-600">Standard Deduction: $${standardDeduction.toLocaleString()}</p>
-                        <p class="text-blue-600">Baseline Tax: $${baselineTotalTax.toLocaleString()}</p>
-                    </div>
                     <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
                         ${createCalculationRow('Gross Income', income)}
                         <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
