@@ -846,45 +846,45 @@
         // Tab switching functionality
         function switchTab(tabName) {
             // Hide all tabs
-            document.getElementById('federal-tab').style.display = 'none';
-            document.getElementById('maryland-tab').style.display = 'none';
-            document.getElementById('anne-arundel-tab').style.display = 'none';
-            document.getElementById('baseline-tab').style.display = 'none';
+            document.getElementById('section-federal').style.display = 'none';
+            document.getElementById('section-maryland').style.display = 'none';
+            document.getElementById('section-anne-arundel').style.display = 'none';
+            document.getElementById('section-baseline').style.display = 'none';
 
             // Reset all button styles
-            const buttons = ['federal-btn', 'maryland-btn', 'anne-arundel-btn', 'baseline-btn'];
+            const buttons = ['tab-federal', 'tab-maryland', 'tab-anne-arundel', 'tab-baseline'];
             buttons.forEach(btnId => {
                 const btn = document.getElementById(btnId);
                 if (btn) {
-                    btn.className = 'px-4 py-2 rounded-lg font-medium transition-colors border-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700';
+                    btn.className = 'tab-button px-4 py-2 rounded-lg font-medium transition-colors duration-200 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300';
                 }
             });
 
             // Show selected tab and update button style
             if (tabName === 'federal') {
-                document.getElementById('federal-tab').style.display = 'block';
-                const btn = document.getElementById('federal-btn');
-                if (btn) btn.className = 'px-4 py-2 rounded-lg font-medium transition-colors border-2 bg-sky-600 text-white border-sky-600 hover:bg-sky-700';
+                document.getElementById('section-federal').style.display = 'block';
+                const btn = document.getElementById('tab-federal');
+                if (btn) btn.className = 'tab-button px-4 py-2 rounded-lg font-medium transition-colors duration-200 bg-sky-600 text-white';
             } else if (tabName === 'maryland') {
-                document.getElementById('maryland-tab').style.display = 'block';
-                const btn = document.getElementById('maryland-btn');
-                if (btn) btn.className = 'px-4 py-2 rounded-lg font-medium transition-colors border-2 bg-purple-600 text-white border-purple-600 hover:bg-purple-700';
+                document.getElementById('section-maryland').style.display = 'block';
+                const btn = document.getElementById('tab-maryland');
+                if (btn) btn.className = 'tab-button px-4 py-2 rounded-lg font-medium transition-colors duration-200 bg-purple-600 text-white';
             } else if (tabName === 'anne-arundel') {
-                document.getElementById('anne-arundel-tab').style.display = 'block';
-                const btn = document.getElementById('anne-arundel-btn');
-                if (btn) btn.className = 'px-4 py-2 rounded-lg font-medium transition-colors border-2 bg-orange-600 text-white border-orange-600 hover:bg-orange-700';
+                document.getElementById('section-anne-arundel').style.display = 'block';
+                const btn = document.getElementById('tab-anne-arundel');
+                if (btn) btn.className = 'tab-button px-4 py-2 rounded-lg font-medium transition-colors duration-200 bg-orange-600 text-white';
             } else if (tabName === 'baseline') {
-                document.getElementById('baseline-tab').style.display = 'block';
-                const btn = document.getElementById('baseline-btn');
-                if (btn) btn.className = 'px-4 py-2 rounded-lg font-medium transition-colors border-2 bg-amber-600 text-white border-amber-600 hover:bg-amber-700';
+                document.getElementById('section-baseline').style.display = 'block';
+                const btn = document.getElementById('tab-baseline');
+                if (btn) btn.className = 'tab-button px-4 py-2 rounded-lg font-medium transition-colors duration-200 bg-amber-600 text-white';
             }
         }
 
         // Add event listeners for tab buttons
-        document.getElementById('federal-btn').addEventListener('click', () => switchTab('federal'));
-        document.getElementById('maryland-btn').addEventListener('click', () => switchTab('maryland'));
-        document.getElementById('anne-arundel-btn').addEventListener('click', () => switchTab('anne-arundel'));
-        document.getElementById('baseline-btn').addEventListener('click', () => switchTab('baseline'));
+        document.getElementById('tab-federal').addEventListener('click', () => switchTab('federal'));
+        document.getElementById('tab-maryland').addEventListener('click', () => switchTab('maryland'));
+        document.getElementById('tab-anne-arundel').addEventListener('click', () => switchTab('anne-arundel'));
+        document.getElementById('tab-baseline').addEventListener('click', () => switchTab('baseline'));
 
         document.addEventListener('DOMContentLoaded', () => {
              initTheme(); // Initialize theme before updating UI
