@@ -34,6 +34,14 @@
             background: #4f46e5;
             cursor: pointer;
             border-radius: 50%;
+            border: none;
+        }
+        /* Dark mode slider track */
+        .dark input[type=range]::-webkit-slider-track {
+            background: #475569; /* slate-600 */
+        }
+        .dark input[type=range]::-moz-range-track {
+            background: #475569;
         }
         /* Hide number input spinners on Chrome, Safari, Edge, Opera */
         input::-webkit-outer-spin-button,
@@ -44,77 +52,89 @@
         /* Hide number input spinners on Firefox */
         input[type=number] {
           -moz-appearance: textfield;
+          appearance: textfield;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
     <div class="container mx-auto p-4 md:p-8 max-w-2xl">
 
-        <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Advanced Federal Income Tax Calculator</h1>
-            <p class="text-slate-600 mt-2">Visualize your tax breakdown with adjustments, deductions, and credits.</p>
+        <header class="text-center mb-8 relative">
+            <!-- Dark/Light Mode Toggle -->
+            <div class="absolute top-0 right-0">
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 transition-colors duration-200" aria-label="Toggle dark mode">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-100">Advanced Federal Income Tax Calculator</h1>
+            <p class="text-slate-600 dark:text-slate-400 mt-2">Visualize your tax breakdown with adjustments, deductions, and credits.</p>
         </header>
 
-        <main class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+        <main class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-lg dark:shadow-slate-700/50 transition-colors duration-300">
 
             <!-- CONTROLS SECTION -->
             <div class="space-y-6 mb-8">
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-2">Filing Status</label>
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Filing Status</label>
                     <div id="filing-status" role="radiogroup" class="flex space-x-4">
                         <label class="flex-1">
                             <input type="radio" name="filingStatus" value="1" class="sr-only peer">
-                            <div class="w-full text-center p-3 rounded-lg cursor-pointer bg-slate-100 text-slate-600 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:font-semibold transition-colors duration-200">Single</div>
+                            <div class="w-full text-center p-3 rounded-lg cursor-pointer bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:font-semibold transition-colors duration-200">Single</div>
                         </label>
                         <label class="flex-1">
                             <input type="radio" name="filingStatus" value="2" class="sr-only peer" checked>
-                            <div class="w-full text-center p-3 rounded-lg cursor-pointer bg-slate-100 text-slate-600 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:font-semibold transition-colors duration-200">Married</div>
+                            <div class="w-full text-center p-3 rounded-lg cursor-pointer bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:font-semibold transition-colors duration-200">Married</div>
                         </label>
                     </div>
                 </div>
                 <div>
-                    <label for="income-input" class="block text-sm font-medium text-slate-700">Gross Income</label>
+                    <label for="income-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Gross Income</label>
                     <div class="flex items-center gap-x-3 mt-1">
-                        <input id="income-slider" type="range" min="0" max="1000000" step="1000" value="309711" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
-                        <input id="income-input" type="number" min="0" max="1000000" step="1000" value="309711" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                        <input id="income-slider" type="range" min="0" max="1000000" step="1000" value="309711" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer">
+                        <input id="income-input" type="number" min="0" max="1000000" step="1000" value="309711" class="w-32 px-2 py-1 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:text-slate-200">
                     </div>
                 </div>
                  <div>
-                    <label for="adjustments-input" class="block text-sm font-medium text-slate-700">Adjustments to Income</label>
+                    <label for="adjustments-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Adjustments to Income</label>
                     <div class="flex items-center gap-x-3 mt-1">
-                        <input id="adjustments-slider" type="range" min="0" max="1000000" step="500" value="40764" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
-                        <input id="adjustments-input" type="number" min="0" max="1000000" step="500" value="40764" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                        <input id="adjustments-slider" type="range" min="0" max="1000000" step="500" value="40764" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer">
+                        <input id="adjustments-input" type="number" min="0" max="1000000" step="500" value="40764" class="w-32 px-2 py-1 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:text-slate-200">
                     </div>
                 </div>
-                <div class="bg-amber-100 p-3 rounded-lg text-center">
-                    <p class="text-sm text-amber-600">Adjusted Gross Income (AGI)</p>
-                    <p id="agi-display" class="text-xl font-semibold text-amber-800"></p>
+                <div class="bg-amber-100 dark:bg-amber-900/50 p-3 rounded-lg text-center">
+                    <p class="text-sm text-amber-600 dark:text-amber-400">Adjusted Gross Income (AGI)</p>
+                    <p id="agi-display" class="text-xl font-semibold text-amber-800 dark:text-amber-300"></p>
                 </div>
                 <div>
-                    <label for="deductions-input" class="block text-sm font-medium text-slate-700">Deductions</label>
+                    <label for="deductions-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Deductions</label>
                     <div class="flex items-center gap-x-3 mt-1">
-                        <input id="deductions-slider" type="range" min="0" max="1000000" step="500" value="70600" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
-                        <input id="deductions-input" type="number" min="0" max="1000000" step="500" value="70600" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                        <input id="deductions-slider" type="range" min="0" max="1000000" step="500" value="70600" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer">
+                        <input id="deductions-input" type="number" min="0" max="1000000" step="500" value="70600" class="w-32 px-2 py-1 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:text-slate-200">
                     </div>
                 </div>
-                <div class="bg-amber-100 p-3 rounded-lg text-center">
-                    <p class="text-sm text-amber-600">Taxable Income</p>
-                    <p id="taxable-income-display-main" class="text-xl font-semibold text-amber-800"></p>
+                <div class="bg-amber-100 dark:bg-amber-900/50 p-3 rounded-lg text-center">
+                    <p class="text-sm text-amber-600 dark:text-amber-400">Taxable Income</p>
+                    <p id="taxable-income-display-main" class="text-xl font-semibold text-amber-800 dark:text-amber-300"></p>
                 </div>
                 <div>
-                    <label for="credits-input" class="block text-sm font-medium text-slate-700">Tax Credits</label>
+                    <label for="credits-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Tax Credits</label>
                      <div class="flex items-center gap-x-3 mt-1">
-                        <input id="credits-slider" type="range" min="0" max="1000000" step="100" value="7500" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
-                        <input id="credits-input" type="number" min="0" max="1000000" step="100" value="7500" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                        <input id="credits-slider" type="range" min="0" max="1000000" step="100" value="7500" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer">
+                        <input id="credits-input" type="number" min="0" max="1000000" step="100" value="7500" class="w-32 px-2 py-1 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:text-slate-200">
                     </div>
                 </div>
             </div>
 
             <!-- VISUALIZATION SECTION -->
-            <div class="mb-8 border-t pt-8">
-                <h2 class="text-xl font-bold text-slate-900 mb-4">Income Breakdown</h2>
-                <div id="tax-bar-container" class="w-full h-10 md:h-12 bg-slate-100 rounded-lg flex overflow-hidden text-white text-xs md:text-sm font-semibold">
+            <div class="mb-8 border-t dark:border-slate-600 pt-8">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4">Income Breakdown</h2>
+                <div id="tax-bar-container" class="w-full h-10 md:h-12 bg-slate-100 dark:bg-slate-700 rounded-lg flex overflow-hidden text-white text-xs md:text-sm font-semibold">
                     <div id="bar-take-home" class="bg-emerald-500 flex items-center justify-center transition-all duration-300 ease-in-out" title="Take-Home Pay"></div>
                     <div id="bar-federal" class="bg-sky-500 flex items-center justify-center transition-all duration-300 ease-in-out" title="Federal Tax"></div>
                 </div>
@@ -127,16 +147,16 @@
 
             <!-- RESULTS & BREAKDOWN SECTION -->
             <div>
-                <h2 class="text-xl font-bold text-slate-900 mb-4 text-center">Your Custom Calculation</h2>
-                <div class="bg-slate-50 p-4 rounded-xl shadow-inner text-center">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 text-center">Your Custom Calculation</h2>
+                <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl shadow-inner text-center border dark:border-slate-600">
                     <div class="space-y-3">
                         <!-- Equation Row 1 -->
                         <div class="flex flex-wrap justify-center items-center gap-x-3">
-                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Gross Income</span><span id="vc-gross-1" class="text-md font-semibold text-slate-800"></span></div>
-                             <span class="text-xl font-bold text-slate-400">-</span>
-                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Adjustments</span><span id="vc-adjustments" class="text-md font-semibold text-slate-800"></span></div>
-                             <span class="text-xl font-bold text-slate-400">=</span>
-                             <div class="flex flex-col bg-amber-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500">AGI</span><span id="vc-agi-1" class="text-md font-semibold text-amber-800"></span></div>
+                             <div class="flex flex-col bg-slate-100 dark:bg-slate-700 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500 dark:text-slate-400">Gross Income</span><span id="vc-gross-1" class="text-md font-semibold text-slate-800 dark:text-slate-200"></span></div>
+                             <span class="text-xl font-bold text-slate-400 dark:text-slate-500">-</span>
+                             <div class="flex flex-col bg-slate-100 dark:bg-slate-700 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500 dark:text-slate-400">Adjustments</span><span id="vc-adjustments" class="text-md font-semibold text-slate-800 dark:text-slate-200"></span></div>
+                             <span class="text-xl font-bold text-slate-400 dark:text-slate-500">=</span>
+                             <div class="flex flex-col bg-amber-100 dark:bg-amber-900/50 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500 dark:text-amber-400">AGI</span><span id="vc-agi-1" class="text-md font-semibold text-amber-800 dark:text-amber-300"></span></div>
                         </div>
                         <!-- Equation Row 2 -->
                         <div class="flex flex-wrap justify-center items-center gap-x-3">
@@ -186,10 +206,10 @@
             </div>
 
             <!-- BASELINE COMPARISON SECTION -->
-            <div class="mt-10 border-t pt-8">
-                <h2 class="text-xl font-bold text-slate-900 mb-2 text-center">Baseline Comparison</h2>
-                 <p class="text-center text-slate-600 mb-4 text-sm">Your gross income with $0 adjustments, $0 credits, and the standard deduction.</p>
-                <div class="bg-slate-50 p-4 rounded-xl shadow-inner text-center">
+            <div class="mt-10 border-t dark:border-slate-600 pt-8">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2 text-center">Baseline Comparison</h2>
+                 <p class="text-center text-slate-600 dark:text-slate-400 mb-4 text-sm">Your gross income with $0 adjustments, $0 credits, and the standard deduction.</p>
+                <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl shadow-inner text-center border dark:border-slate-600">
                     <div class="space-y-3">
                         <!-- Equation Row 1 -->
                         <div class="flex flex-wrap justify-center items-center gap-x-3">
@@ -260,6 +280,11 @@
         const creditsInput = document.getElementById('credits-input');
         const filingStatusRadios = document.querySelectorAll('input[name="filingStatus"]');
 
+        // Dark Mode Elements
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
         // Display Elements
         const agiDisplay = document.getElementById('agi-display');
         const taxableIncomeDisplayMain = document.getElementById('taxable-income-display-main');
@@ -267,6 +292,36 @@
         // Visualization Bar Elements
         const barTakeHome = document.getElementById('bar-take-home');
         const barFederal = document.getElementById('bar-federal');
+
+        // --- DARK MODE FUNCTIONALITY ---
+        
+        function initTheme() {
+            // Check for saved theme preference or default to light mode
+            if (localStorage.getItem('theme') === 'dark' || 
+                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeToggleDarkIcon.classList.remove('hidden');
+                themeToggleLightIcon.classList.add('hidden');
+            }
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                themeToggleDarkIcon.classList.remove('hidden');
+                themeToggleLightIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
+            }
+        }
 
         // --- TAX CALCULATION LOGIC ---
 
@@ -438,7 +493,11 @@
 
         filingStatusRadios.forEach(radio => radio.addEventListener('change', () => updateUI()));
 
+        // Theme toggle event listener
+        themeToggle.addEventListener('click', toggleTheme);
+
         document.addEventListener('DOMContentLoaded', () => {
+             initTheme(); // Initialize theme before updating UI
              updateUI();
         });
     </script>
