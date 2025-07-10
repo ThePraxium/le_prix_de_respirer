@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Federal Income Tax Calculator</title>
+  <!-- Tailwind CSS for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px; height: 20px;
+      background: #4f46e5; border-radius: 50%;
+      cursor: pointer; margin-top: -6px;
+    }
+    input[type=range]::-moz-range-thumb {
+      width: 20px; height: 20px;
+      background: #4f46e5; border-radius: 50%;
+      cursor: pointer;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none; margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+  <div class="container mx-auto p-4 md:p-8 max-w-2xl">
+
+    <header class="text-center mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Advanced Federal Income Tax Calculator</h1>
+      <p class="text-slate-600 mt-2">Visualize your tax breakdown with adjustments, deductions, and credits.</p>
+    </header>
+
+    <main class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+
+      <!-- CONTROLS SECTION -->
+      <div class="space-y-6 mb-8">
+
+        <!-- Filing Status -->
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-2">Filing Status</label>
+          <div id="filing-status" role="radiogroup" class="flex space-x-4">
+            <label class="flex-1">
+              <input type="radio" name="filingStatus" value="1" class="sr-only peer">
+              <div class="w-full text-center p-3 rounded-lg cursor-pointer bg-slate-100 text-slate-600 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:font-semibold transition-colors duration-200">Single</div>
+            </label>
+            <label class="flex-1">
+              <input type="radio" name="filingStatus" value="2" class="sr-only peer" checked>
+              <div class="w-full text-center p-3 rounded-lg cursor-pointer bg-slate-100 text-slate-600 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:font-semibold transition-colors duration-200">Married</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Gross Income -->
+        <div>
+          <label for="income-input" class="block text-sm font-medium text-slate-700">Gross Income</label>
+          <div class="flex items-center gap-x-3 mt-1">
+            <input id="income-slider" type="range" min="0" max="1000000" step="1000" value="309711" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+            <input id="income-input" type="number" min="0" max="1000000" step="1000" value="309711" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+          </div>
+        </div>
+
+        <!-- Adjustments -->
+        <div>
+          <label for="adjustments-input" class="block text-sm font-medium text-slate-700">Adjustments to Income</label>
+          <div class="flex items-center gap-x-3 mt-1">
+            <input id="adjustments-slider" type="range" min="0" max="1000000" step="500" value="40764" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+            <input id="adjustments-input" type="number" min="0" max="1000000" step="500" value="40764" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+          </div>
+        </div>
+
+        <div class="bg-amber-100 p-3 rounded-lg text-center">
+          <p class="text-sm text-amber-600">Adjusted Gross Income (AGI)</p>
+          <p id="agi-display" class="text-xl font-semibold text-amber-800"></p>
+        </div>
+
+        <!-- Deductions -->
+        <div>
+          <label for="deductions-input" class="block text-sm font-medium text-slate-700">Deductions</label>
+          <div class="flex items-center gap-x-3 mt-1">
+            <input id="deductions-slider" type="range" min="0" max="1000000" step="500" value="70600" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+            <input id="deductions-input" type="number" min="0" max="1000000" step="500" value="70600" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+          </div>
+        </div>
+
+        <div class="bg-amber-100 p-3 rounded-lg text-center">
+          <p class="text-sm text-amber-600">Taxable Income</p>
+          <p id="taxable-income-display-main" class="text-xl font-semibold text-amber-800"></p>
+        </div>
+
+        <!-- Credits -->
+        <div>
+          <label for="credits-input" class="block text-sm font-medium text-slate-700">Tax Credits</label>
+          <div class="flex items-center gap-x-3 mt-1">
+            <input id="credits-slider" type="range" min="0" max="1000000" step="100" value="7500" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+            <input id="credits-input" type="number" min="0" max="1000000" step="100" value="7500" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- VISUALIZATION SECTION -->
+      <div class="mb-8 border-t pt-8">
+        <h2 class="text-xl font-bold text-slate-900 mb-4">Income Breakdown</h2>
+        <div id="tax-bar-container" class="w-full h-10 md:h-12 bg-slate-100 rounded-lg flex overflow-hidden text-white text-xs md:text-sm font-semibold">
+          <div id="bar-take-home" class="bg-emerald-500 flex items-center justify-center transition-all duration-300 ease-in-out" title="Take-Home Pay"></div>
+          <div id="bar-federal" class="bg-sky-500 flex items-center justify-center transition-all duration-300 ease-in-out" title="Federal Tax"></div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-4 text-sm">
+          <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-emerald-500 mr-2"></span>Take-Home</div>
+          <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-sky-500 mr-2"></span>Federal Tax</div>
+        </div>
+      </div>
+
+      <!-- RESULTS & BREAKDOWN SECTION -->
+      <!-- … (remains unchanged) … -->
+
+    </main>
+  </div>
+
+  <script>
+    // DOM refs
+    const incomeSlider = document.getElementById('income-slider');
+    const incomeInput  = document.getElementById('income-input');
+    const adjustmentsSlider = document.getElementById('adjustments-slider');
+    const adjustmentsInput  = document.getElementById('adjustments-input');
+    const deductionsSlider  = document.getElementById('deductions-slider');
+    const deductionsInput   = document.getElementById('deductions-input');
+    const creditsSlider     = document.getElementById('credits-slider');
+    const creditsInput      = document.getElementById('credits-input');
+    const filingStatusRadios = document.querySelectorAll('input[name="filingStatus"]');
+
+    // Calculation helpers…
+    function calculateBracketTax(income, brackets){ /* … */ }
+    function getFederalBrackets(status){ /* … */ }
+    function formatCurrency(v){ /* … */ }
+    function updateUI(){ /* … */ }
+
+    // Sync sliders & inputs
+    function setupInputSync(slider, input){
+      slider.addEventListener('input',() => { input.value = slider.value; updateUI(); });
+      input.addEventListener('change',() => {
+        let v = parseFloat(input.value)||0;
+        if(v>slider.max){ v=slider.max; input.value=v; }
+        slider.value=v; updateUI();
+      });
+    }
+    setupInputSync(incomeSlider, incomeInput);
+    setupInputSync(adjustmentsSlider, adjustmentsInput);
+    setupInputSync(deductionsSlider, deductionsInput);
+    setupInputSync(creditsSlider, creditsInput);
+
+    filingStatusRadios.forEach(r => r.addEventListener('change', updateUI));
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateUI();
+    });
+  </script>
+
+</body>
+</html>
