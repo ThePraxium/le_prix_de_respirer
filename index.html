@@ -201,103 +201,67 @@
             <div>
                 <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 text-center">Tax Calculations</h2>
                 
-                <!-- Three Column Layout -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    
-                    <!-- FEDERAL CALCULATION -->
-                    <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl shadow-inner border dark:border-slate-600">
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-3 text-center">Federal Taxes</h3>
-                        <div class="space-y-3 text-center">
-                            <!-- Federal calculations will be populated here -->
-                            <div id="federal-calculations">
-                                <!-- Federal calculation rows will be inserted here by JavaScript -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- MARYLAND CALCULATION -->
-                    <div id="maryland-calculation" class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl shadow-inner border dark:border-slate-600 hidden">
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-3 text-center">Maryland Taxes</h3>
-                        <div class="space-y-3 text-center">
-                            <div id="maryland-calculations">
-                                <!-- Maryland calculation rows will be inserted here by JavaScript -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ANNE ARUNDEL CALCULATION -->
-                    <div id="anne-arundel-calculation" class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl shadow-inner border dark:border-slate-600 hidden">
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-3 text-center">Anne Arundel County Taxes</h3>
-                        <div class="space-y-3 text-center">
-                            <div id="anne-arundel-calculations">
-                                <!-- Anne Arundel calculation rows will be inserted here by JavaScript -->
-                            </div>
-                        </div>
-                    </div>
-
+                <!-- Tab Buttons -->
+                <div class="flex flex-wrap justify-center gap-2 mb-6">
+                    <button id="tab-federal" class="tab-button px-4 py-2 rounded-lg font-medium transition-colors duration-200 bg-sky-600 text-white">
+                        Federal Taxes
+                    </button>
+                    <button id="tab-maryland" class="tab-button px-4 py-2 rounded-lg font-medium transition-colors duration-200 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hidden">
+                        Maryland Taxes
+                    </button>
+                    <button id="tab-anne-arundel" class="tab-button px-4 py-2 rounded-lg font-medium transition-colors duration-200 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hidden">
+                        Anne Arundel County
+                    </button>
+                    <button id="tab-baseline" class="tab-button px-4 py-2 rounded-lg font-medium transition-colors duration-200 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                        Baseline Comparison
+                    </button>
                 </div>
-            </div>
 
-            <!-- BASELINE COMPARISON SECTION -->
-            <div class="mt-10 border-t dark:border-slate-600 pt-8">
-                <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2 text-center">Baseline Comparison</h2>
-                 <p class="text-center text-slate-600 dark:text-slate-400 mb-4 text-sm">Your gross income with $0 adjustments, $0 credits, and the standard deduction.</p>
-                <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl shadow-inner text-center border dark:border-slate-600">
-                    <div class="space-y-3">
-                        <!-- Equation Row 1 -->
-                        <div class="flex flex-wrap justify-center items-center gap-x-3">
-                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Gross Income</span><span id="bc-gross-1" class="text-md font-semibold text-slate-800"></span></div>
-                             <span class="text-xl font-bold text-slate-400">-</span>
-                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Adjustments</span><span id="bc-adjustments" class="text-md font-semibold text-slate-800"></span></div>
-                             <span class="text-xl font-bold text-slate-400">=</span>
-                             <div class="flex flex-col bg-amber-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500">AGI</span><span id="bc-agi-1" class="text-md font-semibold text-amber-800"></span></div>
-                        </div>
-                        <!-- Equation Row 2 -->
-                        <div class="flex flex-wrap justify-center items-center gap-x-3">
-                             <div class="flex flex-col bg-amber-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500">AGI</span><span id="bc-agi-2" class="text-md font-semibold text-amber-800"></span></div>
-                             <span class="text-xl font-bold text-slate-400">-</span>
-                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Deductions</span><span id="bc-deductions" class="text-md font-semibold text-slate-800"></span></div>
-                             <span class="text-xl font-bold text-slate-400">=</span>
-                             <div class="flex flex-col bg-amber-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500">Taxable Income</span><span id="bc-taxable-income" class="text-md font-semibold text-amber-800"></span></div>
-                        </div>
-                        <!-- Equation Row 3 (with effective rate) -->
-                        <div class="flex flex-wrap justify-center items-center gap-x-3">
-                             <div class="flex flex-col bg-amber-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500">Taxable Income</span><span id="bc-taxable-income-2" class="text-md font-semibold text-amber-800"></span></div>
-                             <span class="text-xl font-bold text-slate-400">&times;</span>
-                             <div class="flex flex-col bg-sky-200 p-2 rounded-lg justify-center items-center min-w-[110px]">
-                                <span class="text-xs text-sky-600">Effective Tax Rate</span>
-                                <span id="bc-marginal-rate-value" class="text-md font-semibold text-sky-800"></span>
-                            </div>
-                             <span class="text-xl font-bold text-slate-400">=</span>
-                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-sky-500">Tax Before Credits</span><span id="bc-pre-credit-tax" class="text-md font-semibold text-sky-800"></span></div>
-                        </div>
-                        <!-- Equation Row 4 -->
-                        <div class="flex flex-wrap justify-center items-center gap-x-3">
-                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-sky-500">Tax Before Credits</span><span id="bc-pre-credit-tax-2" class="text-md font-semibold text-sky-800"></span></div>
-                             <span class="text-xl font-bold text-slate-400">-</span>
-                             <div class="flex flex-col bg-green-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-green-500">Credits</span><span id="bc-credits" class="text-md font-semibold text-green-800"></span></div>
-                             <span class="text-xl font-bold text-slate-400">=</span>
-                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg ring-1 ring-sky-500 min-w-[110px]"><span class="text-xs text-sky-500">Total Federal Tax</span><span id="bc-total-tax-1" class="text-md font-semibold text-sky-800"></span></div>
-                        </div>
-                         <!-- Equation Row 5 -->
-                        <div class="flex flex-wrap justify-center items-center gap-x-3">
-                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Gross Income</span><span id="bc-gross-2" class="text-md font-semibold text-slate-800"></span></div>
-                             <span class="text-xl font-bold text-slate-400">-</span>
-                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-sky-500">Total Federal Tax</span><span id="bc-total-tax-2" class="text-md font-semibold text-sky-800"></span></div>
-                             <span class="text-xl font-bold text-slate-400">=</span>
-                             <div class="flex flex-col bg-emerald-100 p-2 rounded-lg ring-2 ring-emerald-500 min-w-[110px]"><span class="text-xs text-emerald-500">Final Take-Home Pay</span><span id="bc-post-tax" class="text-md font-semibold text-emerald-800"></span></div>
-                        </div>
-                        <!-- Equation Row 6 (Gross Effective Rate) -->
-                        <div class="flex flex-wrap justify-center items-center gap-x-3 pt-4 border-t border-slate-200 mt-4">
-                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-sky-500">Total Federal Tax</span><span id="bc-total-tax-3" class="text-md font-semibold text-sky-800"></span></div>
-                             <span class="text-xl font-bold text-slate-400">/</span>
-                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Gross Income</span><span id="bc-gross-3" class="text-md font-semibold text-slate-800"></span></div>
-                             <span class="text-xl font-bold text-slate-400">=</span>
-                             <div class="flex flex-col bg-emerald-100 p-2 rounded-lg ring-2 ring-emerald-500 min-w-[110px]"><span class="text-xs text-emerald-500">Effective Rate (on Gross)</span><span id="bc-gross-effective-rate" class="text-md font-semibold text-emerald-800"></span></div>
+                <!-- Tax Calculation Sections -->
+                
+                <!-- FEDERAL CALCULATION -->
+                <div id="section-federal" class="tax-section bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl shadow-inner border dark:border-slate-600">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4 text-center">Federal Tax Calculation</h3>
+                    <div class="space-y-4">
+                        <div id="federal-calculations">
+                            <!-- Federal calculation rows will be inserted here by JavaScript -->
                         </div>
                     </div>
                 </div>
+
+                <!-- MARYLAND CALCULATION -->
+                <div id="section-maryland" class="tax-section bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl shadow-inner border dark:border-slate-600 hidden">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4 text-center">Maryland State Tax Calculation</h3>
+                    <div class="space-y-4">
+                        <div id="maryland-calculations">
+                            <!-- Maryland calculation rows will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANNE ARUNDEL CALCULATION -->
+                <div id="section-anne-arundel" class="tax-section bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl shadow-inner border dark:border-slate-600 hidden">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4 text-center">Anne Arundel County Tax Calculation</h3>
+                    <div class="space-y-4">
+                        <div id="anne-arundel-calculations">
+                            <!-- Anne Arundel calculation rows will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BASELINE CALCULATION -->
+                <div id="section-baseline" class="tax-section bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl shadow-inner border dark:border-slate-600 hidden">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-slate-100 mb-4 text-center">Baseline Federal Tax Comparison</h3>
+                    <p class="text-center text-slate-600 dark:text-slate-400 mb-4 text-sm">Your gross income with $0 adjustments, $0 credits, and the standard deduction.</p>
+                    <div class="space-y-4">
+                        <div id="baseline-calculations">
+                            <!-- Baseline calculation rows will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
         </main>
     </div>
 
@@ -343,6 +307,48 @@
 
         // MD/AA Toggle State
         let mdEnabled = false;
+        let currentTab = 'federal'; // Track current active tab
+
+        // --- TAB SWITCHING FUNCTIONALITY ---
+        
+        function switchTab(tabName) {
+            currentTab = tabName;
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('bg-sky-600', 'bg-purple-600', 'bg-orange-600', 'bg-amber-600', 'text-white');
+                button.classList.add('bg-slate-200', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-300');
+            });
+            
+            // Hide all sections
+            document.querySelectorAll('.tax-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected tab and section
+            const activeButton = document.getElementById(`tab-${tabName}`);
+            const activeSection = document.getElementById(`section-${tabName}`);
+            
+            if (activeButton && activeSection) {
+                // Color code tabs
+                switch(tabName) {
+                    case 'federal':
+                        activeButton.classList.add('bg-sky-600', 'text-white');
+                        break;
+                    case 'maryland':
+                        activeButton.classList.add('bg-purple-600', 'text-white');
+                        break;
+                    case 'anne-arundel':
+                        activeButton.classList.add('bg-orange-600', 'text-white');
+                        break;
+                    case 'baseline':
+                        activeButton.classList.add('bg-amber-600', 'text-white');
+                        break;
+                }
+                activeButton.classList.remove('bg-slate-200', 'dark:bg-slate-700', 'text-slate-700', 'dark:text-slate-300');
+                activeSection.classList.remove('hidden');
+            }
+        }
 
         // --- MD/AA TOGGLE FUNCTIONALITY ---
         
@@ -356,9 +362,9 @@
                 mdToggleDot.classList.remove('translate-x-1');
                 mdControls.classList.remove('hidden');
                 
-                // Show MD/AA calculation columns
-                document.getElementById('maryland-calculation').classList.remove('hidden');
-                document.getElementById('anne-arundel-calculation').classList.remove('hidden');
+                // Show MD/AA tabs
+                document.getElementById('tab-maryland').classList.remove('hidden');
+                document.getElementById('tab-anne-arundel').classList.remove('hidden');
                 
                 // Show MD/AA visualization bars
                 barMaryland.classList.remove('hidden');
@@ -373,9 +379,14 @@
                 mdToggleDot.classList.add('translate-x-1');
                 mdControls.classList.add('hidden');
                 
-                // Hide MD/AA calculation columns
-                document.getElementById('maryland-calculation').classList.add('hidden');
-                document.getElementById('anne-arundel-calculation').classList.add('hidden');
+                // Hide MD/AA tabs
+                document.getElementById('tab-maryland').classList.add('hidden');
+                document.getElementById('tab-anne-arundel').classList.add('hidden');
+                
+                // If currently viewing MD/AA tab, switch to federal
+                if (currentTab === 'maryland' || currentTab === 'anne-arundel') {
+                    switchTab('federal');
+                }
                 
                 // Hide MD/AA visualization bars
                 barMaryland.classList.add('hidden');
@@ -391,18 +402,18 @@
         
         function createCalculationRow(label, value, bgColor = 'bg-slate-100', textColor = 'text-slate-800') {
             return `
-                <div class="flex flex-col ${bgColor} dark:bg-slate-700 p-2 rounded-lg min-w-[90px]">
-                    <span class="text-xs text-slate-500 dark:text-slate-400">${label}</span>
-                    <span class="text-sm font-semibold ${textColor} dark:text-slate-200">${formatCurrency(value)}</span>
+                <div class="flex flex-col ${bgColor} dark:bg-slate-700 p-3 rounded-lg min-w-[120px]">
+                    <span class="text-sm text-slate-500 dark:text-slate-400">${label}</span>
+                    <span class="text-lg font-semibold ${textColor} dark:text-slate-200">${formatCurrency(value)}</span>
                 </div>
             `;
         }
 
         function createEffectiveRateRow(rate) {
             return `
-                <div class="flex flex-col bg-sky-200 dark:bg-sky-800/50 p-2 rounded-lg justify-center items-center min-w-[90px]">
-                    <span class="text-xs text-sky-600 dark:text-sky-400">Effective Rate</span>
-                    <span class="text-sm font-semibold text-sky-800 dark:text-sky-300">${rate}</span>
+                <div class="flex flex-col bg-sky-200 dark:bg-sky-800/50 p-3 rounded-lg justify-center items-center min-w-[120px]">
+                    <span class="text-sm text-sky-600 dark:text-sky-400">Effective Rate</span>
+                    <span class="text-lg font-semibold text-sky-800 dark:text-sky-300">${rate}</span>
                 </div>
             `;
         }
@@ -613,37 +624,44 @@
             const grossEffectiveRate = income > 0 ? (totalTax / income) * 100 : 0;
 
             federalCalculations.innerHTML = `
-                <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-2">
+                <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
                     ${createCalculationRow('Gross Income', income)}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">-</span>
-                    ${createCalculationRow('Adjustments', adjustments)}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">=</span>
-                    ${createCalculationRow('AGI', agi, 'bg-amber-100', 'text-amber-800')}
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
+                    ${createCalculationRow('Federal Adjustments', adjustments)}
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
+                    ${createCalculationRow('Federal AGI', agi, 'bg-amber-100', 'text-amber-800')}
                 </div>
-                <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-2">
-                    ${createCalculationRow('AGI', agi, 'bg-amber-100', 'text-amber-800')}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">-</span>
-                    ${createCalculationRow('Deductions', deductions)}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">=</span>
-                    ${createCalculationRow('Taxable Income', taxableIncome, 'bg-amber-100', 'text-amber-800')}
+                <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
+                    ${createCalculationRow('Federal AGI', agi, 'bg-amber-100', 'text-amber-800')}
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
+                    ${createCalculationRow('Federal Deductions', deductions)}
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
+                    ${createCalculationRow('Federal Taxable Income', taxableIncome, 'bg-amber-100', 'text-amber-800')}
                 </div>
-                <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-2">
-                    ${createCalculationRow('Taxable Income', taxableIncome, 'bg-amber-100', 'text-amber-800')}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">×</span>
+                <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
+                    ${createCalculationRow('Federal Taxable Income', taxableIncome, 'bg-amber-100', 'text-amber-800')}
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">×</span>
                     ${createEffectiveRateRow(effectiveRateText)}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">=</span>
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
                     ${createCalculationRow('Tax Before Credits', preCreditTax, 'bg-sky-100', 'text-sky-800')}
                 </div>
-                <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-2">
+                <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
                     ${createCalculationRow('Tax Before Credits', preCreditTax, 'bg-sky-100', 'text-sky-800')}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">-</span>
-                    ${createCalculationRow('Credits', credits, 'bg-green-100', 'text-green-800')}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">=</span>
-                    ${createCalculationRow('Total Federal Tax', totalTax, 'bg-sky-100 ring-1 ring-sky-500', 'text-sky-800')}
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
+                    ${createCalculationRow('Federal Credits', credits, 'bg-green-100', 'text-green-800')}
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
+                    ${createCalculationRow('Total Federal Tax', totalTax, 'bg-sky-100 ring-2 ring-sky-500', 'text-sky-800')}
                 </div>
-                <div class="pt-3 border-t border-slate-200 dark:border-slate-600">
-                    <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-2">
-                        ${createCalculationRow('Effective Rate', grossEffectiveRate.toFixed(2) + '%', 'bg-emerald-100', 'text-emerald-800')}
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-600">
+                    <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
+                        ${createCalculationRow('Gross Income', income)}
+                        <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
+                        ${createCalculationRow('Total Federal Tax', totalTax, 'bg-sky-100', 'text-sky-800')}
+                        <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
+                        ${createCalculationRow('Take-Home (Federal Only)', income - totalTax, 'bg-emerald-100 ring-2 ring-emerald-500', 'text-emerald-800')}
+                    </div>
+                    <div class="flex justify-center mt-4">
+                        ${createCalculationRow('Federal Effective Rate', grossEffectiveRate.toFixed(2) + '%', 'bg-sky-100', 'text-sky-800')}
                     </div>
                 </div>
             `;
@@ -659,36 +677,36 @@
             const mdGrossEffectiveRate = income > 0 ? (marylandTax / income) * 100 : 0;
 
             marylandCalculations.innerHTML = `
-                <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-2">
+                <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
                     ${createCalculationRow('Gross Income', income)}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">-</span>
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
                     ${createCalculationRow('MD Adjustments', mdAdjustments)}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">=</span>
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
                     ${createCalculationRow('MD AGI', mdAgi, 'bg-green-100', 'text-green-800')}
                 </div>
-                <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-2">
+                <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
                     ${createCalculationRow('MD AGI', mdAgi, 'bg-green-100', 'text-green-800')}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">-</span>
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
                     ${createCalculationRow('MD Deductions', mdDeductions)}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">=</span>
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
                     ${createCalculationRow('MD Taxable Income', mdTaxableIncome, 'bg-green-100', 'text-green-800')}
                 </div>
-                <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-2">
+                <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
                     ${createCalculationRow('MD Taxable Income', mdTaxableIncome, 'bg-green-100', 'text-green-800')}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">×</span>
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">×</span>
                     ${createEffectiveRateRow(mdEffectiveRateText)}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">=</span>
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
                     ${createCalculationRow('MD Tax Before Credits', mdPreCreditTax, 'bg-purple-100', 'text-purple-800')}
                 </div>
-                <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-2">
+                <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
                     ${createCalculationRow('MD Tax Before Credits', mdPreCreditTax, 'bg-purple-100', 'text-purple-800')}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">-</span>
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
                     ${createCalculationRow('MD Credits', mdCredits * 0.5, 'bg-green-100', 'text-green-800')}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">=</span>
-                    ${createCalculationRow('Total MD Tax', marylandTax, 'bg-purple-100 ring-1 ring-purple-500', 'text-purple-800')}
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
+                    ${createCalculationRow('Total MD Tax', marylandTax, 'bg-purple-100 ring-2 ring-purple-500', 'text-purple-800')}
                 </div>
-                <div class="pt-3 border-t border-slate-200 dark:border-slate-600">
-                    <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-2">
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-600">
+                    <div class="flex justify-center">
                         ${createCalculationRow('MD Effective Rate', mdGrossEffectiveRate.toFixed(2) + '%', 'bg-purple-100', 'text-purple-800')}
                     </div>
                 </div>
@@ -702,22 +720,22 @@
             const aaGrossEffectiveRate = income > 0 ? (anneArundelTax / income) * 100 : 0;
 
             anneArundelCalculations.innerHTML = `
-                <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-2">
+                <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
                     ${createCalculationRow('MD Taxable Income', mdTaxableIncome, 'bg-green-100', 'text-green-800')}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">×</span>
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">×</span>
                     ${createEffectiveRateRow(aaEffectiveRateText)}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">=</span>
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
                     ${createCalculationRow('AA Tax Before Credits', aaPreCreditTax, 'bg-orange-100', 'text-orange-800')}
                 </div>
-                <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-2">
+                <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
                     ${createCalculationRow('AA Tax Before Credits', aaPreCreditTax, 'bg-orange-100', 'text-orange-800')}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">-</span>
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
                     ${createCalculationRow('AA Credits', mdCredits * 0.5, 'bg-green-100', 'text-green-800')}
-                    <span class="text-lg font-bold text-slate-400 dark:text-slate-500">=</span>
-                    ${createCalculationRow('Total AA Tax', anneArundelTax, 'bg-orange-100 ring-1 ring-orange-500', 'text-orange-800')}
+                    <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
+                    ${createCalculationRow('Total AA Tax', anneArundelTax, 'bg-orange-100 ring-2 ring-orange-500', 'text-orange-800')}
                 </div>
-                <div class="pt-3 border-t border-slate-200 dark:border-slate-600">
-                    <div class="flex flex-wrap justify-center items-center gap-x-2 gap-y-2">
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-600">
+                    <div class="flex justify-center">
                         ${createCalculationRow('AA Effective Rate', aaGrossEffectiveRate.toFixed(2) + '%', 'bg-orange-100', 'text-orange-800')}
                     </div>
                 </div>
@@ -736,39 +754,55 @@
             const baselineTotalTax = Math.max(0, baselinePreCreditTax - baselineCredits);
             const baselinePostTaxIncome = income - baselineTotalTax;
 
-            // Update baseline UI elements (if they exist)
-            const baselineElements = {
-                'bc-gross-1': income,
-                'bc-adjustments': baselineAdjustments,
-                'bc-agi-1': baselineAgi,
-                'bc-agi-2': baselineAgi,
-                'bc-deductions': standardDeduction,
-                'bc-taxable-income': baselineTaxableIncome,
-                'bc-taxable-income-2': baselineTaxableIncome,
-                'bc-pre-credit-tax': baselinePreCreditTax,
-                'bc-pre-credit-tax-2': baselinePreCreditTax,
-                'bc-credits': baselineCredits,
-                'bc-total-tax-1': baselineTotalTax,
-                'bc-gross-2': income,
-                'bc-total-tax-2': baselineTotalTax,
-                'bc-post-tax': baselinePostTaxIncome,
-                'bc-total-tax-3': baselineTotalTax,
-                'bc-gross-3': income,
-                'bc-gross-effective-rate': income > 0 ? (baselineTotalTax / income * 100).toFixed(2) + '%' : '0%'
-            };
+            // Update baseline calculation display
+            const baselineCalculations = document.getElementById('baseline-calculations');
+            const baselineEffectiveRate = baselineTaxableIncome > 0 ? (baselinePreCreditTax / baselineTaxableIncome) * 100 : 0;
+            const baselineEffectiveRateText = baselineTaxableIncome > 0 ? `${baselineEffectiveRate.toFixed(2)}%` : 'N/A';
+            const baselineGrossEffectiveRate = income > 0 ? (baselineTotalTax / income) * 100 : 0;
 
-            Object.entries(baselineElements).forEach(([id, value]) => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.textContent = typeof value === 'string' ? value : formatCurrency(value);
-                }
-            });
-
-            // Update marginal rate
-            const marginRateElement = document.getElementById('bc-marginal-rate-value');
-            if (marginRateElement) {
-                const baselineTaxableEffectiveRate = baselineTaxableIncome > 0 ? (baselinePreCreditTax / baselineTaxableIncome) * 100 : 0;
-                marginRateElement.innerHTML = baselineTaxableIncome > 0 ? `${baselineTaxableEffectiveRate.toFixed(2)}%` : 'N/A';
+            if (baselineCalculations) {
+                baselineCalculations.innerHTML = `
+                    <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
+                        ${createCalculationRow('Gross Income', income)}
+                        <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
+                        ${createCalculationRow('Adjustments', baselineAdjustments)}
+                        <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
+                        ${createCalculationRow('AGI', baselineAgi, 'bg-amber-100', 'text-amber-800')}
+                    </div>
+                    <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
+                        ${createCalculationRow('AGI', baselineAgi, 'bg-amber-100', 'text-amber-800')}
+                        <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
+                        ${createCalculationRow('Standard Deduction', standardDeduction)}
+                        <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
+                        ${createCalculationRow('Taxable Income', baselineTaxableIncome, 'bg-amber-100', 'text-amber-800')}
+                    </div>
+                    <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
+                        ${createCalculationRow('Taxable Income', baselineTaxableIncome, 'bg-amber-100', 'text-amber-800')}
+                        <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">×</span>
+                        ${createEffectiveRateRow(baselineEffectiveRateText)}
+                        <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
+                        ${createCalculationRow('Tax Before Credits', baselinePreCreditTax, 'bg-sky-100', 'text-sky-800')}
+                    </div>
+                    <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
+                        ${createCalculationRow('Tax Before Credits', baselinePreCreditTax, 'bg-sky-100', 'text-sky-800')}
+                        <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
+                        ${createCalculationRow('Credits', baselineCredits, 'bg-green-100', 'text-green-800')}
+                        <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
+                        ${createCalculationRow('Total Federal Tax', baselineTotalTax, 'bg-sky-100 ring-2 ring-sky-500', 'text-sky-800')}
+                    </div>
+                    <div class="pt-4 border-t border-slate-200 dark:border-slate-600">
+                        <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
+                            ${createCalculationRow('Gross Income', income)}
+                            <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
+                            ${createCalculationRow('Total Federal Tax', baselineTotalTax, 'bg-sky-100', 'text-sky-800')}
+                            <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">=</span>
+                            ${createCalculationRow('Baseline Take-Home', baselinePostTaxIncome, 'bg-emerald-100 ring-2 ring-emerald-500', 'text-emerald-800')}
+                        </div>
+                        <div class="flex justify-center mt-4">
+                            ${createCalculationRow('Baseline Effective Rate', baselineGrossEffectiveRate.toFixed(2) + '%', 'bg-amber-100', 'text-amber-800')}
+                        </div>
+                    </div>
+                `;
             }
         }
 
@@ -809,8 +843,52 @@
         // Theme toggle event listener
         themeToggle.addEventListener('click', toggleTheme);
 
+        // Tab switching functionality
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.getElementById('federal-tab').style.display = 'none';
+            document.getElementById('maryland-tab').style.display = 'none';
+            document.getElementById('anne-arundel-tab').style.display = 'none';
+            document.getElementById('baseline-tab').style.display = 'none';
+
+            // Reset all button styles
+            const buttons = ['federal-btn', 'maryland-btn', 'anne-arundel-btn', 'baseline-btn'];
+            buttons.forEach(btnId => {
+                const btn = document.getElementById(btnId);
+                if (btn) {
+                    btn.className = 'px-4 py-2 rounded-lg font-medium transition-colors border-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700';
+                }
+            });
+
+            // Show selected tab and update button style
+            if (tabName === 'federal') {
+                document.getElementById('federal-tab').style.display = 'block';
+                const btn = document.getElementById('federal-btn');
+                if (btn) btn.className = 'px-4 py-2 rounded-lg font-medium transition-colors border-2 bg-sky-600 text-white border-sky-600 hover:bg-sky-700';
+            } else if (tabName === 'maryland') {
+                document.getElementById('maryland-tab').style.display = 'block';
+                const btn = document.getElementById('maryland-btn');
+                if (btn) btn.className = 'px-4 py-2 rounded-lg font-medium transition-colors border-2 bg-purple-600 text-white border-purple-600 hover:bg-purple-700';
+            } else if (tabName === 'anne-arundel') {
+                document.getElementById('anne-arundel-tab').style.display = 'block';
+                const btn = document.getElementById('anne-arundel-btn');
+                if (btn) btn.className = 'px-4 py-2 rounded-lg font-medium transition-colors border-2 bg-orange-600 text-white border-orange-600 hover:bg-orange-700';
+            } else if (tabName === 'baseline') {
+                document.getElementById('baseline-tab').style.display = 'block';
+                const btn = document.getElementById('baseline-btn');
+                if (btn) btn.className = 'px-4 py-2 rounded-lg font-medium transition-colors border-2 bg-amber-600 text-white border-amber-600 hover:bg-amber-700';
+            }
+        }
+
+        // Add event listeners for tab buttons
+        document.getElementById('federal-btn').addEventListener('click', () => switchTab('federal'));
+        document.getElementById('maryland-btn').addEventListener('click', () => switchTab('maryland'));
+        document.getElementById('anne-arundel-btn').addEventListener('click', () => switchTab('anne-arundel'));
+        document.getElementById('baseline-btn').addEventListener('click', () => switchTab('baseline'));
+
         document.addEventListener('DOMContentLoaded', () => {
              initTheme(); // Initialize theme before updating UI
+             switchTab('federal'); // Initialize with federal tab
              updateUI();
         });
     </script>
