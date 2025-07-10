@@ -762,6 +762,12 @@
 
             if (baselineCalculations) {
                 baselineCalculations.innerHTML = `
+                    <div class="text-center p-4 bg-blue-100 rounded-lg">
+                        <h4 class="font-bold text-blue-800">Baseline Calculation Test</h4>
+                        <p class="text-blue-600">Income: $${income.toLocaleString()}</p>
+                        <p class="text-blue-600">Standard Deduction: $${standardDeduction.toLocaleString()}</p>
+                        <p class="text-blue-600">Baseline Tax: $${baselineTotalTax.toLocaleString()}</p>
+                    </div>
                     <div class="flex flex-wrap justify-center items-center gap-x-3 gap-y-3">
                         ${createCalculationRow('Gross Income', income)}
                         <span class="text-2xl font-bold text-slate-400 dark:text-slate-500">-</span>
