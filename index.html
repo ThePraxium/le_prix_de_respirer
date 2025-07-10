@@ -1,176 +1,524 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Federal Income Tax Calculator</title>
-  <!-- Tailwind CSS for styling -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 20px; height: 20px;
-      background: #4f46e5; border-radius: 50%;
-      cursor: pointer; margin-top: -6px;
-    }
-    input[type=range]::-moz-range-thumb {
-      width: 20px; height: 20px;
-      background: #4f46e5; border-radius: 50%;
-      cursor: pointer;
-    }
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none; margin: 0;
-    }
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Federal Income Tax Calculator</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles to enhance the look and feel */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Custom styling for the range slider thumb */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #4f46e5; /* Indigo-600 */
+            cursor: pointer;
+            border-radius: 50%;
+            margin-top: -6px; /* Adjust thumb position */
+        }
+        input[type=range]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #4f46e5;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        /* Hide number input spinners on Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        /* Hide number input spinners on Firefox */
+        input[type=number] {
+          -moz-appearance: textfield;
+        }
+    </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
 
-  <div class="container mx-auto p-4 md:p-8 max-w-2xl">
+    <div class="container mx-auto p-4 md:p-8 max-w-2xl">
 
-    <header class="text-center mb-8">
-      <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Advanced Federal Income Tax Calculator</h1>
-      <p class="text-slate-600 mt-2">Visualize your tax breakdown with adjustments, deductions, and credits.</p>
-    </header>
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Advanced Federal Income Tax Calculator</h1>
+            <p class="text-slate-600 mt-2">Visualize your tax breakdown with adjustments, deductions, and credits.</p>
+        </header>
 
-    <main class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+        <main class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
 
-      <!-- CONTROLS SECTION -->
-      <div class="space-y-6 mb-8">
+            <!-- CONTROLS SECTION -->
+            <div class="space-y-6 mb-8">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-2">Filing Status</label>
+                    <div id="filing-status" role="radiogroup" class="flex space-x-4">
+                        <label class="flex-1">
+                            <input type="radio" name="filingStatus" value="1" class="sr-only peer">
+                            <div class="w-full text-center p-3 rounded-lg cursor-pointer bg-slate-100 text-slate-600 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:font-semibold transition-colors duration-200">Single</div>
+                        </label>
+                        <label class="flex-1">
+                            <input type="radio" name="filingStatus" value="2" class="sr-only peer" checked>
+                            <div class="w-full text-center p-3 rounded-lg cursor-pointer bg-slate-100 text-slate-600 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:font-semibold transition-colors duration-200">Married</div>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <label for="income-input" class="block text-sm font-medium text-slate-700">Gross Income</label>
+                    <div class="flex items-center gap-x-3 mt-1">
+                        <input id="income-slider" type="range" min="0" max="1000000" step="1000" value="309711" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                        <input id="income-input" type="number" min="0" max="1000000" step="1000" value="309711" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                    </div>
+                </div>
+                 <div>
+                    <label for="adjustments-input" class="block text-sm font-medium text-slate-700">Adjustments to Income</label>
+                    <div class="flex items-center gap-x-3 mt-1">
+                        <input id="adjustments-slider" type="range" min="0" max="1000000" step="500" value="40764" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                        <input id="adjustments-input" type="number" min="0" max="1000000" step="500" value="40764" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                    </div>
+                </div>
+                <div class="bg-amber-100 p-3 rounded-lg text-center">
+                    <p class="text-sm text-amber-600">Adjusted Gross Income (AGI)</p>
+                    <p id="agi-display" class="text-xl font-semibold text-amber-800"></p>
+                </div>
+                <div>
+                    <label for="deductions-input" class="block text-sm font-medium text-slate-700">Deductions</label>
+                    <div class="flex items-center gap-x-3 mt-1">
+                        <input id="deductions-slider" type="range" min="0" max="1000000" step="500" value="70600" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                        <input id="deductions-input" type="number" min="0" max="1000000" step="500" value="70600" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                    </div>
+                </div>
+                <div class="bg-amber-100 p-3 rounded-lg text-center">
+                    <p class="text-sm text-amber-600">Taxable Income</p>
+                    <p id="taxable-income-display-main" class="text-xl font-semibold text-amber-800"></p>
+                </div>
+                <div>
+                    <label for="credits-input" class="block text-sm font-medium text-slate-700">Tax Credits</label>
+                     <div class="flex items-center gap-x-3 mt-1">
+                        <input id="credits-slider" type="range" min="0" max="1000000" step="100" value="7500" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                        <input id="credits-input" type="number" min="0" max="1000000" step="100" value="7500" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
+                    </div>
+                </div>
+            </div>
 
-        <!-- Filing Status -->
-        <div>
-          <label class="block text-sm font-medium text-slate-700 mb-2">Filing Status</label>
-          <div id="filing-status" role="radiogroup" class="flex space-x-4">
-            <label class="flex-1">
-              <input type="radio" name="filingStatus" value="1" class="sr-only peer">
-              <div class="w-full text-center p-3 rounded-lg cursor-pointer bg-slate-100 text-slate-600 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:font-semibold transition-colors duration-200">Single</div>
-            </label>
-            <label class="flex-1">
-              <input type="radio" name="filingStatus" value="2" class="sr-only peer" checked>
-              <div class="w-full text-center p-3 rounded-lg cursor-pointer bg-slate-100 text-slate-600 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:font-semibold transition-colors duration-200">Married</div>
-            </label>
-          </div>
-        </div>
+            <!-- VISUALIZATION SECTION -->
+            <div class="mb-8 border-t pt-8">
+                <h2 class="text-xl font-bold text-slate-900 mb-4">Income Breakdown</h2>
+                <div id="tax-bar-container" class="w-full h-10 md:h-12 bg-slate-100 rounded-lg flex overflow-hidden text-white text-xs md:text-sm font-semibold">
+                    <div id="bar-take-home" class="bg-emerald-500 flex items-center justify-center transition-all duration-300 ease-in-out" title="Take-Home Pay"></div>
+                    <div id="bar-federal" class="bg-sky-500 flex items-center justify-center transition-all duration-300 ease-in-out" title="Federal Tax"></div>
+                </div>
+                <!-- Legend -->
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-4 text-sm">
+                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-emerald-500 mr-2"></span>Take-Home</div>
+                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-sky-500 mr-2"></span>Federal Tax</div>
+                </div>
+            </div>
 
-        <!-- Gross Income -->
-        <div>
-          <label for="income-input" class="block text-sm font-medium text-slate-700">Gross Income</label>
-          <div class="flex items-center gap-x-3 mt-1">
-            <input id="income-slider" type="range" min="0" max="1000000" step="1000" value="309711" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
-            <input id="income-input" type="number" min="0" max="1000000" step="1000" value="309711" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-          </div>
-        </div>
+            <!-- RESULTS & BREAKDOWN SECTION -->
+            <div>
+                <h2 class="text-xl font-bold text-slate-900 mb-4 text-center">Your Custom Calculation</h2>
+                <div class="bg-slate-50 p-4 rounded-xl shadow-inner text-center">
+                    <div class="space-y-3">
+                        <!-- Equation Row 1 -->
+                        <div class="flex flex-wrap justify-center items-center gap-x-3">
+                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Gross Income</span><span id="vc-gross-1" class="text-md font-semibold text-slate-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">-</span>
+                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Adjustments</span><span id="vc-adjustments" class="text-md font-semibold text-slate-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">=</span>
+                             <div class="flex flex-col bg-amber-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500">AGI</span><span id="vc-agi-1" class="text-md font-semibold text-amber-800"></span></div>
+                        </div>
+                        <!-- Equation Row 2 -->
+                        <div class="flex flex-wrap justify-center items-center gap-x-3">
+                             <div class="flex flex-col bg-amber-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500">AGI</span><span id="vc-agi-2" class="text-md font-semibold text-amber-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">-</span>
+                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Deductions</span><span id="vc-deductions" class="text-md font-semibold text-slate-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">=</span>
+                             <div class="flex flex-col bg-amber-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500">Taxable Income</span><span id="vc-taxable-income" class="text-md font-semibold text-amber-800"></span></div>
+                        </div>
+                        <!-- Equation Row 3 (with effective rate) -->
+                        <div class="flex flex-wrap justify-center items-center gap-x-3">
+                             <div class="flex flex-col bg-amber-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500">Taxable Income</span><span id="vc-taxable-income-2" class="text-md font-semibold text-amber-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">&times;</span>
+                             <div class="flex flex-col bg-sky-200 p-2 rounded-lg justify-center items-center min-w-[110px]">
+                                <span class="text-xs text-sky-600">Effective Tax Rate</span>
+                                <span id="vc-marginal-rate-value" class="text-md font-semibold text-sky-800"></span>
+                            </div>
+                             <span class="text-xl font-bold text-slate-400">=</span>
+                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-sky-500">Tax Before Credits</span><span id="vc-pre-credit-tax" class="text-md font-semibold text-sky-800"></span></div>
+                        </div>
+                        <!-- Equation Row 4 -->
+                        <div class="flex flex-wrap justify-center items-center gap-x-3">
+                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-sky-500">Tax Before Credits</span><span id="vc-pre-credit-tax-2" class="text-md font-semibold text-sky-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">-</span>
+                             <div class="flex flex-col bg-green-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-green-500">Credits</span><span id="vc-credits" class="text-md font-semibold text-green-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">=</span>
+                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg ring-1 ring-sky-500 min-w-[110px]"><span class="text-xs text-sky-500">Total Federal Tax</span><span id="vc-total-tax-1" class="text-md font-semibold text-sky-800"></span></div>
+                        </div>
+                         <!-- Equation Row 5 -->
+                        <div class="flex flex-wrap justify-center items-center gap-x-3">
+                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Gross Income</span><span id="vc-gross-2" class="text-md font-semibold text-slate-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">-</span>
+                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-sky-500">Total Federal Tax</span><span id="vc-total-tax-2" class="text-md font-semibold text-sky-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">=</span>
+                             <div class="flex flex-col bg-emerald-100 p-2 rounded-lg ring-2 ring-emerald-500 min-w-[110px]"><span class="text-xs text-emerald-500">Final Take-Home Pay</span><span id="vc-post-tax" class="text-md font-semibold text-emerald-800"></span></div>
+                        </div>
+                        <!-- Equation Row 6 (Gross Effective Rate) -->
+                        <div class="flex flex-wrap justify-center items-center gap-x-3 pt-4 border-t border-slate-200 mt-4">
+                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-sky-500">Total Federal Tax</span><span id="vc-total-tax-3" class="text-md font-semibold text-sky-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">/</span>
+                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Gross Income</span><span id="vc-gross-3" class="text-md font-semibold text-slate-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">=</span>
+                             <div class="flex flex-col bg-emerald-100 p-2 rounded-lg ring-2 ring-emerald-500 min-w-[110px]"><span class="text-xs text-emerald-500">Effective Rate (on Gross)</span><span id="vc-gross-effective-rate" class="text-md font-semibold text-emerald-800"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <!-- Adjustments -->
-        <div>
-          <label for="adjustments-input" class="block text-sm font-medium text-slate-700">Adjustments to Income</label>
-          <div class="flex items-center gap-x-3 mt-1">
-            <input id="adjustments-slider" type="range" min="0" max="1000000" step="500" value="40764" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
-            <input id="adjustments-input" type="number" min="0" max="1000000" step="500" value="40764" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-          </div>
-        </div>
+            <!-- BASELINE COMPARISON SECTION -->
+            <div class="mt-10 border-t pt-8">
+                <h2 class="text-xl font-bold text-slate-900 mb-2 text-center">Baseline Comparison</h2>
+                 <p class="text-center text-slate-600 mb-4 text-sm">Your gross income with $0 adjustments, $0 credits, and the standard deduction.</p>
+                <div class="bg-slate-50 p-4 rounded-xl shadow-inner text-center">
+                    <div class="space-y-3">
+                        <!-- Equation Row 1 -->
+                        <div class="flex flex-wrap justify-center items-center gap-x-3">
+                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Gross Income</span><span id="bc-gross-1" class="text-md font-semibold text-slate-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">-</span>
+                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Adjustments</span><span id="bc-adjustments" class="text-md font-semibold text-slate-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">=</span>
+                             <div class="flex flex-col bg-amber-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500">AGI</span><span id="bc-agi-1" class="text-md font-semibold text-amber-800"></span></div>
+                        </div>
+                        <!-- Equation Row 2 -->
+                        <div class="flex flex-wrap justify-center items-center gap-x-3">
+                             <div class="flex flex-col bg-amber-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500">AGI</span><span id="bc-agi-2" class="text-md font-semibold text-amber-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">-</span>
+                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Deductions</span><span id="bc-deductions" class="text-md font-semibold text-slate-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">=</span>
+                             <div class="flex flex-col bg-amber-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500">Taxable Income</span><span id="bc-taxable-income" class="text-md font-semibold text-amber-800"></span></div>
+                        </div>
+                        <!-- Equation Row 3 (with effective rate) -->
+                        <div class="flex flex-wrap justify-center items-center gap-x-3">
+                             <div class="flex flex-col bg-amber-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-amber-500">Taxable Income</span><span id="bc-taxable-income-2" class="text-md font-semibold text-amber-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">&times;</span>
+                             <div class="flex flex-col bg-sky-200 p-2 rounded-lg justify-center items-center min-w-[110px]">
+                                <span class="text-xs text-sky-600">Effective Tax Rate</span>
+                                <span id="bc-marginal-rate-value" class="text-md font-semibold text-sky-800"></span>
+                            </div>
+                             <span class="text-xl font-bold text-slate-400">=</span>
+                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-sky-500">Tax Before Credits</span><span id="bc-pre-credit-tax" class="text-md font-semibold text-sky-800"></span></div>
+                        </div>
+                        <!-- Equation Row 4 -->
+                        <div class="flex flex-wrap justify-center items-center gap-x-3">
+                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-sky-500">Tax Before Credits</span><span id="bc-pre-credit-tax-2" class="text-md font-semibold text-sky-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">-</span>
+                             <div class="flex flex-col bg-green-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-green-500">Credits</span><span id="bc-credits" class="text-md font-semibold text-green-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">=</span>
+                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg ring-1 ring-sky-500 min-w-[110px]"><span class="text-xs text-sky-500">Total Federal Tax</span><span id="bc-total-tax-1" class="text-md font-semibold text-sky-800"></span></div>
+                        </div>
+                         <!-- Equation Row 5 -->
+                        <div class="flex flex-wrap justify-center items-center gap-x-3">
+                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Gross Income</span><span id="bc-gross-2" class="text-md font-semibold text-slate-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">-</span>
+                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-sky-500">Total Federal Tax</span><span id="bc-total-tax-2" class="text-md font-semibold text-sky-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">=</span>
+                             <div class="flex flex-col bg-emerald-100 p-2 rounded-lg ring-2 ring-emerald-500 min-w-[110px]"><span class="text-xs text-emerald-500">Final Take-Home Pay</span><span id="bc-post-tax" class="text-md font-semibold text-emerald-800"></span></div>
+                        </div>
+                        <!-- Equation Row 6 (Gross Effective Rate) -->
+                        <div class="flex flex-wrap justify-center items-center gap-x-3 pt-4 border-t border-slate-200 mt-4">
+                             <div class="flex flex-col bg-sky-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-sky-500">Total Federal Tax</span><span id="bc-total-tax-3" class="text-md font-semibold text-sky-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">/</span>
+                             <div class="flex flex-col bg-slate-100 p-2 rounded-lg min-w-[110px]"><span class="text-xs text-slate-500">Gross Income</span><span id="bc-gross-3" class="text-md font-semibold text-slate-800"></span></div>
+                             <span class="text-xl font-bold text-slate-400">=</span>
+                             <div class="flex flex-col bg-emerald-100 p-2 rounded-lg ring-2 ring-emerald-500 min-w-[110px]"><span class="text-xs text-emerald-500">Effective Rate (on Gross)</span><span id="bc-gross-effective-rate" class="text-md font-semibold text-emerald-800"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
-        <div class="bg-amber-100 p-3 rounded-lg text-center">
-          <p class="text-sm text-amber-600">Adjusted Gross Income (AGI)</p>
-          <p id="agi-display" class="text-xl font-semibold text-amber-800"></p>
-        </div>
+    <script>
+        // DOM Element References
+        const incomeSlider = document.getElementById('income-slider');
+        const incomeInput = document.getElementById('income-input');
+        const adjustmentsSlider = document.getElementById('adjustments-slider');
+        const adjustmentsInput = document.getElementById('adjustments-input');
+        const deductionsSlider = document.getElementById('deductions-slider');
+        const deductionsInput = document.getElementById('deductions-input');
+        const creditsSlider = document.getElementById('credits-slider');
+        const creditsInput = document.getElementById('credits-input');
+        const filingStatusRadios = document.querySelectorAll('input[name="filingStatus"]');
 
-        <!-- Deductions -->
-        <div>
-          <label for="deductions-input" class="block text-sm font-medium text-slate-700">Deductions</label>
-          <div class="flex items-center gap-x-3 mt-1">
-            <input id="deductions-slider" type="range" min="0" max="1000000" step="500" value="70600" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
-            <input id="deductions-input" type="number" min="0" max="1000000" step="500" value="70600" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-          </div>
-        </div>
+        // Display Elements
+        const agiDisplay = document.getElementById('agi-display');
+        const taxableIncomeDisplayMain = document.getElementById('taxable-income-display-main');
 
-        <div class="bg-amber-100 p-3 rounded-lg text-center">
-          <p class="text-sm text-amber-600">Taxable Income</p>
-          <p id="taxable-income-display-main" class="text-xl font-semibold text-amber-800"></p>
-        </div>
+        // Visualization Bar Elements
+        const barTakeHome = document.getElementById('bar-take-home');
+        const barFederal = document.getElementById('bar-federal');
 
-        <!-- Credits -->
-        <div>
-          <label for="credits-input" class="block text-sm font-medium text-slate-700">Tax Credits</label>
-          <div class="flex items-center gap-x-3 mt-1">
-            <input id="credits-slider" type="range" min="0" max="1000000" step="100" value="7500" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
-            <input id="credits-input" type="number" min="0" max="1000000" step="100" value="7500" class="w-32 px-2 py-1 bg-white border border-slate-300 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500">
-          </div>
-        </div>
+        // --- TAX CALCULATION LOGIC ---
 
-      </div>
+        function calculateBracketTax(income, brackets) {
+            let totalTax = 0;
+            let previousLimit = 0;
 
-      <!-- VISUALIZATION SECTION -->
-      <div class="mb-8 border-t pt-8">
-        <h2 class="text-xl font-bold text-slate-900 mb-4">Income Breakdown</h2>
-        <div id="tax-bar-container" class="w-full h-10 md:h-12 bg-slate-100 rounded-lg flex overflow-hidden text-white text-xs md:text-sm font-semibold">
-          <div id="bar-take-home" class="bg-emerald-500 flex items-center justify-center transition-all duration-300 ease-in-out" title="Take-Home Pay"></div>
-          <div id="bar-federal" class="bg-sky-500 flex items-center justify-center transition-all duration-300 ease-in-out" title="Federal Tax"></div>
-        </div>
-        <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-4 text-sm">
-          <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-emerald-500 mr-2"></span>Take-Home</div>
-          <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-sky-500 mr-2"></span>Federal Tax</div>
-        </div>
-      </div>
+            for (const bracket of brackets) {
+                const [bracketLimit, rate] = bracket;
+                if (income <= bracketLimit) {
+                    totalTax += (income - previousLimit) * rate;
+                    break;
+                } else {
+                    totalTax += (bracketLimit - previousLimit) * rate;
+                    previousLimit = bracketLimit;
+                }
+            }
+            return totalTax;
+        }
 
-      <!-- RESULTS & BREAKDOWN SECTION -->
-      <!-- … (remains unchanged) … -->
+        function getFederalBrackets(filingStatus) {
+            // 2024 brackets
+            if (filingStatus == 1) { // Single
+                return [[11600, 0.10], [47150, 0.12], [100525, 0.22], [191950, 0.24], [243725, 0.32], [609350, 0.35], [Infinity, 0.37]];
+            } else { // Married
+                return [[23200, 0.10], [94300, 0.12], [201050, 0.22], [383900, 0.24], [487450, 0.32], [731200, 0.35], [Infinity, 0.37]];
+            }
+        }
+        
+        // --- UI UPDATE & MAIN LOGIC ---
 
-    </main>
-  </div>
+        function formatCurrency(value) {
+            return value.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+        }
+        
+        function updateUI() {
+            // 1. Read input values from their respective input fields
+            const income = parseFloat(incomeInput.value) || 0;
+            const adjustments = parseFloat(adjustmentsInput.value) || 0;
+            const deductions = parseFloat(deductionsInput.value) || 0;
+            const credits = parseFloat(creditsInput.value) || 0;
+            const filingStatus = parseInt(document.querySelector('input[name="filingStatus"]:checked').value);
 
-  <script>
-    // DOM refs
-    const incomeSlider = document.getElementById('income-slider');
-    const incomeInput  = document.getElementById('income-input');
-    const adjustmentsSlider = document.getElementById('adjustments-slider');
-    const adjustmentsInput  = document.getElementById('adjustments-input');
-    const deductionsSlider  = document.getElementById('deductions-slider');
-    const deductionsInput   = document.getElementById('deductions-input');
-    const creditsSlider     = document.getElementById('credits-slider');
-    const creditsInput      = document.getElementById('credits-input');
-    const filingStatusRadios = document.querySelectorAll('input[name="filingStatus"]');
+            // 2. Perform CUSTOM calculations
+            const agi = Math.max(0, income - adjustments);
+            const taxableIncome = Math.max(0, agi - deductions);
+            const preCreditFedTax = calculateBracketTax(taxableIncome, getFederalBrackets(filingStatus));
+            const totalTax = Math.max(0, preCreditFedTax - credits);
+            const postTaxIncome = income - totalTax;
 
-    // Calculation helpers…
-    function calculateBracketTax(income, brackets){ /* … */ }
-    function getFederalBrackets(status){ /* … */ }
-    function formatCurrency(v){ /* … */ }
-    function updateUI(){ /* … */ }
+            // 3. Update all CUSTOM UI Display elements
+            agiDisplay.textContent = formatCurrency(agi);
+            taxableIncomeDisplayMain.textContent = formatCurrency(taxableIncome);
 
-    // Sync sliders & inputs
-    function setupInputSync(slider, input){
-      slider.addEventListener('input',() => { input.value = slider.value; updateUI(); });
-      input.addEventListener('change',() => {
-        let v = parseFloat(input.value)||0;
-        if(v>slider.max){ v=slider.max; input.value=v; }
-        slider.value=v; updateUI();
-      });
-    }
-    setupInputSync(incomeSlider, incomeInput);
-    setupInputSync(adjustmentsSlider, adjustmentsInput);
-    setupInputSync(deductionsSlider, deductionsInput);
-    setupInputSync(creditsSlider, creditsInput);
+            // Populate the custom visual calculation flow
+            document.getElementById('vc-gross-1').textContent = formatCurrency(income);
+            document.getElementById('vc-adjustments').textContent = formatCurrency(adjustments);
+            document.getElementById('vc-agi-1').textContent = formatCurrency(agi);
+            document.getElementById('vc-agi-2').textContent = formatCurrency(agi);
+            document.getElementById('vc-deductions').textContent = formatCurrency(deductions);
+            document.getElementById('vc-taxable-income').textContent = formatCurrency(taxableIncome);
+            document.getElementById('vc-taxable-income-2').textContent = formatCurrency(taxableIncome);
+            
+            const taxableEffectiveRate = taxableIncome > 0 ? (preCreditFedTax / taxableIncome) * 100 : 0;
+            const taxableRateHtml = taxableIncome > 0 ? `${taxableEffectiveRate.toFixed(2)}%` : 'N/A';
+            document.getElementById('vc-marginal-rate-value').innerHTML = taxableRateHtml;
 
-    filingStatusRadios.forEach(r => r.addEventListener('change', updateUI));
+            document.getElementById('vc-pre-credit-tax').textContent = formatCurrency(preCreditFedTax);
+            document.getElementById('vc-pre-credit-tax-2').textContent = formatCurrency(preCreditFedTax);
+            document.getElementById('vc-credits').textContent = formatCurrency(credits);
+            document.getElementById('vc-total-tax-1').textContent = formatCurrency(totalTax);
+            document.getElementById('vc-gross-2').textContent = formatCurrency(income);
+            document.getElementById('vc-total-tax-2').textContent = formatCurrency(totalTax);
+            document.getElementById('vc-post-tax').textContent = formatCurrency(postTaxIncome);
+            
+            const grossEffectiveRate = income > 0 ? (totalTax / income) * 100 : 0;
+            document.getElementById('vc-total-tax-3').textContent = formatCurrency(totalTax);
+            document.getElementById('vc-gross-3').textContent = formatCurrency(income);
+            document.getElementById('vc-gross-effective-rate').textContent = grossEffectiveRate.toFixed(2) + '%';
 
-    document.addEventListener('DOMContentLoaded', () => {
-      updateUI();
-    });
-  </script>
+            // 4. Update Visualization Bar based on custom calculation
+            if (income > 0) {
+                const takeHomePercent = Math.max(0, (postTaxIncome / income) * 100);
+                const fedPercent = (totalTax / income) * 100;
+
+                barTakeHome.style.width = `${takeHomePercent}%`;
+                barFederal.style.width = `${fedPercent}%`;
+                
+                barTakeHome.textContent = takeHomePercent > 15 ? 'Take-Home' : '';
+                barFederal.textContent = fedPercent > 15 ? 'Federal Tax' : '';
+            } else {
+                barTakeHome.style.width = '100%';
+                barFederal.style.width = '0%';
+                barTakeHome.textContent = 'Income';
+            }
+
+            // --- 5. BASELINE SCENARIO CALCULATION ---
+            const baselineAdjustments = 0;
+            const baselineCredits = 0;
+            const standardDeduction = (filingStatus === 1) ? 14600 : 29200;
+
+            const baselineAgi = Math.max(0, income - baselineAdjustments);
+            const baselineTaxableIncome = Math.max(0, baselineAgi - standardDeduction);
+            const baselinePreCreditTax = calculateBracketTax(baselineTaxableIncome, getFederalBrackets(filingStatus));
+            const baselineTotalTax = Math.max(0, baselinePreCreditTax - baselineCredits);
+            const baselinePostTaxIncome = income - baselineTotalTax;
+
+            // --- 6. POPULATE BASELINE UI ---
+            document.getElementById('bc-gross-1').textContent = formatCurrency(income);
+            document.getElementById('bc-adjustments').textContent = formatCurrency(baselineAdjustments);
+            document.getElementById('bc-agi-1').textContent = formatCurrency(baselineAgi);
+            document.getElementById('bc-agi-2').textContent = formatCurrency(baselineAgi);
+            document.getElementById('bc-deductions').textContent = formatCurrency(standardDeduction);
+            document.getElementById('bc-taxable-income').textContent = formatCurrency(baselineTaxableIncome);
+            document.getElementById('bc-taxable-income-2').textContent = formatCurrency(baselineTaxableIncome);
+
+            const baselineTaxableEffectiveRate = baselineTaxableIncome > 0 ? (baselinePreCreditTax / baselineTaxableIncome) * 100 : 0;
+            document.getElementById('bc-marginal-rate-value').innerHTML = baselineTaxableIncome > 0 ? `${baselineTaxableEffectiveRate.toFixed(2)}%` : 'N/A';
+
+            document.getElementById('bc-pre-credit-tax').textContent = formatCurrency(baselinePreCreditTax);
+            document.getElementById('bc-pre-credit-tax-2').textContent = formatCurrency(baselinePreCreditTax);
+            document.getElementById('bc-credits').textContent = formatCurrency(baselineCredits);
+            document.getElementById('bc-total-tax-1').textContent = formatCurrency(baselineTotalTax);
+            document.getElementById('bc-gross-2').textContent = formatCurrency(income);
+            document.getElementById('bc-total-tax-2').textContent = formatCurrency(baselineTotalTax);
+            document.getElementById('bc-post-tax').textContent = formatCurrency(baselinePostTaxIncome);
+
+            const baselineGrossEffectiveRate = income > 0 ? (baselineTotalTax / income) * 100 : 0;
+            document.getElementById('bc-total-tax-3').textContent = formatCurrency(baselineTotalTax);
+            document.getElementById('bc-gross-3').textContent = formatCurrency(income);
+            document.getElementById('bc-gross-effective-rate').textContent = baselineGrossEffectiveRate.toFixed(2) + '%';
+        }
+
+        // --- EVENT LISTENERS ---
+        
+        function setupInputSync(slider, input) {
+            slider.addEventListener('input', () => {
+                input.value = slider.value;
+                updateUI();
+            });
+            input.addEventListener('change', () => {
+                let value = parseFloat(input.value) || 0;
+                const max = parseFloat(slider.max);
+                if (value > max) {
+                    value = max;
+                    input.value = value;
+                }
+                slider.value = value;
+                updateUI();
+            });
+        }
+        
+        setupInputSync(incomeSlider, incomeInput);
+        setupInputSync(adjustmentsSlider, adjustmentsInput);
+        setupInputSync(deductionsSlider, deductionsInput);
+        setupInputSync(creditsSlider, creditsInput);
+
+        filingStatusRadios.forEach(radio => radio.addEventListener('change', () => updateUI()));
+
+        document.addEventListener('DOMContentLoaded', () => {
+             updateUI();
+        });
+    </script>
+
+</body>
+</html>
+                updateUI();
+            });
+            input.addEventListener('change', () => {
+                let value = parseFloat(input.value) || 0;
+                const max = parseFloat(slider.max);
+                if (value > max) {
+                    value = max;
+                    input.value = value;
+                }
+                slider.value = value;
+                updateUI();
+            });
+        }
+        
+        setupInputSync(incomeSlider, incomeInput);
+        setupInputSync(adjustmentsSlider, adjustmentsInput);
+        setupInputSync(deductionsSlider, deductionsInput);
+        setupInputSync(creditsSlider, creditsInput);
+
+        filingStatusRadios.forEach(radio => radio.addEventListener('change', () => updateUI()));
+
+ 
+
+        function fetchDataFromSheet() {
+            clearError(); // Clear previous errors
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                setControlsDisabled(true);
+                google.script.run
+                    .withSuccessHandler(updateInputsFromSheet)
+                    .withFailureHandler(onFetchFailure)
+                    .getDataFromSheet();
+            } else {
+                displayError("This feature is only available inside a Google Sheet.");
+                document.querySelector('input[name="dataSource"][value="sliders"]').checked = true;
+                setControlsDisabled(false);
+            }
+        }
+
+        function updateInputsFromSheet(data) {
+            if (data.error) {
+                displayError("Error from sheet: " + data.error);
+                document.querySelector('input[name="dataSource"][value="sliders"]').checked = true;
+                setControlsDisabled(false);
+                return;
+            }
+
+            // Update filing status radio button
+            if (data.filingStatus === 1) {
+                document.querySelector('input[name="filingStatus"][value="1"]').checked = true;
+            } else {
+                document.querySelector('input[name="filingStatus"][value="2"]').checked = true;
+            }
+
+            // Update inputs and sliders
+            incomeInput.value = data.gross;
+            incomeSlider.value = data.gross;
+            adjustmentsInput.value = data.adjustments;
+            adjustmentsSlider.value = data.adjustments;
+            deductionsInput.value = data.deductions;
+            deductionsSlider.value = data.deductions;
+            creditsInput.value = data.credits;
+            creditsSlider.value = data.credits;
+            
+            updateUI();
+        }
+
+        function onFetchFailure(error) {
+            displayError('Failed to contact Google Sheets: ' + error.message + '. Please ensure you have granted script permissions.');
+            document.querySelector('input[name="dataSource"][value="sliders"]').checked = true;
+            setControlsDisabled(false);
+        }
+
+        dataSourceRadios.forEach(radio => radio.addEventListener('change', (event) => {
+            if (event.target.value === 'sheet') {
+                fetchDataFromSheet();
+            } else {
+                clearError();
+                setControlsDisabled(false);
+            }
+        }));
+
+        document.addEventListener('DOMContentLoaded', () => {
+             setControlsDisabled(false); // Start with sliders enabled
+             updateUI();
+        });
+    </script>
 
 </body>
 </html>
