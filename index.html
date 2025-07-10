@@ -271,28 +271,40 @@
         // --- TAX CALCULATION LOGIC ---
 
         function calculateBracketTax(income, brackets) {
+            if (income <= 0) return 0;
+            
             let totalTax = 0;
             let previousLimit = 0;
 
             for (const bracket of brackets) {
                 const [bracketLimit, rate] = bracket;
-                if (income <= bracketLimit) {
-                    totalTax += (income - previousLimit) * rate;
-                    break;
-                } else {
-                    totalTax += (bracketLimit - previousLimit) * rate;
-                    previousLimit = bracketLimit;
+                
+                if (income <= previousLimit) {
+                    break; // Income is below this bracket
                 }
+                
+                const taxableInThisBracket = Math.min(income, bracketLimit) - previousLimit;
+                
+                if (taxableInThisBracket > 0) {
+                    totalTax += taxableInThisBracket * rate;
+                }
+                
+                if (income <= bracketLimit) {
+                    break; // We've calculated all applicable brackets
+                }
+                
+                previousLimit = bracketLimit;
             }
-            return totalTax;
+            
+            return Math.round(totalTax * 100) / 100; // Round to nearest cent
         }
 
         function getFederalBrackets(filingStatus) {
-            // 2024 brackets
+            // 2024 brackets - Exact values from your spreadsheet
             if (filingStatus == 1) { // Single
-                return [[11600, 0.10], [47150, 0.12], [100525, 0.22], [191950, 0.24], [243725, 0.32], [609350, 0.35], [Infinity, 0.37]];
-            } else { // Married
-                return [[23200, 0.10], [94300, 0.12], [201050, 0.22], [383900, 0.24], [487450, 0.32], [731200, 0.35], [Infinity, 0.37]];
+                return [[11950, 0.10], [47150, 0.12], [100525, 0.22], [191950, 0.24], [243725, 0.32], [609350, 0.35], [Infinity, 0.37]];
+            } else { // Married Filing Jointly
+                return [[23850, 0.10], [96950, 0.12], [206700, 0.22], [394600, 0.24], [501050, 0.32], [751600, 0.35], [Infinity, 0.37]];
             }
         }
         
@@ -366,7 +378,7 @@
             // --- 5. BASELINE SCENARIO CALCULATION ---
             const baselineAdjustments = 0;
             const baselineCredits = 0;
-            const standardDeduction = (filingStatus === 1) ? 14600 : 29200;
+            const standardDeduction = (filingStatus === 1) ? 14600 : 29200; // 2024 standard deductions
 
             const baselineAgi = Math.max(0, income - baselineAdjustments);
             const baselineTaxableIncome = Math.max(0, baselineAgi - standardDeduction);
