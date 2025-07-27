@@ -28,22 +28,11 @@ export class TaxCalculatorApp {
         // Get current input values
         const inputs = this.uiControls.getValues();
         
-        // Calculate custom scenario
-        const customCalculation = this.taxCalculator.calculateTaxes(inputs);
-        
-        // Calculate baseline scenario
-        const baselineCalculation = this.taxCalculator.calculateBaseline(inputs.income, inputs.filingStatus);
-        
-        // Get standard deduction for display
-        const standardDeduction = this.taxCalculator.getStandardDeduction(inputs.filingStatus);
+        // Calculate comprehensive tax scenario with federal, state, and county taxes
+        const calculation = this.taxCalculator.calculateAllTaxes(inputs);
         
         // Update all displays
-        this.displayManager.updateAll({
-            customCalculation,
-            baselineCalculation,
-            inputs,
-            standardDeduction
-        });
+        this.displayManager.updateAll(calculation);
     }
 
     /**
@@ -59,13 +48,11 @@ export class TaxCalculatorApp {
      */
     getState() {
         const inputs = this.uiControls.getValues();
-        const customCalculation = this.taxCalculator.calculateTaxes(inputs);
-        const baselineCalculation = this.taxCalculator.calculateBaseline(inputs.income, inputs.filingStatus);
+        const calculation = this.taxCalculator.calculateAllTaxes(inputs);
         
         return {
             inputs,
-            customCalculation,
-            baselineCalculation,
+            calculation,
             theme: this.themeManager.getCurrentTheme()
         };
     }
