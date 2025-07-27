@@ -376,6 +376,33 @@ export class DisplayManager {
     }
 
     /**
+     * Clear baseline visual calculations when no income
+     */
+    clearBaselineVisualCalculations() {
+        const elementsToUpdate = [
+            'baselineGrossIncome', 'baselineAdjustments', 'baselineAgi', 'baselineAgi2',
+            'baselineDeductions', 'baselineTaxableIncome', 'baselineTaxableIncome2',
+            'baselineTaxRate', 'baselinePreCreditTax', 'baselinePreCreditTax2',
+            'baselineCredits', 'baselineTotalTax', 'baselineGrossIncome2',
+            'baselineTotalTax2', 'baselineTakeHome', 'baselineTotalTax3',
+            'baselineGrossIncome3'
+        ];
+
+        elementsToUpdate.forEach(elementName => {
+            if (this.elements[elementName]) {
+                this.elements[elementName].textContent = this.formatCurrency(0);
+            }
+        });
+
+        if (this.elements.baselineTaxRate) {
+            this.elements.baselineTaxRate.textContent = this.formatPercentage(0);
+        }
+        if (this.elements.baselineEffectiveRate) {
+            this.elements.baselineEffectiveRate.textContent = this.formatPercentage(0);
+        }
+    }
+
+    /**
      * Update all displays with current data
      * @param {Object} calculation - Complete tax calculation results
      * @param {Object} inputs - Input values
@@ -390,10 +417,13 @@ export class DisplayManager {
         // Update visual calculations
         this.updateVisualCalculations(calculation, inputs);
         
-        // Update baseline if provided
-        if (baselineCalculation) {
+        // Update baseline if provided and income > 0
+        if (baselineCalculation && (inputs.federalIncome || 0) > 0) {
             const grossIncome = inputs.federalIncome || 0;
             this.updateBaselineVisualCalculations(baselineCalculation, grossIncome, standardDeduction);
+        } else {
+            // Clear baseline when no income
+            this.clearBaselineVisualCalculations();
         }
     }
 }
