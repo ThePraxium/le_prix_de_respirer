@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Usage Example</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        .example { 
+            background: #f5f5f5; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 5px; 
+        }
+        button { 
+            background: #007cba; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin: 5px; 
+        }
+        button:hover { background: #005a87; }
+        .result { 
+            background: #e8f5e8; 
+            padding: 10px; 
+            margin: 10px 0; 
+            border-radius: 5px; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculator Module Usage Examples</h1>
+    <p>This page demonstrates how to use individual calculator modules independently.</p>
+
+    <div class="example">
+        <h2>1. Using TaxCalculator Module Only</h2>
+        <p>Calculate taxes for $75,000 income with $2,000 credits:</p>
+        <button onclick="testTaxCalculator()">Run Tax Calculation</button>
+        <div id="tax-result" class="result"></div>
+    </div>
+
+    <div class="example">
+        <h2>2. Using DisplayManager for Formatting</h2>
+        <p>Format various dollar amounts:</p>
+        <button onclick="testDisplayManager()">Test Currency Formatting</button>
+        <div id="display-result" class="result"></div>
+    </div>
+
+    <div class="example">
+        <h2>3. Custom Tax Calculator Implementation</h2>
+        <p>Example of replacing the tax calculation logic:</p>
+        <button onclick="testCustomCalculator()">Test Custom Calculator</button>
+        <div id="custom-result" class="result"></div>
+    </div>
+
+    <div class="example">
+        <h2>4. Theme Manager Standalone</h2>
+        <p>Demonstrate theme switching:</p>
+        <button onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+        <button onclick="getTheme()">Get Current Theme</button>
+        <div id="theme-result" class="result"></div>
+    </div>
+
+    <script type="module">
+        import { TaxCalculator } from './js/taxCalculator.js';
+        import { DisplayManager } from './js/displayManager.js';
+        import { ThemeManager } from './js/themeManager.js';
+
+        // Make modules available globally for the demo buttons
+        window.taxCalculator = new TaxCalculator();
+        window.displayManager = new DisplayManager();
+        window.themeManager = new ThemeManager();
+
+        // Custom calculator example
+        class SimpleTaxCalculator {
+            calculateTaxes(params) {
+                const { income, adjustments, deductions, credits } = params;
+                const agi = Math.max(0, income - adjustments);
+                const taxableIncome = Math.max(0, agi - deductions);
+                
+                // Simple flat 20% tax rate
+                const preCreditTax = taxableIncome * 0.20;
+                const totalTax = Math.max(0, preCreditTax - credits);
+                const postTaxIncome = income - totalTax;
+                
+                return {
+                    agi,
+                    taxableIncome,
+                    preCreditTax,
+                    totalTax,
+                    postTaxIncome,
+                    taxableEffectiveRate: taxableIncome > 0 ? 20 : 0,
+                    grossEffectiveRate: income > 0 ? (totalTax / income) * 100 : 0
+                };
+            }
+        }
+        
+        window.customCalculator = new SimpleTaxCalculator();
+
+        // Demo functions
+        window.testTaxCalculator = function() {
+            const result = window.taxCalculator.calculateTaxes({
+                income: 75000,
+                adjustments: 0,
+                deductions: 29200, // Standard deduction for married
+                credits: 2000,
+                filingStatus: 2
+            });
+            
+            document.getElementById('tax-result').innerHTML = `
+                <strong>Tax Calculation Results:</strong><br>
+                AGI: $${result.agi.toLocaleString()}<br>
+                Taxable Income: $${result.taxableIncome.toLocaleString()}<br>
+                Pre-Credit Tax: $${result.preCreditTax.toLocaleString()}<br>
+                Total Tax: $${result.totalTax.toLocaleString()}<br>
+                Take-Home: $${result.postTaxIncome.toLocaleString()}<br>
+                Effective Rate: ${result.grossEffectiveRate.toFixed(2)}%
+            `;
+        };
+
+        window.testDisplayManager = function() {
+            const amounts = [1234.56, 75000, 123456789, 0, -500];
+            const formatted = amounts.map(amount => 
+                `${amount} → ${window.displayManager.formatCurrency(amount)}`
+            ).join('<br>');
+            
+            document.getElementById('display-result').innerHTML = `
+                <strong>Currency Formatting Examples:</strong><br>
+                ${formatted}
+            `;
+        };
+
+        window.testCustomCalculator = function() {
+            const standardResult = window.taxCalculator.calculateTaxes({
+                income: 100000,
+                adjustments: 0,
+                deductions: 29200,
+                credits: 0,
+                filingStatus: 2
+            });
+
+            const customResult = window.customCalculator.calculateTaxes({
+                income: 100000,
+                adjustments: 0,
+                deductions: 29200,
+                credits: 0,
+                filingStatus: 2
+            });
+            
+            document.getElementById('custom-result').innerHTML = `
+                <strong>Comparison: Standard vs Custom Calculator</strong><br>
+                <strong>Standard (Progressive Brackets):</strong><br>
+                Total Tax: $${standardResult.totalTax.toLocaleString()}<br>
+                Effective Rate: ${standardResult.grossEffectiveRate.toFixed(2)}%<br>
+                <br>
+                <strong>Custom (Flat 20%):</strong><br>
+                Total Tax: $${customResult.totalTax.toLocaleString()}<br>
+                Effective Rate: ${customResult.grossEffectiveRate.toFixed(2)}%
+            `;
+        };
+
+        window.toggleTheme = function() {
+            window.themeManager.toggleTheme();
+            document.getElementById('theme-result').innerHTML = `
+                Theme switched to: <strong>${window.themeManager.getCurrentTheme()}</strong>
+            `;
+        };
+
+        window.getTheme = function() {
+            document.getElementById('theme-result').innerHTML = `
+                Current theme: <strong>${window.themeManager.getCurrentTheme()}</strong>
+            `;
+        };
+    </script>
+</body>
+</html>
