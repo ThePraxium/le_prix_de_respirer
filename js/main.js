@@ -31,8 +31,13 @@ export class TaxCalculatorApp {
         // Calculate comprehensive tax scenario with federal, state, and county taxes
         const calculation = this.taxCalculator.calculateAllTaxes(inputs);
         
+        // Calculate baseline scenario for federal taxes
+        const grossIncome = inputs.federalIncome || 0;
+        const standardDeduction = this.taxCalculator.getStandardDeduction(inputs.filingStatus);
+        const baselineCalculation = grossIncome > 0 ? this.taxCalculator.calculateBaseline(grossIncome, inputs.filingStatus) : null;
+        
         // Update all displays
-        this.displayManager.updateAll(calculation);
+        this.displayManager.updateAll(calculation, inputs, baselineCalculation, standardDeduction);
     }
 
     /**
