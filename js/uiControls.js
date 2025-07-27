@@ -69,12 +69,14 @@ export class UIControls {
      * @param {HTMLElement} input - Input element
      */
     setupInputSync(slider, input) {
+        // Update input when slider changes
         slider.addEventListener('input', () => {
             input.value = slider.value;
             this.updateCallback();
         });
 
-        input.addEventListener('change', () => {
+        // Update slider and trigger calculations when input changes
+        const updateFromInput = () => {
             let value = parseFloat(input.value) || 0;
             const max = parseFloat(slider.max);
             if (value > max) {
@@ -83,7 +85,11 @@ export class UIControls {
             }
             slider.value = value;
             this.updateCallback();
-        });
+        };
+
+        // Listen for both 'input' (real-time while typing) and 'change' (on blur) events
+        input.addEventListener('input', updateFromInput);
+        input.addEventListener('change', updateFromInput);
     }
 
     /**
