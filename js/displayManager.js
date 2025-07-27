@@ -1,6 +1,6 @@
 /**
  * Display Manager Module
- * Handles updating all display elements and visualizations
+ * Handles updating all display elements and visualizations for federal, state, and county taxes
  */
 
 export class DisplayManager {
@@ -14,57 +14,38 @@ export class DisplayManager {
      */
     initializeElements() {
         return {
-            // Main display elements
-            agiDisplay: document.getElementById('agi-display'),
-            taxableIncomeDisplayMain: document.getElementById('taxable-income-display-main'),
+            // Federal display elements
+            federalAgiDisplay: document.getElementById('federal-agi-display'),
+            federalTaxableIncomeDisplay: document.getElementById('federal-taxable-income-display'),
+            
+            // State display elements
+            stateAgiDisplay: document.getElementById('state-agi-display'),
+            stateTaxableIncomeDisplay: document.getElementById('state-taxable-income-display'),
 
             // Visualization bar elements
             barTakeHome: document.getElementById('bar-take-home'),
             barFederal: document.getElementById('bar-federal'),
+            barState: document.getElementById('bar-state'),
+            barCounty: document.getElementById('bar-county'),
 
-            // Custom calculation display elements
-            vcElements: {
-                gross1: document.getElementById('vc-gross-1'),
-                adjustments: document.getElementById('vc-adjustments'),
-                agi1: document.getElementById('vc-agi-1'),
-                agi2: document.getElementById('vc-agi-2'),
-                deductions: document.getElementById('vc-deductions'),
-                taxableIncome: document.getElementById('vc-taxable-income'),
-                taxableIncome2: document.getElementById('vc-taxable-income-2'),
-                marginalRateValue: document.getElementById('vc-marginal-rate-value'),
-                preCreditTax: document.getElementById('vc-pre-credit-tax'),
-                preCreditTax2: document.getElementById('vc-pre-credit-tax-2'),
-                credits: document.getElementById('vc-credits'),
-                totalTax1: document.getElementById('vc-total-tax-1'),
-                gross2: document.getElementById('vc-gross-2'),
-                totalTax2: document.getElementById('vc-total-tax-2'),
-                postTax: document.getElementById('vc-post-tax'),
-                totalTax3: document.getElementById('vc-total-tax-3'),
-                gross3: document.getElementById('vc-gross-3'),
-                grossEffectiveRate: document.getElementById('vc-gross-effective-rate')
-            },
-
-            // Baseline comparison display elements
-            bcElements: {
-                gross1: document.getElementById('bc-gross-1'),
-                adjustments: document.getElementById('bc-adjustments'),
-                agi1: document.getElementById('bc-agi-1'),
-                agi2: document.getElementById('bc-agi-2'),
-                deductions: document.getElementById('bc-deductions'),
-                taxableIncome: document.getElementById('bc-taxable-income'),
-                taxableIncome2: document.getElementById('bc-taxable-income-2'),
-                marginalRateValue: document.getElementById('bc-marginal-rate-value'),
-                preCreditTax: document.getElementById('bc-pre-credit-tax'),
-                preCreditTax2: document.getElementById('bc-pre-credit-tax-2'),
-                credits: document.getElementById('bc-credits'),
-                totalTax1: document.getElementById('bc-total-tax-1'),
-                gross2: document.getElementById('bc-gross-2'),
-                totalTax2: document.getElementById('bc-total-tax-2'),
-                postTax: document.getElementById('bc-post-tax'),
-                totalTax3: document.getElementById('bc-total-tax-3'),
-                gross3: document.getElementById('bc-gross-3'),
-                grossEffectiveRate: document.getElementById('bc-gross-effective-rate')
-            }
+            // Tax summary elements
+            federalAgiSummary: document.getElementById('federal-agi-summary'),
+            federalTaxableSummary: document.getElementById('federal-taxable-summary'),
+            federalTaxSummary: document.getElementById('federal-tax-summary'),
+            federalRateSummary: document.getElementById('federal-rate-summary'),
+            
+            stateAgiSummary: document.getElementById('state-agi-summary'),
+            stateTaxableSummary: document.getElementById('state-taxable-summary'),
+            stateTaxSummary: document.getElementById('state-tax-summary'),
+            countyTaxSummary: document.getElementById('county-tax-summary'),
+            stateRateSummary: document.getElementById('state-rate-summary'),
+            
+            totalFederalDisplay: document.getElementById('total-federal-display'),
+            totalStateDisplay: document.getElementById('total-state-display'),
+            totalCountyDisplay: document.getElementById('total-county-display'),
+            totalAllTaxesDisplay: document.getElementById('total-all-taxes-display'),
+            totalTakeHomeDisplay: document.getElementById('total-take-home-display'),
+            totalEffectiveRateDisplay: document.getElementById('total-effective-rate-display')
         };
     }
 
@@ -83,117 +64,132 @@ export class DisplayManager {
     }
 
     /**
-     * Update main display elements
-     * @param {Object} calculation - Tax calculation results
+     * Format number as percentage
+     * @param {number} value - Number to format
+     * @returns {string} Formatted percentage string
      */
-    updateMainDisplays(calculation) {
-        this.elements.agiDisplay.textContent = this.formatCurrency(calculation.agi);
-        this.elements.taxableIncomeDisplayMain.textContent = this.formatCurrency(calculation.taxableIncome);
+    formatPercentage(value) {
+        return value.toFixed(2) + '%';
     }
 
     /**
-     * Update visualization bar
-     * @param {Object} params - Parameters for visualization
+     * Update federal and state AGI displays
+     * @param {Object} calculation - Tax calculation results
      */
-    updateVisualizationBar(params) {
-        const { income, totalTax, postTaxIncome } = params;
+    updateAgiDisplays(calculation) {
+        if (this.elements.federalAgiDisplay) {
+            this.elements.federalAgiDisplay.textContent = this.formatCurrency(calculation.federal.agi);
+        }
+        if (this.elements.federalTaxableIncomeDisplay) {
+            this.elements.federalTaxableIncomeDisplay.textContent = this.formatCurrency(calculation.federal.taxableIncome);
+        }
+        if (this.elements.stateAgiDisplay) {
+            this.elements.stateAgiDisplay.textContent = this.formatCurrency(calculation.state.agi);
+        }
+        if (this.elements.stateTaxableIncomeDisplay) {
+            this.elements.stateTaxableIncomeDisplay.textContent = this.formatCurrency(calculation.state.taxableIncome);
+        }
+    }
 
-        if (income > 0) {
-            const takeHomePercent = Math.max(0, (postTaxIncome / income) * 100);
-            const fedPercent = (totalTax / income) * 100;
+    /**
+     * Update visualization bar with federal, state, and county taxes
+     * @param {Object} calculation - Tax calculation results
+     */
+    updateVisualizationBar(calculation) {
+        const { federal, state, county, totals } = calculation;
+        const totalIncome = totals.primaryIncome;
+
+        if (totalIncome > 0) {
+            const takeHomePercent = Math.max(0, (totals.postTaxIncome / totalIncome) * 100);
+            const federalPercent = (federal.totalTax / totalIncome) * 100;
+            const statePercent = (state.totalTax / totalIncome) * 100;
+            const countyPercent = (county.totalTax / totalIncome) * 100;
 
             this.elements.barTakeHome.style.width = `${takeHomePercent}%`;
-            this.elements.barFederal.style.width = `${fedPercent}%`;
+            this.elements.barFederal.style.width = `${federalPercent}%`;
+            this.elements.barState.style.width = `${statePercent}%`;
+            this.elements.barCounty.style.width = `${countyPercent}%`;
             
+            // Only show text if the segment is wide enough
             this.elements.barTakeHome.textContent = takeHomePercent > 15 ? 'Take-Home' : '';
-            this.elements.barFederal.textContent = fedPercent > 15 ? 'Federal Tax' : '';
+            this.elements.barFederal.textContent = federalPercent > 8 ? 'Federal' : '';
+            this.elements.barState.textContent = statePercent > 8 ? 'State' : '';
+            this.elements.barCounty.textContent = countyPercent > 5 ? 'County' : '';
         } else {
             this.elements.barTakeHome.style.width = '100%';
             this.elements.barFederal.style.width = '0%';
+            this.elements.barState.style.width = '0%';
+            this.elements.barCounty.style.width = '0%';
             this.elements.barTakeHome.textContent = 'Income';
         }
     }
 
     /**
-     * Update custom calculation section
+     * Update tax summary sections
      * @param {Object} calculation - Tax calculation results
-     * @param {Object} inputs - Input values
      */
-    updateCustomCalculation(calculation, inputs) {
-        const { income, adjustments, deductions, credits } = inputs;
-        const { agi, taxableIncome, preCreditTax, totalTax, postTaxIncome, taxableEffectiveRate, grossEffectiveRate } = calculation;
+    updateTaxSummary(calculation) {
+        const { federal, state, county, totals } = calculation;
 
-        // Populate the custom visual calculation flow
-        this.elements.vcElements.gross1.textContent = this.formatCurrency(income);
-        this.elements.vcElements.adjustments.textContent = this.formatCurrency(adjustments);
-        this.elements.vcElements.agi1.textContent = this.formatCurrency(agi);
-        this.elements.vcElements.agi2.textContent = this.formatCurrency(agi);
-        this.elements.vcElements.deductions.textContent = this.formatCurrency(deductions);
-        this.elements.vcElements.taxableIncome.textContent = this.formatCurrency(taxableIncome);
-        this.elements.vcElements.taxableIncome2.textContent = this.formatCurrency(taxableIncome);
-        
-        const taxableRateHtml = taxableIncome > 0 ? `${taxableEffectiveRate.toFixed(2)}%` : 'N/A';
-        this.elements.vcElements.marginalRateValue.innerHTML = taxableRateHtml;
+        // Federal summary
+        if (this.elements.federalAgiSummary) {
+            this.elements.federalAgiSummary.textContent = this.formatCurrency(federal.agi);
+        }
+        if (this.elements.federalTaxableSummary) {
+            this.elements.federalTaxableSummary.textContent = this.formatCurrency(federal.taxableIncome);
+        }
+        if (this.elements.federalTaxSummary) {
+            this.elements.federalTaxSummary.textContent = this.formatCurrency(federal.totalTax);
+        }
+        if (this.elements.federalRateSummary) {
+            this.elements.federalRateSummary.textContent = this.formatPercentage(federal.effectiveRate);
+        }
 
-        this.elements.vcElements.preCreditTax.textContent = this.formatCurrency(preCreditTax);
-        this.elements.vcElements.preCreditTax2.textContent = this.formatCurrency(preCreditTax);
-        this.elements.vcElements.credits.textContent = this.formatCurrency(credits);
-        this.elements.vcElements.totalTax1.textContent = this.formatCurrency(totalTax);
-        this.elements.vcElements.gross2.textContent = this.formatCurrency(income);
-        this.elements.vcElements.totalTax2.textContent = this.formatCurrency(totalTax);
-        this.elements.vcElements.postTax.textContent = this.formatCurrency(postTaxIncome);
-        
-        this.elements.vcElements.totalTax3.textContent = this.formatCurrency(totalTax);
-        this.elements.vcElements.gross3.textContent = this.formatCurrency(income);
-        this.elements.vcElements.grossEffectiveRate.textContent = grossEffectiveRate.toFixed(2) + '%';
-    }
+        // State summary
+        if (this.elements.stateAgiSummary) {
+            this.elements.stateAgiSummary.textContent = this.formatCurrency(state.agi);
+        }
+        if (this.elements.stateTaxableSummary) {
+            this.elements.stateTaxableSummary.textContent = this.formatCurrency(state.taxableIncome);
+        }
+        if (this.elements.stateTaxSummary) {
+            this.elements.stateTaxSummary.textContent = this.formatCurrency(state.totalTax);
+        }
+        if (this.elements.countyTaxSummary) {
+            this.elements.countyTaxSummary.textContent = this.formatCurrency(county.totalTax);
+        }
+        if (this.elements.stateRateSummary) {
+            this.elements.stateRateSummary.textContent = this.formatPercentage(state.effectiveRate + county.effectiveRate);
+        }
 
-    /**
-     * Update baseline comparison section
-     * @param {Object} calculation - Baseline calculation results
-     * @param {number} income - Gross income
-     * @param {number} standardDeduction - Standard deduction amount
-     */
-    updateBaselineComparison(calculation, income, standardDeduction) {
-        const { agi, taxableIncome, preCreditTax, totalTax, postTaxIncome, taxableEffectiveRate, grossEffectiveRate } = calculation;
-
-        this.elements.bcElements.gross1.textContent = this.formatCurrency(income);
-        this.elements.bcElements.adjustments.textContent = this.formatCurrency(0);
-        this.elements.bcElements.agi1.textContent = this.formatCurrency(agi);
-        this.elements.bcElements.agi2.textContent = this.formatCurrency(agi);
-        this.elements.bcElements.deductions.textContent = this.formatCurrency(standardDeduction);
-        this.elements.bcElements.taxableIncome.textContent = this.formatCurrency(taxableIncome);
-        this.elements.bcElements.taxableIncome2.textContent = this.formatCurrency(taxableIncome);
-
-        this.elements.bcElements.marginalRateValue.innerHTML = taxableIncome > 0 ? `${taxableEffectiveRate.toFixed(2)}%` : 'N/A';
-
-        this.elements.bcElements.preCreditTax.textContent = this.formatCurrency(preCreditTax);
-        this.elements.bcElements.preCreditTax2.textContent = this.formatCurrency(preCreditTax);
-        this.elements.bcElements.credits.textContent = this.formatCurrency(0);
-        this.elements.bcElements.totalTax1.textContent = this.formatCurrency(totalTax);
-        this.elements.bcElements.gross2.textContent = this.formatCurrency(income);
-        this.elements.bcElements.totalTax2.textContent = this.formatCurrency(totalTax);
-        this.elements.bcElements.postTax.textContent = this.formatCurrency(postTaxIncome);
-
-        this.elements.bcElements.totalTax3.textContent = this.formatCurrency(totalTax);
-        this.elements.bcElements.gross3.textContent = this.formatCurrency(income);
-        this.elements.bcElements.grossEffectiveRate.textContent = grossEffectiveRate.toFixed(2) + '%';
+        // Total summary
+        if (this.elements.totalFederalDisplay) {
+            this.elements.totalFederalDisplay.textContent = this.formatCurrency(federal.totalTax);
+        }
+        if (this.elements.totalStateDisplay) {
+            this.elements.totalStateDisplay.textContent = this.formatCurrency(state.totalTax);
+        }
+        if (this.elements.totalCountyDisplay) {
+            this.elements.totalCountyDisplay.textContent = this.formatCurrency(county.totalTax);
+        }
+        if (this.elements.totalAllTaxesDisplay) {
+            this.elements.totalAllTaxesDisplay.textContent = this.formatCurrency(totals.totalTax);
+        }
+        if (this.elements.totalTakeHomeDisplay) {
+            this.elements.totalTakeHomeDisplay.textContent = this.formatCurrency(totals.postTaxIncome);
+        }
+        if (this.elements.totalEffectiveRateDisplay) {
+            this.elements.totalEffectiveRateDisplay.textContent = this.formatPercentage(totals.effectiveRate);
+        }
     }
 
     /**
      * Update all displays with current data
-     * @param {Object} data - Complete data object with calculations and inputs
+     * @param {Object} calculation - Complete tax calculation results
      */
-    updateAll(data) {
-        const { customCalculation, baselineCalculation, inputs, standardDeduction } = data;
-        
-        this.updateMainDisplays(customCalculation);
-        this.updateVisualizationBar({
-            income: inputs.income,
-            totalTax: customCalculation.totalTax,
-            postTaxIncome: customCalculation.postTaxIncome
-        });
-        this.updateCustomCalculation(customCalculation, inputs);
-        this.updateBaselineComparison(baselineCalculation, inputs.income, standardDeduction);
+    updateAll(calculation) {
+        this.updateAgiDisplays(calculation);
+        this.updateVisualizationBar(calculation);
+        this.updateTaxSummary(calculation);
     }
 }
