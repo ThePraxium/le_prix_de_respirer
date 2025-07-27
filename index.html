@@ -293,6 +293,250 @@
                 </div>
             </div>
 
+            <!-- VISUAL CALCULATIONS SECTION -->
+            <div class="mt-12 border-t dark:border-slate-600 pt-8">
+                <!-- Your Custom Calculation -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4 text-center">Your Custom Calculation</h2>
+                    
+                    <!-- Federal Custom Calculation Flow -->
+                    <div class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700 mb-6">
+                        <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-6 text-center">Federal Tax Calculation</h3>
+                        
+                        <!-- Step 1: Gross Income - Adjustments = AGI -->
+                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
+                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-slate-600 dark:text-slate-400">Gross Income</div>
+                                <div id="visual-gross-income" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
+                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-slate-600 dark:text-slate-400">Adjustments</div>
+                                <div id="visual-adjustments" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
+                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-amber-700 dark:text-amber-300">AGI</div>
+                                <div id="visual-agi" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: AGI - Deductions = Taxable Income -->
+                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
+                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-amber-700 dark:text-amber-300">AGI</div>
+                                <div id="visual-agi-2" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
+                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-slate-600 dark:text-slate-400">Deductions</div>
+                                <div id="visual-deductions" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
+                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-amber-700 dark:text-amber-300">Taxable Income</div>
+                                <div id="visual-taxable-income" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Taxable Income × Effective Tax Rate = Tax Before Credits -->
+                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
+                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-amber-700 dark:text-amber-300">Taxable Income</div>
+                                <div id="visual-taxable-income-2" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">×</div>
+                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-blue-700 dark:text-blue-300">Effective Tax Rate</div>
+                                <div id="visual-tax-rate" class="font-semibold text-blue-900 dark:text-blue-100">0.00%</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
+                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-blue-700 dark:text-blue-300">Tax Before Credits</div>
+                                <div id="visual-pre-credit-tax" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Tax Before Credits - Credits = Total Federal Tax -->
+                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
+                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-blue-700 dark:text-blue-300">Tax Before Credits</div>
+                                <div id="visual-pre-credit-tax-2" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
+                            <div class="bg-green-200 dark:bg-green-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-green-700 dark:text-green-300">Credits</div>
+                                <div id="visual-credits" class="font-semibold text-green-900 dark:text-green-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
+                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-blue-700 dark:text-blue-300">Total Federal Tax</div>
+                                <div id="visual-total-tax" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Gross Income - Total Federal Tax = Final Take-Home Pay -->
+                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
+                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-slate-600 dark:text-slate-400">Gross Income</div>
+                                <div id="visual-gross-income-2" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
+                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-blue-700 dark:text-blue-300">Total Federal Tax</div>
+                                <div id="visual-total-tax-2" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
+                            <div class="bg-emerald-200 dark:bg-emerald-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-emerald-700 dark:text-emerald-300">Final Take-Home Pay</div>
+                                <div id="visual-take-home" class="font-semibold text-emerald-900 dark:text-emerald-100">$0</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 6: Total Federal Tax ÷ Gross Income = Effective Rate (on Gross) -->
+                        <div class="border-t border-slate-300 dark:border-slate-600 pt-4">
+                            <div class="flex items-center justify-center flex-wrap gap-2">
+                                <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
+                                    <div class="text-xs text-blue-700 dark:text-blue-300">Total Federal Tax</div>
+                                    <div id="visual-total-tax-3" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                                </div>
+                                <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">÷</div>
+                                <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
+                                    <div class="text-xs text-slate-600 dark:text-slate-400">Gross Income</div>
+                                    <div id="visual-gross-income-3" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
+                                </div>
+                                <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
+                                <div class="bg-emerald-200 dark:bg-emerald-800 p-3 rounded-lg text-center min-w-[120px]">
+                                    <div class="text-xs text-emerald-700 dark:text-emerald-300">Effective Rate (on Gross)</div>
+                                    <div id="visual-effective-rate" class="font-semibold text-emerald-900 dark:text-emerald-100">0.00%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Baseline Comparison -->
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4 text-center">Baseline Comparison</h2>
+                    <p class="text-slate-600 dark:text-slate-400 text-center mb-6">Your gross income with $0 adjustments, $0 credits, and the standard deduction.</p>
+                    
+                    <!-- Federal Baseline Calculation Flow -->
+                    <div class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-6 text-center">Federal Tax Calculation</h3>
+                        
+                        <!-- Step 1: Gross Income - Adjustments = AGI -->
+                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
+                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-slate-600 dark:text-slate-400">Gross Income</div>
+                                <div id="baseline-gross-income" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
+                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-slate-600 dark:text-slate-400">Adjustments</div>
+                                <div id="baseline-adjustments" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
+                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-amber-700 dark:text-amber-300">AGI</div>
+                                <div id="baseline-agi" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: AGI - Deductions = Taxable Income -->
+                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
+                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-amber-700 dark:text-amber-300">AGI</div>
+                                <div id="baseline-agi-2" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
+                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-slate-600 dark:text-slate-400">Deductions</div>
+                                <div id="baseline-deductions" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
+                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-amber-700 dark:text-amber-300">Taxable Income</div>
+                                <div id="baseline-taxable-income" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Taxable Income × Effective Tax Rate = Tax Before Credits -->
+                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
+                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-amber-700 dark:text-amber-300">Taxable Income</div>
+                                <div id="baseline-taxable-income-2" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">×</div>
+                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-blue-700 dark:text-blue-300">Effective Tax Rate</div>
+                                <div id="baseline-tax-rate" class="font-semibold text-blue-900 dark:text-blue-100">0.00%</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
+                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-blue-700 dark:text-blue-300">Tax Before Credits</div>
+                                <div id="baseline-pre-credit-tax" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Tax Before Credits - Credits = Total Federal Tax -->
+                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
+                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-blue-700 dark:text-blue-300">Tax Before Credits</div>
+                                <div id="baseline-pre-credit-tax-2" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
+                            <div class="bg-green-200 dark:bg-green-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-green-700 dark:text-green-300">Credits</div>
+                                <div id="baseline-credits" class="font-semibold text-green-900 dark:text-green-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
+                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-blue-700 dark:text-blue-300">Total Federal Tax</div>
+                                <div id="baseline-total-tax" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Gross Income - Total Federal Tax = Final Take-Home Pay -->
+                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
+                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-slate-600 dark:text-slate-400">Gross Income</div>
+                                <div id="baseline-gross-income-2" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
+                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-blue-700 dark:text-blue-300">Total Federal Tax</div>
+                                <div id="baseline-total-tax-2" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                            </div>
+                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
+                            <div class="bg-emerald-200 dark:bg-emerald-800 p-3 rounded-lg text-center min-w-[120px]">
+                                <div class="text-xs text-emerald-700 dark:text-emerald-300">Final Take-Home Pay</div>
+                                <div id="baseline-take-home" class="font-semibold text-emerald-900 dark:text-emerald-100">$0</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 6: Total Federal Tax ÷ Gross Income = Effective Rate (on Gross) -->
+                        <div class="border-t border-slate-300 dark:border-slate-600 pt-4">
+                            <div class="flex items-center justify-center flex-wrap gap-2">
+                                <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
+                                    <div class="text-xs text-blue-700 dark:text-blue-300">Total Federal Tax</div>
+                                    <div id="baseline-total-tax-3" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                                </div>
+                                <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">÷</div>
+                                <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
+                                    <div class="text-xs text-slate-600 dark:text-slate-400">Gross Income</div>
+                                    <div id="baseline-gross-income-3" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
+                                </div>
+                                <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
+                                <div class="bg-emerald-200 dark:bg-emerald-800 p-3 rounded-lg text-center min-w-[120px]">
+                                    <div class="text-xs text-emerald-700 dark:text-emerald-300">Effective Rate (on Gross)</div>
+                                    <div id="baseline-effective-rate" class="font-semibold text-emerald-900 dark:text-emerald-100">0.00%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
