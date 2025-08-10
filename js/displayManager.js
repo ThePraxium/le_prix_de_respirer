@@ -202,11 +202,19 @@ export class DisplayManager {
             this.elements.barState.style.width = `${statePercent}%`;
             this.elements.barCounty.style.width = `${countyPercent}%`;
             
-            // Only show text if the segment is wide enough
-            this.elements.barTakeHome.textContent = takeHomePercent > 15 ? 'Take-Home' : '';
-            this.elements.barFederal.textContent = federalPercent > 8 ? 'Federal' : '';
-            this.elements.barState.textContent = statePercent > 8 ? 'State' : '';
-            this.elements.barCounty.textContent = countyPercent > 5 ? 'County' : '';
+            // Show percentages and labels - make them more visible
+            this.elements.barTakeHome.textContent = takeHomePercent > 10 
+                ? `${takeHomePercent.toFixed(1)}%` 
+                : takeHomePercent > 5 ? `${takeHomePercent.toFixed(1)}%` : '';
+            this.elements.barFederal.textContent = federalPercent > 5 
+                ? `${federalPercent.toFixed(1)}%` 
+                : federalPercent > 2 ? `${federalPercent.toFixed(1)}%` : '';
+            this.elements.barState.textContent = statePercent > 3 
+                ? `${statePercent.toFixed(1)}%` 
+                : statePercent > 1 ? `${statePercent.toFixed(1)}%` : '';
+            this.elements.barCounty.textContent = countyPercent > 2 
+                ? `${countyPercent.toFixed(1)}%` 
+                : countyPercent > 1 ? `${countyPercent.toFixed(1)}%` : '';
         } else {
             this.elements.barTakeHome.style.width = '100%';
             this.elements.barFederal.style.width = '0%';
