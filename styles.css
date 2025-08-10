@@ -148,7 +148,8 @@ body {
 }
 
 .federal-section {
-    border-color: #bfdbfe; /* blue-200 */
+    border-color: #3b82f6; /* blue-500 - darker blue for better visibility */
+    border-width: 3px; /* increased thickness */
 }
 
 .state-section {
@@ -450,6 +451,12 @@ body {
     margin-bottom: 1.5rem;
 }
 
+/* Add blue border for federal calculation containers */
+.calculation-container {
+    border: 3px solid #3b82f6; /* blue-500 */
+    background-color: #eff6ff; /* blue-50 */
+}
+
 .calculation-title {
     font-size: 1.125rem;
     font-weight: 600;
@@ -469,9 +476,13 @@ body {
 
 .calc-step-mobile {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: nowrap;
     gap: 0.75rem;
     align-items: center;
+    justify-content: center;
+    overflow-x: auto;
+    min-height: 80px;
 }
 
 .calc-box {
@@ -479,9 +490,9 @@ body {
     padding: 1rem;
     border-radius: 0.5rem;
     text-align: center;
-    min-width: 120px;
-    flex: 1;
-    max-width: 200px;
+    min-width: 100px;
+    flex: 0 0 auto;
+    max-width: 150px;
 }
 
 .calc-box-label {
@@ -501,6 +512,8 @@ body {
     font-weight: 700;
     color: #64748b;
     margin: 0.5rem 0;
+    flex: 0 0 auto;
+    white-space: nowrap;
 }
 
 .calc-result {
@@ -571,6 +584,26 @@ body {
     .number-input {
         width: 100%;
     }
+    
+    /* Keep math equations on one line even on small screens */
+    .calc-step-mobile {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 0.5rem;
+    }
+    
+    .calc-box {
+        min-width: 80px;
+        max-width: 120px;
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .calc-operator {
+        margin: 0 0.25rem;
+        font-size: 1.25rem;
+    }
 }
 
 /* Medium mobile devices (375px and up) */
@@ -623,13 +656,19 @@ body {
     }
     
     .calc-step-mobile {
-        flex-direction: row;
-        flex-wrap: wrap;
         justify-content: center;
+        padding: 1rem;
+    }
+    
+    .calc-box {
+        min-width: 120px;
+        max-width: 150px;
+        padding: 1rem;
     }
     
     .calc-operator {
         margin: 0 0.5rem;
+        font-size: 1.5rem;
     }
     
     .total-main {
