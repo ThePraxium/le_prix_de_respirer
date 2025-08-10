@@ -256,4 +256,150 @@ export class TaxCalculator {
             }
         };
     }
+
+    /**
+     * Calculate detailed tax bracket breakdown for visual display
+     * @param {number} income - Taxable income
+     * @param {Array} brackets - Tax bracket array
+     * @param {string} jurisdiction - Name of the tax jurisdiction
+     * @returns {Object} Detailed breakdown with bracket-by-bracket information
+     */
+    calculateBracketBreakdown(income, brackets, jurisdiction) {
+        if (income <= 0) {
+            return {
+                jurisdiction,
+                totalTax: 0,
+                totalIncome: 0,
+                brackets: []
+            };
+        }
+        
+        let totalTax = 0;
+        let previousLimit = 0;
+        let remainingIncome = income;
+        const bracketDetails = [];
+
+        for (let i = 0; i < brackets.length; i++) {
+            const [bracketLimit, rate] = brackets[i];
+            
+            if (remainingIncome <= 0) {
+                // No remaining income for this bracket
+                bracketDetails.push({
+                    lowerLimit: previousLimit,
+                    upperLimit: bracketLimit === Infinity ? 'No Limit' : bracketLimit,
+                    rate: rate * 100,
+                    incomeRemaining: 0,
+                    taxIncomeInBracket: 0,
+                    taxAmount: 0
+                });
+                continue;
+            }
+            
+            const taxableInThisBracket = Math.min(remainingIncome, bracketLimit - previousLimit);
+            const taxForThisBracket = taxableInThisBracket * rate;
+            
+            bracketDetails.push({
+                lowerLimit: previousLimit,
+                upperLimit: bracketLimit === Infinity ? 'No Limit' : bracketLimit,
+                rate: rate * 100,
+                incomeRemaining: remainingIncome,
+                taxIncomeInBracket: taxableInThisBracket,
+                taxAmount: taxForThisBracket
+            });
+            
+            totalTax += taxForThisBracket;
+            remainingIncome -= taxableInThisBracket;
+            
+            if (income <= bracketLimit) {
+                // Fill remaining brackets with zeros
+                for (let j = i + 1; j < brackets.length; j++) {
+                    const [nextLimit, nextRate] = brackets[j];
+                    bracketDetails.push({
+                        lowerLimit: j === 0 ? 0 : brackets[j-1][0],
+                        upperLimit: nextLimit === Infinity ? 'No Limit' : nextLimit,
+                        rate: nextRate * 100,
+                        incomeRemaining: 0,
+                        taxIncomeInBracket: 0,
+                        taxAmount: 0
+                    });
+                }
+                break;
+            }
+            
+            previousLimit = bracketLimit;
+        }
+        
+        return {
+            jurisdiction,
+            totalTax: Math.round(totalTax * 100) / 100,
+            totalIncome: income,
+            brackets: bracketDetails
+        };
+    }
+
+    /**
+     * Get complete tax breakdown for all jurisdictions
+     * @param {Object} inputs - Tax calculation inputs
+     * @returns {Object} Complete breakdown for federal, state, and county taxes
+     */
+    getCompleteTaxBreakdown(inputs) {
+        const {
+            federalIncome,
+            federalAdjustments,
+            federalDeductions,
+            federalCredits,
+            stateIncome,
+            stateAdjustments,
+            stateDeductions,
+            stateCredits,
+            filingStatus
+        } = inputs;
+        
+        // Calculate taxable incomes
+        const federalAGI = Math.max(0, federalIncome - federalAdjustments);
+        const federalTaxableIncome = Math.max(0, federalAGI - federalDeductions);
+        
+        const stateAGI = Math.max(0, stateIncome - stateAdjustments);
+        const stateTaxableIncome = Math.max(0, stateAGI - stateDeductions);
+        
+        // Get brackets
+        const federalBrackets = this.getFederalBrackets(filingStatus);
+        const marylandBrackets = this.getMarylandBrackets(filingStatus);
+        const anneArundelBrackets = this.getAnneArundelBrackets(filingStatus);
+        
+        // Calculate breakdowns
+        const federalBreakdown = this.calculateBracketBreakdown(
+            federalTaxableIncome, 
+            federalBrackets, 
+            'Federal Tax Bracket Breakdown'
+        );
+        
+        const marylandBreakdown = this.calculateBracketBreakdown(
+            stateTaxableIncome, 
+            marylandBrackets, 
+            'Maryland Tax Bracket Breakdown'
+        );
+        
+        const anneArundelBreakdown = this.calculateBracketBreakdown(
+            stateTaxableIncome, 
+            anneArundelBrackets, 
+            'Anne Arundel Tax Bracket Breakdown'
+        );
+        
+        return {
+            federal: federalBreakdown,
+            maryland: marylandBreakdown,
+            anneArundel: anneArundelBreakdown,
+            summary: {
+                federalTaxableIncome,
+                stateTaxableIncome,
+                totalFederalTax: Math.max(0, federalBreakdown.totalTax - federalCredits),
+                totalStateTax: Math.max(0, marylandBreakdown.totalTax - stateCredits),
+                totalCountyTax: anneArundelBreakdown.totalTax,
+                combinedTax: Math.max(0, federalBreakdown.totalTax - federalCredits) + 
+                            Math.max(0, marylandBreakdown.totalTax - stateCredits) + 
+                            anneArundelBreakdown.totalTax
+            }
+        };
+    }
 }

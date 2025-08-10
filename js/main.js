@@ -19,6 +19,13 @@ export class TaxCalculatorApp {
         // Initialize UI controls with update callback
         this.uiControls = new UIControls(() => this.updateCalculations());
         
+        // Listen for tab changes to update bracket breakdown
+        document.addEventListener('tabChanged', (e) => {
+            if (e.detail.activeTab === 'bracket-breakdown') {
+                this.updateBracketBreakdown();
+            }
+        });
+        
         // Perform initial calculations
         this.updateCalculations();
     }
@@ -40,6 +47,19 @@ export class TaxCalculatorApp {
         
         // Update all displays
         this.displayManager.updateAll(calculation, inputs, baselineCalculation, standardDeduction);
+        
+        // Update bracket breakdown if that tab is active
+        if (this.tabManager.getActiveTab() === 'bracket-breakdown') {
+            this.updateBracketBreakdown();
+        }
+    }
+
+    /**
+     * Update bracket breakdown tables
+     */
+    updateBracketBreakdown() {
+        const inputs = this.uiControls.getValues();
+        this.displayManager.updateBracketBreakdown(inputs, this.taxCalculator);
     }
 
     /**

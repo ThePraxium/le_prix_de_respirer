@@ -724,4 +724,89 @@ export class DisplayManager {
             this.clearMarylandBaselineVisualCalculations();
         }
     }
+
+    /**
+     * Update bracket breakdown tables with tax calculation details
+     * @param {Object} taxInputs - Tax calculation inputs
+     * @param {Object} taxCalculator - Tax calculator instance
+     */
+    updateBracketBreakdown(taxInputs, taxCalculator) {
+        const breakdown = taxCalculator.getCompleteTaxBreakdown(taxInputs);
+        
+        // Update federal breakdown table
+        this.updateBracketTable(
+            'federal-bracket-table', 
+            breakdown.federal,
+            'federal-total-income',
+            'federal-total-tax'
+        );
+        
+        // Update Maryland breakdown table
+        this.updateBracketTable(
+            'maryland-bracket-table', 
+            breakdown.maryland,
+            'maryland-total-income',
+            'maryland-total-tax'
+        );
+        
+        // Update Anne Arundel breakdown table
+        this.updateBracketTable(
+            'anne-arundel-bracket-table', 
+            breakdown.anneArundel,
+            'anne-arundel-total-income',
+            'anne-arundel-total-tax'
+        );
+    }
+
+    /**
+     * Update a specific bracket breakdown table
+     * @param {string} tableId - ID of the table to update
+     * @param {Object} breakdown - Bracket breakdown data
+     * @param {string} totalIncomeId - ID of total income element
+     * @param {string} totalTaxId - ID of total tax element
+     */
+    updateBracketTable(tableId, breakdown, totalIncomeId, totalTaxId) {
+        const table = document.getElementById(tableId);
+        if (!table) return;
+
+        const tbody = table.querySelector('tbody');
+        if (!tbody) return;
+
+        // Clear existing rows
+        tbody.innerHTML = '';
+
+        // Add bracket rows
+        breakdown.brackets.forEach((bracket) => {
+            const row = document.createElement('tr');
+            
+            // Determine if this bracket has any tax (for highlighting)
+            const hasActivity = bracket.taxIncomeInBracket > 0;
+            if (hasActivity) {
+                row.classList.add('active-bracket');
+            }
+
+            row.innerHTML = `
+                <td>${this.formatCurrency(bracket.lowerLimit)}</td>
+                <td>${bracket.upperLimit === 'No Limit' ? 'No Limit' : this.formatCurrency(bracket.upperLimit)}</td>
+                <td>${bracket.rate.toFixed(2)}%</td>
+                <td>${this.formatCurrency(bracket.incomeRemaining)}</td>
+                <td>${this.formatCurrency(bracket.taxIncomeInBracket)}</td>
+                <td>${this.formatCurrency(bracket.taxAmount)}</td>
+            `;
+            
+            tbody.appendChild(row);
+        });
+
+        // Update totals
+        const totalIncomeElement = document.getElementById(totalIncomeId);
+        const totalTaxElement = document.getElementById(totalTaxId);
+        
+        if (totalIncomeElement) {
+            totalIncomeElement.textContent = this.formatCurrency(breakdown.totalIncome);
+        }
+        
+        if (totalTaxElement) {
+            totalTaxElement.textContent = this.formatCurrency(breakdown.totalTax);
+        }
+    }
 }
