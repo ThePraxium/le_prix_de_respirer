@@ -529,7 +529,7 @@ body {
 
 /* Unique colors for each calculation element type */
 .calc-gross-income {
-    background-color: #E8ECF9 !important; /* Gross Income - Light */
+    background-color: #E6ECFE !important; /* Gross Income - Light */
     border: 2px solid #3B82F6; /* Blue border */
 }
 
@@ -542,7 +542,7 @@ body {
 }
 
 .calc-adjustments {
-    background-color: #E8F7F4 !important; /* Adjustments - Light */
+    background-color: #E6FAF3 !important; /* Adjustments - Light */
     border: 2px solid #3B82F6; /* Blue border */
 }
 
@@ -555,7 +555,7 @@ body {
 }
 
 .calc-deductions {
-    background-color: #DFF3F0 !important; /* Deductions - Light */
+    background-color: #E4F7FB !important; /* Deductions - Light */
     border: 2px solid #3B82F6; /* Blue border */
 }
 
@@ -568,7 +568,7 @@ body {
 }
 
 .calc-tax-rate {
-    background-color: #CDD8F0 !important; /* Effective Tax Rate - Light */
+    background-color: #E8EEF4 !important; /* Effective Tax Rate - Light */
     border: 2px solid #3B82F6; /* Blue border */
 }
 
@@ -581,7 +581,7 @@ body {
 }
 
 .calc-pre-credit-tax {
-    background-color: #FCDCDC !important; /* Tax Before Credits - Light */
+    background-color: #FFE3E0 !important; /* Tax Before Credits - Light */
     border: 2px solid #3B82F6; /* Blue border */
 }
 
@@ -594,7 +594,7 @@ body {
 }
 
 .calc-credits {
-    background-color: #D5EEEC !important; /* Credits - Light */
+    background-color: #E9FDEB !important; /* Credits - Light */
     border: 2px solid #3B82F6; /* Blue border */
 }
 
@@ -607,7 +607,7 @@ body {
 }
 
 .calc-total-tax {
-    background-color: #F9CFCF !important; /* Total Federal Tax - Light */
+    background-color: #FFD6D1 !important; /* Total Federal Tax - Light */
     border: 2px solid #3B82F6; /* Blue border */
 }
 
@@ -620,7 +620,7 @@ body {
 }
 
 .calc-take-home {
-    background-color: #CCEBE8 !important; /* Final Take-Home Pay - Light */
+    background-color: #EEF8E6 !important; /* Final Take-Home Pay - Light */
     border: 2px solid #3B82F6; /* Blue border */
 }
 
@@ -633,7 +633,7 @@ body {
 }
 
 .calc-effective-rate {
-    background-color: #CDD8F0 !important; /* Effective Tax Rate - Light */
+    background-color: #E8EEF4 !important; /* Effective Rate - Light */
     border: 2px solid #3B82F6; /* Blue border */
 }
 
@@ -647,7 +647,7 @@ body {
 
 /* Maryland-specific classes */
 .calc-maryland-state-tax-rate {
-    background-color: #FFF9E0 !important; /* Maryland State Tax Rate - Light */
+    background-color: #FFF9D6 !important; /* Maryland State Tax Rate - Light */
     border: 2px solid #FACC15; /* Yellow border */
 }
 
@@ -660,7 +660,7 @@ body {
 }
 
 .calc-maryland-state-tax-before-credits {
-    background-color: #FFF3C9 !important; /* Maryland State Tax Before Credits - Light */
+    background-color: #FFF1C9 !important; /* Maryland State Tax Before Credits - Light */
     border: 2px solid #FACC15; /* Yellow border */
 }
 
@@ -673,7 +673,7 @@ body {
 }
 
 .calc-maryland-total-state-tax {
-    background-color: #FEEEB6 !important; /* Total Maryland State Tax - Light */
+    background-color: #FFE4B8 !important; /* Total Maryland State Tax - Light */
     border: 2px solid #FACC15; /* Yellow border */
 }
 
@@ -686,7 +686,7 @@ body {
 }
 
 .calc-anne-arundel-county-tax {
-    background-color: #FBE0F4 !important; /* Anne Arundel County Tax - Light */
+    background-color: #F3D6FF !important; /* Anne Arundel County Tax - Light */
     border: 2px solid #A855F7; /* Purple border */
 }
 
@@ -699,7 +699,7 @@ body {
 }
 
 .calc-anne-arundel-county-tax-rate {
-    background-color: #F1D9F7 !important; /* Anne Arundel County Tax Rate - Light */
+    background-color: #E7E0FF !important; /* Anne Arundel County Tax Rate - Light */
     border: 2px solid #A855F7; /* Purple border */
 }
 
@@ -712,7 +712,7 @@ body {
 }
 
 .calc-combined-maryland-tax {
-    background-color: #F8D3EE !important; /* Combined Maryland Tax - Light */
+    background-color: #FFD6F1 !important; /* Combined Maryland Tax - Light */
     border: 2px solid #A855F7; /* Purple border */
 }
 
@@ -726,7 +726,7 @@ body {
 
 /* Concept classes for AGI and Taxable Income */
 .concept-agi {
-    background-color: #DFE5F6 !important; /* AGI - Light */
+    background-color: #EDE7FF !important; /* AGI - Light */
     border: 2px solid #3B82F6; /* Blue border */
 }
 
@@ -739,7 +739,7 @@ body {
 }
 
 .concept-taxable-income {
-    background-color: #D6DFF3 !important; /* Taxable Income - Light */
+    background-color: #E6F2FF !important; /* Taxable Income - Light */
     border: 2px solid #3B82F6; /* Blue border */
 }
 
@@ -957,7 +957,7 @@ body {
 
 /* Dark mode overrides for new colored calculation boxes */
 .dark .calc-gross-income {
-    background-color: #1A2233 !important; /* Gross Income - Dark */
+    background-color: #1B2344 !important; /* Gross Income - Dark */
     border-color: #60A5FA !important; /* Blue border for dark mode */
 }
 
@@ -970,7 +970,7 @@ body {
 }
 
 .dark .calc-adjustments {
-    background-color: #0E3939 !important; /* Adjustments - Dark */
+    background-color: #0F3831 !important; /* Adjustments - Dark */
     border-color: #60A5FA !important; /* Blue border for dark mode */
 }
 
@@ -983,7 +983,7 @@ body {
 }
 
 .dark .calc-deductions {
-    background-color: #0D3232 !important; /* Deductions - Dark */
+    background-color: #0E3440 !important; /* Deductions - Dark */
     border-color: #60A5FA !important; /* Blue border for dark mode */
 }
 
@@ -996,7 +996,7 @@ body {
 }
 
 .dark .calc-tax-rate {
-    background-color: #131927 !important; /* Effective Tax Rate - Dark */
+    background-color: #1C2730 !important; /* Effective Tax Rate - Dark */
     border-color: #60A5FA !important; /* Blue border for dark mode */
 }
 
@@ -1009,7 +1009,7 @@ body {
 }
 
 .dark .calc-pre-credit-tax {
-    background-color: #3A1E1E !important; /* Tax Before Credits - Dark */
+    background-color: #3A1E1B !important; /* Tax Before Credits - Dark */
     border-color: #60A5FA !important; /* Blue border for dark mode */
 }
 
@@ -1022,7 +1022,7 @@ body {
 }
 
 .dark .calc-credits {
-    background-color: #0B2D2D !important; /* Credits - Dark */
+    background-color: #12331A !important; /* Credits - Dark */
     border-color: #60A5FA !important; /* Blue border for dark mode */
 }
 
@@ -1035,7 +1035,7 @@ body {
 }
 
 .dark .calc-total-tax {
-    background-color: #351A1A !important; /* Total Federal Tax - Dark */
+    background-color: #321816 !important; /* Total Federal Tax - Dark */
     border-color: #60A5FA !important; /* Blue border for dark mode */
 }
 
@@ -1048,7 +1048,7 @@ body {
 }
 
 .dark .calc-take-home {
-    background-color: #092727 !important; /* Final Take-Home Pay - Dark */
+    background-color: #1B2F14 !important; /* Final Take-Home Pay - Dark */
     border-color: #60A5FA !important; /* Blue border for dark mode */
 }
 
@@ -1061,7 +1061,7 @@ body {
 }
 
 .dark .calc-effective-rate {
-    background-color: #131927 !important; /* Effective Tax Rate - Dark */
+    background-color: #1C2730 !important; /* Effective Rate - Dark */
     border-color: #60A5FA !important; /* Blue border for dark mode */
 }
 
@@ -1075,7 +1075,7 @@ body {
 
 /* Dark mode styles for Maryland-specific classes */
 .dark .calc-maryland-state-tax-rate {
-    background-color: #474025 !important; /* Maryland State Tax Rate - Dark */
+    background-color: #3A3517 !important; /* Maryland State Tax Rate - Dark */
     border-color: #FDE047 !important; /* Yellow border for dark mode */
 }
 
@@ -1088,7 +1088,7 @@ body {
 }
 
 .dark .calc-maryland-state-tax-before-credits {
-    background-color: #4A3B18 !important; /* Maryland State Tax Before Credits - Dark */
+    background-color: #3F3313 !important; /* Maryland State Tax Before Credits - Dark */
     border-color: #FDE047 !important; /* Yellow border for dark mode */
 }
 
@@ -1101,7 +1101,7 @@ body {
 }
 
 .dark .calc-maryland-total-state-tax {
-    background-color: #443514 !important; /* Total Maryland State Tax - Dark */
+    background-color: #3E2A10 !important; /* Total Maryland State Tax - Dark */
     border-color: #FDE047 !important; /* Yellow border for dark mode */
 }
 
@@ -1114,7 +1114,7 @@ body {
 }
 
 .dark .calc-anne-arundel-county-tax {
-    background-color: #512A4F !important; /* Anne Arundel County Tax - Dark */
+    background-color: #3F2163 !important; /* Anne Arundel County Tax - Dark */
     border-color: #C084FC !important; /* Purple border for dark mode */
 }
 
@@ -1127,7 +1127,7 @@ body {
 }
 
 .dark .calc-anne-arundel-county-tax-rate {
-    background-color: #432051 !important; /* Anne Arundel County Tax Rate - Dark */
+    background-color: #2E2457 !important; /* Anne Arundel County Tax Rate - Dark */
     border-color: #C084FC !important; /* Purple border for dark mode */
 }
 
@@ -1140,7 +1140,7 @@ body {
 }
 
 .dark .calc-combined-maryland-tax {
-    background-color: #4C254A !important; /* Combined Maryland Tax - Dark */
+    background-color: #4A1845 !important; /* Combined Maryland Tax - Dark */
     border-color: #C084FC !important; /* Purple border for dark mode */
 }
 
@@ -1241,12 +1241,12 @@ body {
 
 /* Dark mode versions of concept boxes */
 .dark .concept-agi {
-    background-color: #181F30 !important; /* AGI - Dark */
+    background-color: #2A1F55 !important; /* AGI - Dark */
     border-color: #60A5FA !important; /* Blue border for dark mode */
 }
 
 .dark .concept-taxable-income {
-    background-color: #151C2B !important; /* Taxable Income - Dark */
+    background-color: #14253A !important; /* Taxable Income - Dark */
     border-color: #60A5FA !important; /* Blue border for dark mode */
 }
 
