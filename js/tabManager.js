@@ -24,6 +24,7 @@ export class TabManager {
         const calculatorTab = document.getElementById('calculator-tab');
         const customCalcTab = document.getElementById('custom-calc-tab');
         const marylandCalcTab = document.getElementById('maryland-calc-tab');
+        const bracketBreakdownTab = document.getElementById('bracket-breakdown-tab');
 
         if (calculatorTab) {
             calculatorTab.addEventListener('click', () => this.setActiveTab('calculator'));
@@ -35,6 +36,10 @@ export class TabManager {
 
         if (marylandCalcTab) {
             marylandCalcTab.addEventListener('click', () => this.setActiveTab('maryland-calc'));
+        }
+
+        if (bracketBreakdownTab) {
+            bracketBreakdownTab.addEventListener('click', () => this.setActiveTab('bracket-breakdown'));
         }
 
         // Handle keyboard navigation
@@ -52,6 +57,10 @@ export class TabManager {
                     case '3':
                         e.preventDefault();
                         this.setActiveTab('maryland-calc');
+                        break;
+                    case '4':
+                        e.preventDefault();
+                        this.setActiveTab('bracket-breakdown');
                         break;
                 }
             }

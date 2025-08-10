@@ -42,6 +42,9 @@
             <button id="maryland-calc-tab" class="tab-button" aria-selected="false">
                 Maryland Tax Graphs
             </button>
+            <button id="bracket-breakdown-tab" class="tab-button" aria-selected="false">
+                Tax Bracket Breakdown
+            </button>
         </nav>
 
         <main class="main-content">
@@ -868,6 +871,105 @@
                     </div>
                 </div>
             </div>
+            </div>
+
+            <!-- TAB CONTENT: TAX BRACKET BREAKDOWN VIEW -->
+            <div id="bracket-breakdown-content" class="tab-content">
+                <div class="calculation-section">
+                    <div style="margin-bottom: 3rem;">
+                        <h2 class="section-heading" style="text-align: center;">Tax Bracket Breakdown</h2>
+                        <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                            See exactly how your income is taxed across different brackets
+                        </p>
+                    </div>
+
+                    <!-- Federal Tax Bracket Table -->
+                    <div class="bracket-table-container" style="margin-bottom: 3rem;">
+                        <h3 style="color: var(--federal-color); margin-bottom: 1rem;">Federal Tax Bracket Breakdown</h3>
+                        <div class="table-wrapper">
+                            <table id="federal-bracket-table" class="bracket-table">
+                                <thead>
+                                    <tr>
+                                        <th>Lower Limit</th>
+                                        <th>Upper Limit</th>
+                                        <th>Rate</th>
+                                        <th>Income Remaining</th>
+                                        <th>Tax Income in Bracket</th>
+                                        <th>Tax Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Federal bracket rows will be populated here -->
+                                </tbody>
+                                <tfoot>
+                                    <tr class="total-row">
+                                        <td colspan="4"><strong>TOTALS</strong></td>
+                                        <td id="federal-total-income"><strong>$0</strong></td>
+                                        <td id="federal-total-tax"><strong>$0</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Maryland Tax Bracket Table -->
+                    <div class="bracket-table-container" style="margin-bottom: 3rem;">
+                        <h3 style="color: var(--state-color); margin-bottom: 1rem;">Maryland Tax Bracket Breakdown</h3>
+                        <div class="table-wrapper">
+                            <table id="maryland-bracket-table" class="bracket-table">
+                                <thead>
+                                    <tr>
+                                        <th>Lower Limit</th>
+                                        <th>Upper Limit</th>
+                                        <th>Rate</th>
+                                        <th>Income Remaining</th>
+                                        <th>Tax Income in Bracket</th>
+                                        <th>Tax Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Maryland bracket rows will be populated here -->
+                                </tbody>
+                                <tfoot>
+                                    <tr class="total-row">
+                                        <td colspan="4"><strong>TOTALS</strong></td>
+                                        <td id="maryland-total-income"><strong>$0</strong></td>
+                                        <td id="maryland-total-tax"><strong>$0</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Anne Arundel County Tax Bracket Table -->
+                    <div class="bracket-table-container" style="margin-bottom: 3rem;">
+                        <h3 style="color: var(--county-color); margin-bottom: 1rem;">Anne Arundel Tax Bracket Breakdown</h3>
+                        <div class="table-wrapper">
+                            <table id="anne-arundel-bracket-table" class="bracket-table">
+                                <thead>
+                                    <tr>
+                                        <th>Lower Limit</th>
+                                        <th>Upper Limit</th>
+                                        <th>Rate</th>
+                                        <th>Income Remaining</th>
+                                        <th>Tax Income in Bracket</th>
+                                        <th>Tax Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Anne Arundel bracket rows will be populated here -->
+                                </tbody>
+                                <tfoot>
+                                    <tr class="total-row">
+                                        <td colspan="4"><strong>TOTALS</strong></td>
+                                        <td id="anne-arundel-total-income"><strong>$0</strong></td>
+                                        <td id="anne-arundel-total-tax"><strong>$0</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </main>

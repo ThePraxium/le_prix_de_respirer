@@ -1550,3 +1550,196 @@ body {
         font-size: 0.875rem;
     }
 }
+
+/* Tax Bracket Breakdown Table Styles */
+.bracket-table-container {
+    margin-bottom: 3rem;
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.bracket-table-container h3 {
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin: 0;
+    padding: 1.5rem 1.5rem 0.5rem;
+    color: inherit;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border: none;
+    background: transparent;
+}
+
+.bracket-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.bracket-table th,
+.bracket-table td {
+    padding: 0.875rem 1rem;
+    text-align: right;
+    border-bottom: 1px solid #e5e7eb; /* gray-200 */
+    vertical-align: middle;
+}
+
+.bracket-table th {
+    background-color: #f9fafb; /* gray-50 */
+    font-weight: 600;
+    color: #374151; /* gray-700 */
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.bracket-table th:first-child,
+.bracket-table td:first-child {
+    text-align: left;
+    padding-left: 1.5rem;
+}
+
+.bracket-table th:last-child,
+.bracket-table td:last-child {
+    padding-right: 1.5rem;
+}
+
+.bracket-table tbody tr {
+    transition: background-color 0.15s ease-in-out;
+}
+
+.bracket-table tbody tr:hover {
+    background-color: #f9fafb; /* gray-50 */
+}
+
+.bracket-table .total-row {
+    background-color: #f3f4f6 !important; /* gray-100 */
+    border-top: 2px solid #d1d5db; /* gray-300 */
+    font-weight: 600;
+    position: sticky;
+    bottom: 0;
+}
+
+.bracket-table .total-row td {
+    color: #111827; /* gray-900 */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* Active bracket highlighting */
+.bracket-table tbody tr.active-bracket {
+    background-color: #fef3c7 !important; /* amber-100 */
+    font-weight: 500;
+}
+
+.bracket-table tbody tr.active-bracket:hover {
+    background-color: #fde68a !important; /* amber-200 */
+}
+
+/* Dark mode styles for bracket tables */
+.dark .bracket-table-container {
+    background: #1e293b; /* slate-800 */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.dark .bracket-table th {
+    background-color: #334155; /* slate-700 */
+    color: #e2e8f0; /* slate-200 */
+    border-bottom-color: #475569; /* slate-600 */
+}
+
+.dark .bracket-table td {
+    color: #cbd5e1; /* slate-300 */
+    border-bottom-color: #475569; /* slate-600 */
+}
+
+.dark .bracket-table tbody tr:hover {
+    background-color: #334155; /* slate-700 */
+}
+
+.dark .bracket-table .total-row {
+    background-color: #475569 !important; /* slate-600 */
+    border-top-color: #64748b; /* slate-500 */
+}
+
+.dark .bracket-table .total-row td {
+    color: #f1f5f9; /* slate-100 */
+}
+
+.dark .bracket-table tbody tr.active-bracket {
+    background-color: #451a03 !important; /* amber-900 */
+}
+
+.dark .bracket-table tbody tr.active-bracket:hover {
+    background-color: #78350f !important; /* amber-800 */
+}
+
+/* Mobile responsive adjustments for bracket tables */
+@media (max-width: 768px) {
+    .bracket-table-container {
+        margin-bottom: 2rem;
+        border-radius: 0.5rem;
+    }
+    
+    .bracket-table-container h3 {
+        font-size: 1.125rem;
+        padding: 1rem 1rem 0.5rem;
+    }
+    
+    .bracket-table {
+        font-size: 0.75rem;
+    }
+    
+    .bracket-table th,
+    .bracket-table td {
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .bracket-table th:first-child,
+    .bracket-table td:first-child {
+        padding-left: 1rem;
+    }
+    
+    .bracket-table th:last-child,
+    .bracket-table td:last-child {
+        padding-right: 1rem;
+    }
+    
+    .bracket-table th {
+        font-size: 0.7rem;
+    }
+}
+
+/* Color coding for different tax types */
+.bracket-table-container:has(#federal-bracket-table) h3 {
+    color: #2563eb; /* blue-600 */
+}
+
+.bracket-table-container:has(#maryland-bracket-table) h3 {
+    color: #16a34a; /* green-600 */
+}
+
+.bracket-table-container:has(#anne-arundel-bracket-table) h3 {
+    color: #9333ea; /* purple-600 */
+}
+
+.dark .bracket-table-container:has(#federal-bracket-table) h3 {
+    color: #60a5fa; /* blue-400 */
+}
+
+.dark .bracket-table-container:has(#maryland-bracket-table) h3 {
+    color: #4ade80; /* green-400 */
+}
+
+.dark .bracket-table-container:has(#anne-arundel-bracket-table) h3 {
+    color: #c084fc; /* purple-400 */
+}
