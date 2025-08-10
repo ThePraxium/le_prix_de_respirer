@@ -538,24 +538,198 @@ body {
     color: #e2e8f0; /* slate-200 */
 }
 
+/* Main content areas */
 .dark .main-content {
     background-color: #1e293b; /* slate-800 */
+    border-color: #374151; /* slate-700 */
 }
 
+/* Header elements */
+.dark .main-title {
+    color: #f1f5f9; /* slate-100 */
+}
+
+.dark .subtitle {
+    color: #94a3b8; /* slate-400 */
+}
+
+.dark .section-heading {
+    color: #f1f5f9; /* slate-100 */
+}
+
+/* Theme toggle button */
 .dark .theme-toggle {
     background-color: #374151; /* slate-700 */
+    color: #e2e8f0; /* slate-200 */
 }
 
 .dark .theme-toggle:hover {
     background-color: #4b5563; /* slate-600 */
 }
 
+/* Form controls and inputs */
+.dark .control-label {
+    color: #cbd5e1; /* slate-300 */
+}
+
+.dark .filing-status-option {
+    background-color: #374151; /* slate-700 */
+    color: #cbd5e1; /* slate-300 */
+    border-color: #4b5563; /* slate-600 */
+}
+
+.dark .filing-status input[type="radio"]:checked + .filing-status-option {
+    background-color: #4f46e5; /* indigo-600 */
+    color: white;
+    border-color: #4f46e5;
+}
+
+.dark .number-input {
+    background-color: #374151; /* slate-700 */
+    border-color: #4b5563; /* slate-600 */
+    color: #e2e8f0; /* slate-200 */
+}
+
+.dark .number-input:focus {
+    border-color: #6366f1; /* indigo-500 */
+    box-shadow: 0 0 0 1px #6366f1;
+}
+
+.dark .slider {
+    background-color: #4b5563; /* slate-600 */
+}
+
+.dark .slider::-webkit-slider-thumb {
+    background: #6366f1; /* indigo-500 */
+}
+
+.dark .slider::-moz-range-thumb {
+    background: #6366f1; /* indigo-500 */
+}
+
+/* Tax sections */
+.dark .tax-section {
+    background-color: #1e293b; /* slate-800 */
+    border-color: #374151; /* slate-700 */
+}
+
+.dark .federal-section {
+    border-color: #3b82f6; /* blue-500 */
+    background-color: #1e293b; /* slate-800 */
+}
+
+.dark .state-section {
+    border-color: #22c55e; /* green-500 */
+    background-color: #1e293b; /* slate-800 */
+}
+
+.dark .section-title {
+    color: #f1f5f9; /* slate-100 */
+}
+
+.dark .federal-title {
+    color: #60a5fa; /* blue-400 */
+}
+
+.dark .state-title {
+    color: #4ade80; /* green-400 */
+}
+
+/* Display boxes */
+.dark .display-box {
+    background-color: #451a03; /* amber-900 */
+    border-color: #92400e; /* amber-800 */
+}
+
+.dark .display-label {
+    color: #fbbf24; /* amber-400 */
+}
+
+.dark .display-value {
+    color: #fde047; /* yellow-300 */
+}
+
+/* Summary cards */
+.dark .summary-card {
+    background-color: #1e293b; /* slate-800 */
+    border-color: #374151; /* slate-700 */
+}
+
+.dark .federal-summary {
+    background-color: #1e293b; /* slate-800 */
+    border-color: #3b82f6; /* blue-500 */
+}
+
+.dark .state-summary {
+    background-color: #1e293b; /* slate-800 */
+    border-color: #22c55e; /* green-500 */
+}
+
+.dark .summary-label {
+    color: #94a3b8; /* slate-400 */
+}
+
+.dark .summary-value {
+    color: #e2e8f0; /* slate-200 */
+}
+
+/* Total summary */
+.dark .total-summary {
+    background-color: #1e293b; /* slate-800 */
+    border-color: #374151; /* slate-700 */
+}
+
+.dark .total-label {
+    color: #94a3b8; /* slate-400 */
+}
+
+.dark .total-value {
+    color: #e2e8f0; /* slate-200 */
+}
+
+.dark .total-main-value {
+    color: #f1f5f9; /* slate-100 */
+}
+
+/* Visualization section */
+.dark .tax-bar-container {
+    background-color: #374151; /* slate-700 */
+}
+
+.dark .legend {
+    color: #cbd5e1; /* slate-300 */
+}
+
+/* Calculation flow sections */
 .dark .calc-box {
     background-color: #374151; /* slate-700 */
+    color: #e2e8f0; /* slate-200 */
+    border-color: #4b5563; /* slate-600 */
+}
+
+.dark .calc-box-label {
+    color: #94a3b8; /* slate-400 */
 }
 
 .dark .calc-box-value {
     color: #e2e8f0; /* slate-200 */
+}
+
+.dark .calc-operator {
+    color: #94a3b8; /* slate-400 */
+}
+
+.dark .calc-result {
+    background-color: #451a03; /* amber-900 */
+    border-color: #92400e; /* amber-800 */
+}
+
+.dark .calc-result .calc-box-label {
+    color: #fbbf24; /* amber-400 */
+}
+
+.dark .calc-result .calc-box-value {
+    color: #fde047; /* yellow-300 */
 }
 
 /* Dark mode overrides for calculation boxes with inline styles */
@@ -596,6 +770,27 @@ body {
 .dark .calc-step {
     background-color: #374151 !important; /* slate-700 for dark mode */
     border-color: #4b5563 !important; /* slate-600 border for dark mode */
+}
+
+/* Dark mode for specific colored text elements */
+.dark p[style*="color: #2563eb"] {
+    color: #60a5fa !important; /* blue-400 for dark mode */
+}
+
+.dark p[style*="color: #16a34a"] {
+    color: #4ade80 !important; /* green-400 for dark mode */
+}
+
+.dark p[style*="color: #9333ea"] {
+    color: #a855f7 !important; /* purple-500 for dark mode */
+}
+
+.dark p[style*="color: #059669"] {
+    color: #10b981 !important; /* emerald-500 for dark mode */
+}
+
+.dark span[style*="color: #7c3aed"] {
+    color: #a855f7 !important; /* purple-500 for dark mode */
 }
 
 /* Hidden by default */
