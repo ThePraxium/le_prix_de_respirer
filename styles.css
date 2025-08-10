@@ -278,6 +278,59 @@ body {
     padding-top: 2rem;
 }
 
+/* Percentage display area */
+.percentage-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8fafc; /* slate-50 */
+    border: 1px solid #e2e8f0; /* slate-200 */
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.percentage-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 100px;
+}
+
+.percentage-label {
+    font-size: 0.75rem;
+    color: #64748b; /* slate-600 */
+    margin-bottom: 0.25rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+.percentage-value {
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Color coding for percentage values */
+.percentage-item:nth-child(1) .percentage-value {
+    color: #059669; /* emerald-600 - Take-Home */
+}
+
+.percentage-item:nth-child(2) .percentage-value {
+    color: #2563eb; /* blue-600 - Federal Tax */
+}
+
+.percentage-item:nth-child(3) .percentage-value {
+    color: #ca8a04; /* yellow-600 - State Tax */
+}
+
+.percentage-item:nth-child(4) .percentage-value {
+    color: #9333ea; /* purple-600 - County Tax */
+}
+
 .section-heading {
     font-size: 1.25rem;
     font-weight: 700;
@@ -923,6 +976,33 @@ body {
     border-color: #4b5563; /* slate-600 */
 }
 
+/* Dark mode for percentage display */
+.dark .percentage-display {
+    background-color: #1e293b; /* slate-800 */
+    border-color: #475569; /* slate-600 */
+}
+
+.dark .percentage-label {
+    color: #cbd5e1; /* slate-300 */
+}
+
+/* Dark mode color coding for percentage values */
+.dark .percentage-item:nth-child(1) .percentage-value {
+    color: #10b981; /* emerald-500 - Take-Home */
+}
+
+.dark .percentage-item:nth-child(2) .percentage-value {
+    color: #60a5fa; /* blue-400 - Federal Tax */
+}
+
+.dark .percentage-item:nth-child(3) .percentage-value {
+    color: #eab308; /* yellow-500 - State Tax */
+}
+
+.dark .percentage-item:nth-child(4) .percentage-value {
+    color: #a855f7; /* purple-500 - County Tax */
+}
+
 .dark .legend {
     color: #f1f5f9; /* slate-100 - brighter text */
 }
@@ -1324,6 +1404,29 @@ body {
         width: 100%;
     }
     
+    /* Mobile percentage display */
+    .percentage-display {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .percentage-item {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .percentage-label {
+        margin-bottom: 0;
+        text-align: left;
+    }
+    
+    .percentage-value {
+        text-align: right;
+    }
+    
     /* Keep math equations on one line even on small screens */
     .calc-step-mobile {
         flex-direction: row;
@@ -1371,6 +1474,28 @@ body {
     
     .number-input {
         width: 140px;
+    }
+    
+    /* Reset percentage display to flex layout */
+    .percentage-display {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .percentage-item {
+        flex-direction: column;
+        flex: 1;
+        min-width: 80px;
+    }
+    
+    .percentage-label {
+        text-align: center;
+        margin-bottom: 0.25rem;
+    }
+    
+    .percentage-value {
+        text-align: center;
     }
 }
 

@@ -28,6 +28,12 @@ export class DisplayManager {
             barState: document.getElementById('bar-state'),
             barCounty: document.getElementById('bar-county'),
 
+            // Percentage display elements
+            percentageTakeHome: document.getElementById('percentage-take-home'),
+            percentageFederal: document.getElementById('percentage-federal'),
+            percentageState: document.getElementById('percentage-state'),
+            percentageCounty: document.getElementById('percentage-county'),
+
             // Tax summary elements
             federalAgiSummary: document.getElementById('federal-agi-summary'),
             federalTaxableSummary: document.getElementById('federal-taxable-summary'),
@@ -197,30 +203,55 @@ export class DisplayManager {
             const statePercent = (state.totalTax / totalIncome) * 100;
             const countyPercent = (county.totalTax / totalIncome) * 100;
 
+            // Update bar widths
             this.elements.barTakeHome.style.width = `${takeHomePercent}%`;
             this.elements.barFederal.style.width = `${federalPercent}%`;
             this.elements.barState.style.width = `${statePercent}%`;
             this.elements.barCounty.style.width = `${countyPercent}%`;
             
-            // Show percentages and labels - make them more visible
-            this.elements.barTakeHome.textContent = takeHomePercent > 10 
-                ? `${takeHomePercent.toFixed(1)}%` 
-                : takeHomePercent > 5 ? `${takeHomePercent.toFixed(1)}%` : '';
-            this.elements.barFederal.textContent = federalPercent > 5 
-                ? `${federalPercent.toFixed(1)}%` 
-                : federalPercent > 2 ? `${federalPercent.toFixed(1)}%` : '';
-            this.elements.barState.textContent = statePercent > 3 
-                ? `${statePercent.toFixed(1)}%` 
-                : statePercent > 1 ? `${statePercent.toFixed(1)}%` : '';
-            this.elements.barCounty.textContent = countyPercent > 2 
-                ? `${countyPercent.toFixed(1)}%` 
-                : countyPercent > 1 ? `${countyPercent.toFixed(1)}%` : '';
+            // Clear text content from bar segments (percentages now shown above)
+            this.elements.barTakeHome.textContent = '';
+            this.elements.barFederal.textContent = '';
+            this.elements.barState.textContent = '';
+            this.elements.barCounty.textContent = '';
+
+            // Update percentage display area
+            if (this.elements.percentageTakeHome) {
+                this.elements.percentageTakeHome.textContent = `${takeHomePercent.toFixed(1)}%`;
+            }
+            if (this.elements.percentageFederal) {
+                this.elements.percentageFederal.textContent = `${federalPercent.toFixed(1)}%`;
+            }
+            if (this.elements.percentageState) {
+                this.elements.percentageState.textContent = `${statePercent.toFixed(1)}%`;
+            }
+            if (this.elements.percentageCounty) {
+                this.elements.percentageCounty.textContent = `${countyPercent.toFixed(1)}%`;
+            }
         } else {
+            // No income case
             this.elements.barTakeHome.style.width = '100%';
             this.elements.barFederal.style.width = '0%';
             this.elements.barState.style.width = '0%';
             this.elements.barCounty.style.width = '0%';
-            this.elements.barTakeHome.textContent = 'Income';
+            this.elements.barTakeHome.textContent = '';
+            this.elements.barFederal.textContent = '';
+            this.elements.barState.textContent = '';
+            this.elements.barCounty.textContent = '';
+
+            // Reset percentage display
+            if (this.elements.percentageTakeHome) {
+                this.elements.percentageTakeHome.textContent = '100.0%';
+            }
+            if (this.elements.percentageFederal) {
+                this.elements.percentageFederal.textContent = '0.0%';
+            }
+            if (this.elements.percentageState) {
+                this.elements.percentageState.textContent = '0.0%';
+            }
+            if (this.elements.percentageCounty) {
+                this.elements.percentageCounty.textContent = '0.0%';
+            }
         }
     }
 
