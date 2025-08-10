@@ -254,12 +254,12 @@
                         <!-- Step 1: Gross Income - Adjustments = AGI -->
                         <div class="calc-step">
                             <div class="calc-step-mobile">
-                                <div class="calc-box">
+                                <div class="calc-box calc-gross-income">
                                     <div class="calc-box-label">Gross Income</div>
                                     <div id="visual-gross-income" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">−</div>
-                                <div class="calc-box">
+                                <div class="calc-box calc-adjustments">
                                     <div class="calc-box-label">Adjustments</div>
                                     <div id="visual-adjustments" class="calc-box-value">$0</div>
                                 </div>
@@ -279,7 +279,7 @@
                                     <div id="visual-agi-2" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">−</div>
-                                <div class="calc-box">
+                                <div class="calc-box calc-deductions">
                                     <div class="calc-box-label">Deductions</div>
                                     <div id="visual-deductions" class="calc-box-value">$0</div>
                                 </div>
@@ -294,19 +294,19 @@
                         <!-- Step 3: Taxable Income × Effective Tax Rate = Tax Before Credits -->
                         <div class="calc-step">
                             <div class="calc-step-mobile">
-                                <div class="calc-box concept-taxable-income">
+                                <div class="calc-box calc-result concept-taxable-income">
                                     <div class="calc-box-label">Taxable Income</div>
                                     <div id="visual-taxable-income-2" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">×</div>
-                                <div class="calc-box" style="background-color: #dbeafe;">
-                                    <div class="calc-box-label" style="color: #1e40af;">Effective Tax Rate</div>
-                                    <div id="visual-tax-rate" class="calc-box-value" style="color: #1e3a8a;">0.00%</div>
+                                <div class="calc-box calc-tax-rate">
+                                    <div class="calc-box-label">Effective Tax Rate</div>
+                                    <div id="visual-tax-rate" class="calc-box-value">0.00%</div>
                                 </div>
                                 <div class="calc-operator">=</div>
-                                <div class="calc-box" style="background-color: #dbeafe;">
-                                    <div class="calc-box-label" style="color: #1e40af;">Tax Before Credits</div>
-                                    <div id="visual-pre-credit-tax" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                <div class="calc-box calc-pre-credit-tax">
+                                    <div class="calc-box-label">Tax Before Credits</div>
+                                    <div id="visual-pre-credit-tax" class="calc-box-value">$0</div>
                                 </div>
                             </div>
                         </div>
@@ -314,19 +314,19 @@
                         <!-- Step 4: Tax Before Credits - Credits = Total Federal Tax -->
                         <div class="calc-step">
                             <div class="calc-step-mobile">
-                                <div class="calc-box" style="background-color: #dbeafe;">
-                                    <div class="calc-box-label" style="color: #1e40af;">Tax Before Credits</div>
-                                    <div id="visual-pre-credit-tax-2" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                <div class="calc-box calc-pre-credit-tax">
+                                    <div class="calc-box-label">Tax Before Credits</div>
+                                    <div id="visual-pre-credit-tax-2" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">−</div>
-                                <div class="calc-box concept-credits" style="background-color: #dcfce7;">
-                                    <div class="calc-box-label" style="color: #166534;">Credits</div>
-                                    <div id="visual-credits" class="calc-box-value" style="color: #14532d;">$0</div>
+                                <div class="calc-box calc-credits">
+                                    <div class="calc-box-label">Credits</div>
+                                    <div id="visual-credits" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">=</div>
-                                <div class="calc-box" style="background-color: #dbeafe;">
-                                    <div class="calc-box-label" style="color: #1e40af;">Total Federal Tax</div>
-                                    <div id="visual-total-tax" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                <div class="calc-box calc-total-tax">
+                                    <div class="calc-box-label">Total Federal Tax</div>
+                                    <div id="visual-total-tax" class="calc-box-value">$0</div>
                                 </div>
                             </div>
                         </div>
@@ -334,19 +334,19 @@
                         <!-- Step 5: Gross Income - Total Federal Tax = Final Take-Home Pay -->
                         <div class="calc-step">
                             <div class="calc-step-mobile">
-                                <div class="calc-box">
+                                <div class="calc-box calc-gross-income">
                                     <div class="calc-box-label">Gross Income</div>
                                     <div id="visual-gross-income-2" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">−</div>
-                                <div class="calc-box" style="background-color: #dbeafe;">
-                                    <div class="calc-box-label" style="color: #1e40af;">Total Federal Tax</div>
-                                    <div id="visual-total-tax-2" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                <div class="calc-box calc-total-tax">
+                                    <div class="calc-box-label">Total Federal Tax</div>
+                                    <div id="visual-total-tax-2" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">=</div>
-                                <div class="calc-box concept-take-home" style="background-color: #d1fae5;">
-                                    <div class="calc-box-label" style="color: #065f46;">Final Take-Home Pay</div>
-                                    <div id="visual-take-home" class="calc-box-value" style="color: #064e3b;">$0</div>
+                                <div class="calc-box calc-take-home">
+                                    <div class="calc-box-label">Final Take-Home Pay</div>
+                                    <div id="visual-take-home" class="calc-box-value">$0</div>
                                 </div>
                             </div>
                         </div>
@@ -354,19 +354,19 @@
                         <!-- Step 6: Total Federal Tax ÷ Gross Income = Effective Rate (on Gross) -->
                         <div class="calc-step" style="border-top: 1px solid #e2e8f0; margin-top: 1rem; padding-top: 1rem;">
                             <div class="calc-step-mobile">
-                                <div class="calc-box" style="background-color: #dbeafe;">
-                                    <div class="calc-box-label" style="color: #1e40af;">Total Federal Tax</div>
-                                    <div id="visual-total-tax-3" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                <div class="calc-box calc-total-tax">
+                                    <div class="calc-box-label">Total Federal Tax</div>
+                                    <div id="visual-total-tax-3" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">÷</div>
-                                <div class="calc-box">
+                                <div class="calc-box calc-gross-income">
                                     <div class="calc-box-label">Gross Income</div>
                                     <div id="visual-gross-income-3" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">=</div>
-                                <div class="calc-box" style="background-color: #d1fae5;">
-                                    <div class="calc-box-label" style="color: #065f46;">Effective Rate (on Gross)</div>
-                                    <div id="visual-effective-rate" class="calc-box-value" style="color: #064e3b;">0.00%</div>
+                                <div class="calc-box calc-effective-rate">
+                                    <div class="calc-box-label">Effective Rate (on Gross)</div>
+                                    <div id="visual-effective-rate" class="calc-box-value">0.00%</div>
                                 </div>
                             </div>
                         </div>
@@ -385,12 +385,12 @@
                         <!-- Step 1: Gross Income - Adjustments = AGI -->
                         <div class="calc-step">
                             <div class="calc-step-mobile">
-                                <div class="calc-box">
+                                <div class="calc-box calc-gross-income">
                                     <div class="calc-box-label">Gross Income</div>
                                     <div id="baseline-gross-income" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">−</div>
-                                <div class="calc-box">
+                                <div class="calc-box calc-adjustments">
                                     <div class="calc-box-label">Adjustments</div>
                                     <div id="baseline-adjustments" class="calc-box-value">$0</div>
                                 </div>
@@ -410,7 +410,7 @@
                                     <div id="baseline-agi-2" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">−</div>
-                                <div class="calc-box">
+                                <div class="calc-box calc-deductions">
                                     <div class="calc-box-label">Deductions</div>
                                     <div id="baseline-deductions" class="calc-box-value">$0</div>
                                 </div>
@@ -425,19 +425,19 @@
                         <!-- Step 3: Taxable Income × Effective Tax Rate = Tax Before Credits -->
                         <div class="calc-step">
                             <div class="calc-step-mobile">
-                                <div class="calc-box concept-taxable-income">
+                                <div class="calc-box calc-result concept-taxable-income">
                                     <div class="calc-box-label">Taxable Income</div>
                                     <div id="baseline-taxable-income-2" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">×</div>
-                                <div class="calc-box" style="background-color: #dbeafe;">
-                                    <div class="calc-box-label" style="color: #1e40af;">Effective Tax Rate</div>
-                                    <div id="baseline-tax-rate" class="calc-box-value" style="color: #1e3a8a;">0.00%</div>
+                                <div class="calc-box calc-tax-rate">
+                                    <div class="calc-box-label">Effective Tax Rate</div>
+                                    <div id="baseline-tax-rate" class="calc-box-value">0.00%</div>
                                 </div>
                                 <div class="calc-operator">=</div>
-                                <div class="calc-box" style="background-color: #dbeafe;">
-                                    <div class="calc-box-label" style="color: #1e40af;">Tax Before Credits</div>
-                                    <div id="baseline-pre-credit-tax" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                <div class="calc-box calc-pre-credit-tax">
+                                    <div class="calc-box-label">Tax Before Credits</div>
+                                    <div id="baseline-pre-credit-tax" class="calc-box-value">$0</div>
                                 </div>
                             </div>
                         </div>
@@ -445,19 +445,19 @@
                         <!-- Step 4: Tax Before Credits - Credits = Total Federal Tax -->
                         <div class="calc-step">
                             <div class="calc-step-mobile">
-                                <div class="calc-box" style="background-color: #dbeafe;">
-                                    <div class="calc-box-label" style="color: #1e40af;">Tax Before Credits</div>
-                                    <div id="baseline-pre-credit-tax-2" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                <div class="calc-box calc-pre-credit-tax">
+                                    <div class="calc-box-label">Tax Before Credits</div>
+                                    <div id="baseline-pre-credit-tax-2" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">−</div>
-                                <div class="calc-box concept-credits" style="background-color: #dcfce7;">
-                                    <div class="calc-box-label" style="color: #166534;">Credits</div>
-                                    <div id="baseline-credits" class="calc-box-value" style="color: #14532d;">$0</div>
+                                <div class="calc-box calc-credits">
+                                    <div class="calc-box-label">Credits</div>
+                                    <div id="baseline-credits" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">=</div>
-                                <div class="calc-box" style="background-color: #dbeafe;">
-                                    <div class="calc-box-label" style="color: #1e40af;">Total Federal Tax</div>
-                                    <div id="baseline-total-tax" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                <div class="calc-box calc-total-tax">
+                                    <div class="calc-box-label">Total Federal Tax</div>
+                                    <div id="baseline-total-tax" class="calc-box-value">$0</div>
                                 </div>
                             </div>
                         </div>
@@ -465,19 +465,19 @@
                         <!-- Step 5: Gross Income - Total Federal Tax = Final Take-Home Pay -->
                         <div class="calc-step">
                             <div class="calc-step-mobile">
-                                <div class="calc-box">
+                                <div class="calc-box calc-gross-income">
                                     <div class="calc-box-label">Gross Income</div>
                                     <div id="baseline-gross-income-2" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">−</div>
-                                <div class="calc-box" style="background-color: #dbeafe;">
-                                    <div class="calc-box-label" style="color: #1e40af;">Total Federal Tax</div>
-                                    <div id="baseline-total-tax-2" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                <div class="calc-box calc-total-tax">
+                                    <div class="calc-box-label">Total Federal Tax</div>
+                                    <div id="baseline-total-tax-2" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">=</div>
-                                <div class="calc-box concept-take-home" style="background-color: #d1fae5;">
-                                    <div class="calc-box-label" style="color: #065f46;">Final Take-Home Pay</div>
-                                    <div id="baseline-take-home" class="calc-box-value" style="color: #064e3b;">$0</div>
+                                <div class="calc-box calc-take-home">
+                                    <div class="calc-box-label">Final Take-Home Pay</div>
+                                    <div id="baseline-take-home" class="calc-box-value">$0</div>
                                 </div>
                             </div>
                         </div>
@@ -485,19 +485,19 @@
                         <!-- Step 6: Total Federal Tax ÷ Gross Income = Effective Rate (on Gross) -->
                         <div class="calc-step" style="border-top: 1px solid #e2e8f0; margin-top: 1rem; padding-top: 1rem;">
                             <div class="calc-step-mobile">
-                                <div class="calc-box" style="background-color: #dbeafe;">
-                                    <div class="calc-box-label" style="color: #1e40af;">Total Federal Tax</div>
-                                    <div id="baseline-total-tax-3" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                <div class="calc-box calc-total-tax">
+                                    <div class="calc-box-label">Total Federal Tax</div>
+                                    <div id="baseline-total-tax-3" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">÷</div>
-                                <div class="calc-box">
+                                <div class="calc-box calc-gross-income">
                                     <div class="calc-box-label">Gross Income</div>
                                     <div id="baseline-gross-income-3" class="calc-box-value">$0</div>
                                 </div>
                                 <div class="calc-operator">=</div>
-                                <div class="calc-box" style="background-color: #d1fae5;">
-                                    <div class="calc-box-label" style="color: #065f46;">Effective Rate (on Gross)</div>
-                                    <div id="baseline-effective-rate" class="calc-box-value" style="color: #064e3b;">0.00%</div>
+                                <div class="calc-box calc-effective-rate">
+                                    <div class="calc-box-label">Effective Rate (on Gross)</div>
+                                    <div id="baseline-effective-rate" class="calc-box-value">0.00%</div>
                                 </div>
                             </div>
                         </div>
