@@ -535,7 +535,7 @@ body {
 
 .dark body {
     background-color: #0f172a; /* slate-900 */
-    color: #e2e8f0; /* slate-200 */
+    color: #f1f5f9; /* slate-100 - brighter text */
 }
 
 /* Main content areas */
@@ -569,12 +569,12 @@ body {
 
 /* Form controls and inputs */
 .dark .control-label {
-    color: #cbd5e1; /* slate-300 */
+    color: #f1f5f9; /* slate-100 - brighter text */
 }
 
 .dark .filing-status-option {
     background-color: #374151; /* slate-700 */
-    color: #cbd5e1; /* slate-300 */
+    color: #f1f5f9; /* slate-100 - brighter text */
     border-color: #4b5563; /* slate-600 */
 }
 
@@ -587,7 +587,7 @@ body {
 .dark .number-input {
     background-color: #374151; /* slate-700 */
     border-color: #4b5563; /* slate-600 */
-    color: #e2e8f0; /* slate-200 */
+    color: #f1f5f9; /* slate-100 - brighter text */
 }
 
 .dark .number-input:focus {
@@ -666,25 +666,25 @@ body {
 }
 
 .dark .summary-label {
-    color: #94a3b8; /* slate-400 */
+    color: #cbd5e1; /* slate-300 - slightly brighter than before */
 }
 
 .dark .summary-value {
-    color: #e2e8f0; /* slate-200 */
+    color: #f1f5f9; /* slate-100 - brighter text */
 }
 
 /* Total summary */
 .dark .total-summary {
-    background-color: #1e293b; /* slate-800 */
+    background-color: #0f172a; /* slate-900 - darker background */
     border-color: #374151; /* slate-700 */
 }
 
 .dark .total-label {
-    color: #94a3b8; /* slate-400 */
+    color: #cbd5e1; /* slate-300 - brighter */
 }
 
 .dark .total-value {
-    color: #e2e8f0; /* slate-200 */
+    color: #f1f5f9; /* slate-100 - brighter text */
 }
 
 .dark .total-main-value {
@@ -697,7 +697,7 @@ body {
 }
 
 .dark .legend {
-    color: #cbd5e1; /* slate-300 */
+    color: #f1f5f9; /* slate-100 - brighter text */
 }
 
 /* Calculation flow sections */
@@ -708,15 +708,15 @@ body {
 }
 
 .dark .calc-box-label {
-    color: #94a3b8; /* slate-400 */
+    color: #cbd5e1; /* slate-300 - brighter */
 }
 
 .dark .calc-box-value {
-    color: #e2e8f0; /* slate-200 */
+    color: #f1f5f9; /* slate-100 - brighter text */
 }
 
 .dark .calc-operator {
-    color: #94a3b8; /* slate-400 */
+    color: #cbd5e1; /* slate-300 - brighter */
 }
 
 .dark .calc-result {
@@ -791,6 +791,86 @@ body {
 
 .dark span[style*="color: #7c3aed"] {
     color: #a855f7 !important; /* purple-500 for dark mode */
+}
+
+/* Color-coded concept boxes for visual consistency */
+.concept-agi {
+    border: 2px solid #f59e0b; /* amber-500 - consistent AGI color */
+    background-color: #fef3c7; /* amber-100 */
+}
+
+.concept-taxable-income {
+    border: 2px solid #3b82f6; /* blue-500 - consistent taxable income color */
+    background-color: #dbeafe; /* blue-100 */
+}
+
+.concept-tax-amount {
+    border: 2px solid #ef4444; /* red-500 - consistent tax amount color */
+    background-color: #fee2e2; /* red-100 */
+}
+
+.concept-credits {
+    border: 2px solid #10b981; /* emerald-500 - consistent credits color */
+    background-color: #d1fae5; /* emerald-100 */
+}
+
+.concept-take-home {
+    border: 2px solid #059669; /* emerald-600 - consistent take-home color */
+    background-color: #dcfce7; /* green-100 */
+}
+
+/* Dark mode versions of concept boxes */
+.dark .concept-agi {
+    border-color: #f59e0b; /* amber-500 */
+    background-color: #451a03; /* amber-900 */
+}
+
+.dark .concept-taxable-income {
+    border-color: #3b82f6; /* blue-500 */
+    background-color: #1e3a8a; /* blue-900 */
+}
+
+.dark .concept-tax-amount {
+    border-color: #ef4444; /* red-500 */
+    background-color: #7f1d1d; /* red-900 */
+}
+
+.dark .concept-credits {
+    border-color: #10b981; /* emerald-500 */
+    background-color: #064e3b; /* emerald-900 */
+}
+
+.dark .concept-take-home {
+    border-color: #059669; /* emerald-600 */
+    background-color: #065f46; /* green-900 */
+}
+
+/* Ensure text remains readable in concept boxes */
+.dark .concept-agi .calc-box-label,
+.dark .concept-agi .calc-box-value,
+.dark .concept-agi .display-label,
+.dark .concept-agi .display-value {
+    color: #fbbf24 !important; /* amber-400 */
+}
+
+.dark .concept-taxable-income .calc-box-label,
+.dark .concept-taxable-income .calc-box-value {
+    color: #60a5fa !important; /* blue-400 */
+}
+
+.dark .concept-tax-amount .calc-box-label,
+.dark .concept-tax-amount .calc-box-value {
+    color: #f87171 !important; /* red-400 */
+}
+
+.dark .concept-credits .calc-box-label,
+.dark .concept-credits .calc-box-value {
+    color: #34d399 !important; /* emerald-400 */
+}
+
+.dark .concept-take-home .calc-box-label,
+.dark .concept-take-home .calc-box-value {
+    color: #10b981 !important; /* emerald-500 */
 }
 
 /* Hidden by default */
