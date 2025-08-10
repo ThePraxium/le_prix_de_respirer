@@ -558,6 +558,46 @@ body {
     color: #e2e8f0; /* slate-200 */
 }
 
+/* Dark mode overrides for calculation boxes with inline styles */
+.dark .calc-box[style*="background-color: #dbeafe"] {
+    background-color: #1e40af !important; /* darker blue for dark mode */
+}
+
+.dark .calc-box[style*="background-color: #dcfce7"] {
+    background-color: #166534 !important; /* darker green for dark mode */
+}
+
+.dark .calc-box[style*="background-color: #d1fae5"] {
+    background-color: #065f46 !important; /* dark green for dark mode */
+}
+
+/* Dark mode text color overrides for elements with inline color styles */
+.dark .calc-box-label[style*="color: #1e40af"],
+.dark .calc-box-value[style*="color: #1e3a8a"] {
+    color: #bfdbfe !important; /* light blue for dark mode */
+}
+
+.dark .calc-box-label[style*="color: #166534"],
+.dark .calc-box-value[style*="color: #14532d"] {
+    color: #bbf7d0 !important; /* light green for dark mode */
+}
+
+.dark .calc-box-label[style*="color: #065f46"],
+.dark .calc-box-value[style*="color: #064e3b"] {
+    color: #d1fae5 !important; /* very light green for dark mode */
+}
+
+/* Dark mode for calculation containers */
+.dark .calculation-container {
+    background-color: #1e293b !important; /* slate-800 for dark mode */
+    border-color: #1e40af !important; /* darker blue border for dark mode */
+}
+
+.dark .calc-step {
+    background-color: #374151 !important; /* slate-700 for dark mode */
+    border-color: #4b5563 !important; /* slate-600 border for dark mode */
+}
+
 /* Hidden by default */
 .hidden {
     display: none;
