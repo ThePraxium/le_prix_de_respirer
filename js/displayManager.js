@@ -198,10 +198,11 @@ export class DisplayManager {
         const totalIncome = totals.primaryIncome;
 
         if (totalIncome > 0) {
-            const takeHomePercent = Math.max(0, (totals.postTaxIncome / totalIncome) * 100);
-            const federalPercent = (federal.totalTax / totalIncome) * 100;
-            const statePercent = (state.totalTax / totalIncome) * 100;
-            const countyPercent = (county.totalTax / totalIncome) * 100;
+            // Use the exact effective rates from tax calculation to match Tax Summary
+            const federalPercent = federal.effectiveRate;
+            const statePercent = state.effectiveRate;
+            const countyPercent = county.effectiveRate;
+            const takeHomePercent = Math.max(0, 100 - federalPercent - statePercent - countyPercent);
 
             // Update bar widths
             this.elements.barTakeHome.style.width = `${takeHomePercent}%`;
@@ -215,18 +216,18 @@ export class DisplayManager {
             this.elements.barState.textContent = '';
             this.elements.barCounty.textContent = '';
 
-            // Update percentage display area
+            // Update percentage display area - use same formatting as Tax Summary (2 decimal places)
             if (this.elements.percentageTakeHome) {
-                this.elements.percentageTakeHome.textContent = `${takeHomePercent.toFixed(1)}%`;
+                this.elements.percentageTakeHome.textContent = this.formatPercentage(takeHomePercent);
             }
             if (this.elements.percentageFederal) {
-                this.elements.percentageFederal.textContent = `${federalPercent.toFixed(1)}%`;
+                this.elements.percentageFederal.textContent = this.formatPercentage(federalPercent);
             }
             if (this.elements.percentageState) {
-                this.elements.percentageState.textContent = `${statePercent.toFixed(1)}%`;
+                this.elements.percentageState.textContent = this.formatPercentage(statePercent);
             }
             if (this.elements.percentageCounty) {
-                this.elements.percentageCounty.textContent = `${countyPercent.toFixed(1)}%`;
+                this.elements.percentageCounty.textContent = this.formatPercentage(countyPercent);
             }
         } else {
             // No income case
@@ -241,16 +242,16 @@ export class DisplayManager {
 
             // Reset percentage display
             if (this.elements.percentageTakeHome) {
-                this.elements.percentageTakeHome.textContent = '100.0%';
+                this.elements.percentageTakeHome.textContent = this.formatPercentage(100);
             }
             if (this.elements.percentageFederal) {
-                this.elements.percentageFederal.textContent = '0.0%';
+                this.elements.percentageFederal.textContent = this.formatPercentage(0);
             }
             if (this.elements.percentageState) {
-                this.elements.percentageState.textContent = '0.0%';
+                this.elements.percentageState.textContent = this.formatPercentage(0);
             }
             if (this.elements.percentageCounty) {
-                this.elements.percentageCounty.textContent = '0.0%';
+                this.elements.percentageCounty.textContent = this.formatPercentage(0);
             }
         }
     }
