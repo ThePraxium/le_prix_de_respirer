@@ -4,411 +4,369 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Federal & State Tax Calculator</title>
-    <!-- Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-        }
-    </script>
-    <!-- Google Fonts: Inter -->
+    <!-- Local CSS for mobile-friendly styling -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts: Inter (with fallback) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Custom styles to enhance the look and feel */
-        body {
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        /* Custom styling for the range slider thumb */
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #4f46e5; /* Indigo-600 */
-            cursor: pointer;
-            border-radius: 50%;
-            margin-top: -6px; /* Adjust thumb position */
-        }
-        input[type=range]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: #4f46e5;
-            cursor: pointer;
-            border-radius: 50%;
-            border: none;
-        }
-        /* Dark mode slider track */
-        .dark input[type=range]::-webkit-slider-track {
-            background: #475569; /* slate-600 */
-        }
-        .dark input[type=range]::-moz-range-track {
-            background: #475569;
-        }
-        /* Hide number input spinners on Chrome, Safari, Edge, Opera */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-          margin: 0;
-        }
-        /* Hide number input spinners on Firefox */
-        input[type=number] {
-          -moz-appearance: textfield;
-          appearance: textfield;
-        }
-    </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
+<body class="dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
 
-    <div class="container mx-auto p-4 md:p-8 max-w-2xl">
+    <div class="container">
 
-        <header class="text-center mb-8 relative">
+        <header class="header">
             <!-- Dark/Light Mode Toggle -->
             <div class="absolute top-0 right-0">
-                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 transition-colors duration-200" aria-label="Toggle dark mode">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
                     <svg id="theme-toggle-dark-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                     </svg>
-                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <svg id="theme-toggle-light-icon" class="hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
                     </svg>
                 </button>
             </div>
-            <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-100">Federal & State Tax Calculator</h1>
-            <p class="text-slate-600 dark:text-slate-400 mt-2">Visualize your tax breakdown with federal, Maryland state, and Anne Arundel County taxes.</p>
+            <h1 class="main-title">Federal & State Tax Calculator</h1>
+            <p class="subtitle">Visualize your tax breakdown with federal, Maryland state, and Anne Arundel County taxes.</p>
         </header>
 
-        <main class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-lg dark:shadow-slate-700/50 transition-colors duration-300">
+        <main class="main-content">
 
             <!-- CONTROLS SECTION -->
-            <div class="space-y-6 mb-8">
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Filing Status</label>
-                    <div id="filing-status" role="radiogroup" class="flex space-x-4">
-                        <label class="flex-1">
-                            <input type="radio" name="filingStatus" value="1" class="sr-only peer">
-                            <div class="w-full text-center p-3 rounded-lg cursor-pointer bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:font-semibold transition-colors duration-200">Single</div>
+            <div class="controls-section">
+                <div class="control-group">
+                    <label class="control-label">Filing Status</label>
+                    <div id="filing-status" role="radiogroup" class="filing-status">
+                        <label>
+                            <input type="radio" name="filingStatus" value="1">
+                            <div class="filing-status-option">Single</div>
                         </label>
-                        <label class="flex-1">
-                            <input type="radio" name="filingStatus" value="2" class="sr-only peer" checked>
-                            <div class="w-full text-center p-3 rounded-lg cursor-pointer bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400 peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:font-semibold transition-colors duration-200">Married</div>
+                        <label>
+                            <input type="radio" name="filingStatus" value="2" checked>
+                            <div class="filing-status-option">Married</div>
                         </label>
                     </div>
                 </div>
                 
                 <!-- FEDERAL TAX SECTION -->
-                <div class="border-2 border-blue-200 dark:border-blue-800 rounded-lg p-4 space-y-4">
-                    <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-300">Federal Taxes</h3>
-                    <div>
-                        <label for="federal-income-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Federal Gross Income</label>
-                        <div class="flex items-center gap-x-3 mt-1">
-                            <input id="federal-income-slider" type="range" min="0" max="1000000" step="1000" value="0" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer">
-                            <input id="federal-income-input" type="number" min="0" max="1000000" step="1000" value="0" class="w-32 px-2 py-1 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:text-slate-200">
+                <div class="tax-section federal-section">
+                    <h3 class="section-title federal-title">Federal Taxes</h3>
+                    <div class="input-group">
+                        <label for="federal-income-input" class="control-label">Federal Gross Income</label>
+                        <div class="input-row">
+                            <input id="federal-income-slider" type="range" min="0" max="1000000" step="1000" value="0" class="slider">
+                            <input id="federal-income-input" type="number" min="0" max="1000000" step="1000" value="0" class="number-input">
                         </div>
                     </div>
-                    <div>
-                        <label for="federal-adjustments-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Federal Adjustments to Income</label>
-                        <div class="flex items-center gap-x-3 mt-1">
-                            <input id="federal-adjustments-slider" type="range" min="0" max="1000000" step="500" value="0" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer">
-                            <input id="federal-adjustments-input" type="number" min="0" max="1000000" step="500" value="0" class="w-32 px-2 py-1 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:text-slate-200">
+                    <div class="input-group">
+                        <label for="federal-adjustments-input" class="control-label">Federal Adjustments to Income</label>
+                        <div class="input-row">
+                            <input id="federal-adjustments-slider" type="range" min="0" max="1000000" step="500" value="0" class="slider">
+                            <input id="federal-adjustments-input" type="number" min="0" max="1000000" step="500" value="0" class="number-input">
                         </div>
                     </div>
-                    <div class="bg-amber-100 dark:bg-amber-900/50 p-3 rounded-lg text-center">
-                        <p class="text-sm text-amber-600 dark:text-amber-400">Federal AGI</p>
-                        <p id="federal-agi-display" class="text-xl font-semibold text-amber-800 dark:text-amber-300"></p>
+                    <div class="display-box">
+                        <p class="display-label">Federal AGI</p>
+                        <p id="federal-agi-display" class="display-value">$0</p>
                     </div>
-                    <div>
-                        <label for="federal-deductions-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Federal Deductions</label>
-                        <div class="flex items-center gap-x-3 mt-1">
-                            <input id="federal-deductions-slider" type="range" min="0" max="1000000" step="500" value="0" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer">
-                            <input id="federal-deductions-input" type="number" min="0" max="1000000" step="500" value="0" class="w-32 px-2 py-1 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:text-slate-200">
+                    <div class="input-group">
+                        <label for="federal-deductions-input" class="control-label">Federal Deductions</label>
+                        <div class="input-row">
+                            <input id="federal-deductions-slider" type="range" min="0" max="1000000" step="500" value="0" class="slider">
+                            <input id="federal-deductions-input" type="number" min="0" max="1000000" step="500" value="0" class="number-input">
                         </div>
                     </div>
-                    <div class="bg-amber-100 dark:bg-amber-900/50 p-3 rounded-lg text-center">
-                        <p class="text-sm text-amber-600 dark:text-amber-400">Federal Taxable Income</p>
-                        <p id="federal-taxable-income-display" class="text-xl font-semibold text-amber-800 dark:text-amber-300"></p>
+                    <div class="display-box">
+                        <p class="display-label">Federal Taxable Income</p>
+                        <p id="federal-taxable-income-display" class="display-value">$0</p>
                     </div>
-                    <div>
-                        <label for="federal-credits-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Federal Tax Credits</label>
-                        <div class="flex items-center gap-x-3 mt-1">
-                            <input id="federal-credits-slider" type="range" min="0" max="1000000" step="100" value="0" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer">
-                            <input id="federal-credits-input" type="number" min="0" max="1000000" step="100" value="0" class="w-32 px-2 py-1 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:text-slate-200">
+                    <div class="input-group">
+                        <label for="federal-credits-input" class="control-label">Federal Tax Credits</label>
+                        <div class="input-row">
+                            <input id="federal-credits-slider" type="range" min="0" max="1000000" step="100" value="0" class="slider">
+                            <input id="federal-credits-input" type="number" min="0" max="1000000" step="100" value="0" class="number-input">
                         </div>
                     </div>
                 </div>
 
                 <!-- STATE TAX SECTION -->
-                <div class="border-2 border-green-200 dark:border-green-800 rounded-lg p-4 space-y-4">
-                    <h3 class="text-lg font-semibold text-green-800 dark:text-green-300">Maryland State & Anne Arundel County Taxes</h3>
-                    <div>
-                        <label for="state-income-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Maryland Gross Income</label>
-                        <div class="flex items-center gap-x-3 mt-1">
-                            <input id="state-income-slider" type="range" min="0" max="1000000" step="1000" value="0" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer">
-                            <input id="state-income-input" type="number" min="0" max="1000000" step="1000" value="0" class="w-32 px-2 py-1 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:text-slate-200">
+                <div class="tax-section state-section">
+                    <h3 class="section-title state-title">Maryland State & Anne Arundel County Taxes</h3>
+                    <div class="input-group">
+                        <label for="state-income-input" class="control-label">Maryland Gross Income</label>
+                        <div class="input-row">
+                            <input id="state-income-slider" type="range" min="0" max="1000000" step="1000" value="0" class="slider">
+                            <input id="state-income-input" type="number" min="0" max="1000000" step="1000" value="0" class="number-input">
                         </div>
                     </div>
-                    <div>
-                        <label for="state-adjustments-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Maryland Adjustments to Income</label>
-                        <div class="flex items-center gap-x-3 mt-1">
-                            <input id="state-adjustments-slider" type="range" min="0" max="1000000" step="500" value="0" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer">
-                            <input id="state-adjustments-input" type="number" min="0" max="1000000" step="500" value="0" class="w-32 px-2 py-1 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:text-slate-200">
+                    <div class="input-group">
+                        <label for="state-adjustments-input" class="control-label">Maryland Adjustments to Income</label>
+                        <div class="input-row">
+                            <input id="state-adjustments-slider" type="range" min="0" max="1000000" step="500" value="0" class="slider">
+                            <input id="state-adjustments-input" type="number" min="0" max="1000000" step="500" value="0" class="number-input">
                         </div>
                     </div>
-                    <div class="bg-amber-100 dark:bg-amber-900/50 p-3 rounded-lg text-center">
-                        <p class="text-sm text-amber-600 dark:text-amber-400">Maryland AGI</p>
-                        <p id="state-agi-display" class="text-xl font-semibold text-amber-800 dark:text-amber-300"></p>
+                    <div class="display-box">
+                        <p class="display-label">Maryland AGI</p>
+                        <p id="state-agi-display" class="display-value">$0</p>
                     </div>
-                    <div>
-                        <label for="state-deductions-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Maryland Deductions</label>
-                        <div class="flex items-center gap-x-3 mt-1">
-                            <input id="state-deductions-slider" type="range" min="0" max="1000000" step="500" value="0" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer">
-                            <input id="state-deductions-input" type="number" min="0" max="1000000" step="500" value="0" class="w-32 px-2 py-1 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:text-slate-200">
+                    <div class="input-group">
+                        <label for="state-deductions-input" class="control-label">Maryland Deductions</label>
+                        <div class="input-row">
+                            <input id="state-deductions-slider" type="range" min="0" max="1000000" step="500" value="0" class="slider">
+                            <input id="state-deductions-input" type="number" min="0" max="1000000" step="500" value="0" class="number-input">
                         </div>
                     </div>
-                    <div class="bg-amber-100 dark:bg-amber-900/50 p-3 rounded-lg text-center">
-                        <p class="text-sm text-amber-600 dark:text-amber-400">Maryland Taxable Income</p>
-                        <p id="state-taxable-income-display" class="text-xl font-semibold text-amber-800 dark:text-amber-300"></p>
+                    <div class="display-box">
+                        <p class="display-label">Maryland Taxable Income</p>
+                        <p id="state-taxable-income-display" class="display-value">$0</p>
                     </div>
-                    <div>
-                        <label for="state-credits-input" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Maryland Tax Credits</label>
-                        <div class="flex items-center gap-x-3 mt-1">
-                            <input id="state-credits-slider" type="range" min="0" max="1000000" step="100" value="0" class="w-full h-2 bg-slate-200 dark:bg-slate-600 rounded-lg appearance-none cursor-pointer">
-                            <input id="state-credits-input" type="number" min="0" max="1000000" step="100" value="0" class="w-32 px-2 py-1 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:text-slate-200">
+                    <div class="input-group">
+                        <label for="state-credits-input" class="control-label">Maryland Tax Credits</label>
+                        <div class="input-row">
+                            <input id="state-credits-slider" type="range" min="0" max="1000000" step="100" value="0" class="slider">
+                            <input id="state-credits-input" type="number" min="0" max="1000000" step="100" value="0" class="number-input">
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- VISUALIZATION SECTION -->
-            <div class="mb-8 border-t dark:border-slate-600 pt-8">
-                <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4">Income Breakdown</h2>
-                <div id="tax-bar-container" class="w-full h-10 md:h-12 bg-slate-100 dark:bg-slate-700 rounded-lg flex overflow-hidden text-white text-xs md:text-sm font-semibold">
-                    <div id="bar-take-home" class="bg-emerald-500 flex items-center justify-center transition-all duration-300 ease-in-out" title="Take-Home Pay"></div>
-                    <div id="bar-federal" class="bg-sky-500 flex items-center justify-center transition-all duration-300 ease-in-out" title="Federal Tax"></div>
-                    <div id="bar-state" class="bg-green-500 flex items-center justify-center transition-all duration-300 ease-in-out" title="Maryland State Tax"></div>
-                    <div id="bar-county" class="bg-purple-500 flex items-center justify-center transition-all duration-300 ease-in-out" title="Anne Arundel County Tax"></div>
+            <div class="visualization-section">
+                <h2 class="section-heading">Income Breakdown</h2>
+                <div id="tax-bar-container" class="tax-bar-container">
+                    <div id="bar-take-home" class="tax-bar bar-take-home" title="Take-Home Pay"></div>
+                    <div id="bar-federal" class="tax-bar bar-federal" title="Federal Tax"></div>
+                    <div id="bar-state" class="tax-bar bar-state" title="Maryland State Tax"></div>
+                    <div id="bar-county" class="tax-bar bar-county" title="Anne Arundel County Tax"></div>
                 </div>
                 <!-- Legend -->
-                <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-4 text-sm">
-                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-emerald-500 mr-2"></span>Take-Home</div>
-                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-sky-500 mr-2"></span>Federal Tax</div>
-                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-green-500 mr-2"></span>Maryland State Tax</div>
-                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-purple-500 mr-2"></span>Anne Arundel County Tax</div>
+                <div class="legend">
+                    <div class="legend-item"><span class="legend-color" style="background-color: #10b981;"></span>Take-Home</div>
+                    <div class="legend-item"><span class="legend-color" style="background-color: #0ea5e9;"></span>Federal Tax</div>
+                    <div class="legend-item"><span class="legend-color" style="background-color: #22c55e;"></span>Maryland State Tax</div>
+                    <div class="legend-item"><span class="legend-color" style="background-color: #a855f7;"></span>Anne Arundel County Tax</div>
                 </div>
             </div>
 
             <!-- RESULTS & BREAKDOWN SECTION -->
             <div>
-                <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 text-center">Tax Summary</h2>
+                <h2 class="section-heading" style="text-align: center;">Tax Summary</h2>
                 
                 <!-- Tax Summary Grid -->
-                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="summary-grid">
                     <!-- Federal Tax Summary -->
-                    <div class="bg-blue-50 dark:bg-blue-900/30 p-4 rounded-xl border border-blue-200 dark:border-blue-800">
-                        <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-3">Federal Taxes</h3>
-                        <div class="space-y-2">
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Federal AGI:</span>
-                                <span id="federal-agi-summary" class="font-semibold">$0</span>
+                    <div class="summary-card federal-summary">
+                        <h3 class="summary-title federal-title">Federal Taxes</h3>
+                        <div>
+                            <div class="summary-row">
+                                <span class="summary-label">Federal AGI:</span>
+                                <span id="federal-agi-summary" class="summary-value">$0</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Taxable Income:</span>
-                                <span id="federal-taxable-summary" class="font-semibold">$0</span>
+                            <div class="summary-row">
+                                <span class="summary-label">Taxable Income:</span>
+                                <span id="federal-taxable-summary" class="summary-value">$0</span>
                             </div>
-                            <div class="flex justify-between border-t pt-2">
-                                <span class="font-medium">Federal Tax:</span>
-                                <span id="federal-tax-summary" class="font-bold text-blue-800 dark:text-blue-300">$0</span>
+                            <div class="summary-row summary-divider" style="border-color: #bfdbfe;">
+                                <span class="summary-label" style="font-weight: 500;">Federal Tax:</span>
+                                <span id="federal-tax-summary" class="summary-value federal-title">$0</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Effective Rate:</span>
-                                <span id="federal-rate-summary" class="text-sm font-medium">0.00%</span>
+                            <div class="summary-row">
+                                <span class="summary-label">Effective Rate:</span>
+                                <span id="federal-rate-summary" class="summary-value">0.00%</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- State Tax Summary -->
-                    <div class="bg-green-50 dark:bg-green-900/30 p-4 rounded-xl border border-green-200 dark:border-green-800">
-                        <h3 class="text-lg font-semibold text-green-800 dark:text-green-300 mb-3">Maryland State Taxes</h3>
-                        <div class="space-y-2">
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Maryland AGI:</span>
-                                <span id="state-agi-summary" class="font-semibold">$0</span>
+                    <div class="summary-card state-summary">
+                        <h3 class="summary-title state-title">Maryland State Taxes</h3>
+                        <div>
+                            <div class="summary-row">
+                                <span class="summary-label">Maryland AGI:</span>
+                                <span id="state-agi-summary" class="summary-value">$0</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Taxable Income:</span>
-                                <span id="state-taxable-summary" class="font-semibold">$0</span>
+                            <div class="summary-row">
+                                <span class="summary-label">Taxable Income:</span>
+                                <span id="state-taxable-summary" class="summary-value">$0</span>
                             </div>
-                            <div class="flex justify-between border-t pt-2">
-                                <span class="font-medium">State Tax:</span>
-                                <span id="state-tax-summary" class="font-bold text-green-800 dark:text-green-300">$0</span>
+                            <div class="summary-row summary-divider" style="border-color: #bbf7d0;">
+                                <span class="summary-label" style="font-weight: 500;">State Tax:</span>
+                                <span id="state-tax-summary" class="summary-value state-title">$0</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">County Tax:</span>
-                                <span id="county-tax-summary" class="font-bold text-purple-800 dark:text-purple-300">$0</span>
+                            <div class="summary-row">
+                                <span class="summary-label">County Tax:</span>
+                                <span id="county-tax-summary" class="summary-value" style="color: #7c3aed;">$0</span>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-sm text-slate-600 dark:text-slate-400">Combined Rate:</span>
-                                <span id="state-rate-summary" class="text-sm font-medium">0.00%</span>
+                            <div class="summary-row">
+                                <span class="summary-label">Combined Rate:</span>
+                                <span id="state-rate-summary" class="summary-value">0.00%</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Total Summary -->
-                <div class="bg-slate-100 dark:bg-slate-800 p-6 rounded-xl border-2 border-slate-300 dark:border-slate-600">
-                    <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 text-center">Total Tax Summary</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                        <div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Total Federal</p>
-                            <p id="total-federal-display" class="text-lg font-bold text-blue-600">$0</p>
+                <div class="total-summary">
+                    <h3 class="section-heading" style="text-align: center; margin-bottom: 1rem;">Total Tax Summary</h3>
+                    <div class="total-grid">
+                        <div class="total-item">
+                            <p class="total-label">Total Federal</p>
+                            <p id="total-federal-display" class="total-value" style="color: #2563eb;">$0</p>
                         </div>
-                        <div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Total State</p>
-                            <p id="total-state-display" class="text-lg font-bold text-green-600">$0</p>
+                        <div class="total-item">
+                            <p class="total-label">Total State</p>
+                            <p id="total-state-display" class="total-value" style="color: #16a34a;">$0</p>
                         </div>
-                        <div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">Total County</p>
-                            <p id="total-county-display" class="text-lg font-bold text-purple-600">$0</p>
+                        <div class="total-item">
+                            <p class="total-label">Total County</p>
+                            <p id="total-county-display" class="total-value" style="color: #9333ea;">$0</p>
                         </div>
-                        <div>
-                            <p class="text-sm text-slate-600 dark:text-slate-400">All Taxes</p>
-                            <p id="total-all-taxes-display" class="text-xl font-bold text-slate-900 dark:text-slate-100">$0</p>
+                        <div class="total-item">
+                            <p class="total-label">All Taxes</p>
+                            <p id="total-all-taxes-display" class="total-value">$0</p>
                         </div>
                     </div>
-                    <div class="mt-4 pt-4 border-t border-slate-300 dark:border-slate-600 text-center">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">Take-Home Pay</p>
-                                <p id="total-take-home-display" class="text-2xl font-bold text-emerald-600">$0</p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-slate-600 dark:text-slate-400">Total Effective Rate</p>
-                                <p id="total-effective-rate-display" class="text-2xl font-bold text-slate-900 dark:text-slate-100">0.00%</p>
-                            </div>
+                    <div class="total-main">
+                        <div class="total-main-item">
+                            <p class="total-label">Take-Home Pay</p>
+                            <p id="total-take-home-display" class="total-main-value" style="color: #059669;">$0</p>
+                        </div>
+                        <div class="total-main-item">
+                            <p class="total-label">Total Effective Rate</p>
+                            <p id="total-effective-rate-display" class="total-main-value">0.00%</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- VISUAL CALCULATIONS SECTION -->
-            <div class="mt-12 border-t dark:border-slate-600 pt-8">
+            <div class="calculation-section">
                 <!-- Your Custom Calculation -->
-                <div class="mb-12">
-                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4 text-center">Your Custom Calculation</h2>
+                <div style="margin-bottom: 3rem;">
+                    <h2 class="section-heading" style="text-align: center;">Your Custom Calculation</h2>
                     
                     <!-- Federal Custom Calculation Flow -->
-                    <div class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700 mb-6">
-                        <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-6 text-center">Federal Tax Calculation</h3>
+                    <div class="calculation-container">
+                        <h3 class="calculation-title">Federal Tax Calculation</h3>
                         
                         <!-- Step 1: Gross Income - Adjustments = AGI -->
-                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
-                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-slate-600 dark:text-slate-400">Gross Income</div>
-                                <div id="visual-gross-income" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
-                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-slate-600 dark:text-slate-400">Adjustments</div>
-                                <div id="visual-adjustments" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
-                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-amber-700 dark:text-amber-300">AGI</div>
-                                <div id="visual-agi" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box">
+                                    <div class="calc-box-label">Gross Income</div>
+                                    <div id="visual-gross-income" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box">
+                                    <div class="calc-box-label">Adjustments</div>
+                                    <div id="visual-adjustments" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-result">
+                                    <div class="calc-box-label">AGI</div>
+                                    <div id="visual-agi" class="calc-box-value">$0</div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Step 2: AGI - Deductions = Taxable Income -->
-                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
-                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-amber-700 dark:text-amber-300">AGI</div>
-                                <div id="visual-agi-2" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
-                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-slate-600 dark:text-slate-400">Deductions</div>
-                                <div id="visual-deductions" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
-                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-amber-700 dark:text-amber-300">Taxable Income</div>
-                                <div id="visual-taxable-income" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-result">
+                                    <div class="calc-box-label">AGI</div>
+                                    <div id="visual-agi-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box">
+                                    <div class="calc-box-label">Deductions</div>
+                                    <div id="visual-deductions" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-result">
+                                    <div class="calc-box-label">Taxable Income</div>
+                                    <div id="visual-taxable-income" class="calc-box-value">$0</div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Step 3: Taxable Income × Effective Tax Rate = Tax Before Credits -->
-                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
-                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-amber-700 dark:text-amber-300">Taxable Income</div>
-                                <div id="visual-taxable-income-2" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">×</div>
-                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-blue-700 dark:text-blue-300">Effective Tax Rate</div>
-                                <div id="visual-tax-rate" class="font-semibold text-blue-900 dark:text-blue-100">0.00%</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
-                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-blue-700 dark:text-blue-300">Tax Before Credits</div>
-                                <div id="visual-pre-credit-tax" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-result">
+                                    <div class="calc-box-label">Taxable Income</div>
+                                    <div id="visual-taxable-income-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">×</div>
+                                <div class="calc-box" style="background-color: #dbeafe;">
+                                    <div class="calc-box-label" style="color: #1e40af;">Effective Tax Rate</div>
+                                    <div id="visual-tax-rate" class="calc-box-value" style="color: #1e3a8a;">0.00%</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box" style="background-color: #dbeafe;">
+                                    <div class="calc-box-label" style="color: #1e40af;">Tax Before Credits</div>
+                                    <div id="visual-pre-credit-tax" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Step 4: Tax Before Credits - Credits = Total Federal Tax -->
-                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
-                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-blue-700 dark:text-blue-300">Tax Before Credits</div>
-                                <div id="visual-pre-credit-tax-2" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
-                            <div class="bg-green-200 dark:bg-green-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-green-700 dark:text-green-300">Credits</div>
-                                <div id="visual-credits" class="font-semibold text-green-900 dark:text-green-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
-                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-blue-700 dark:text-blue-300">Total Federal Tax</div>
-                                <div id="visual-total-tax" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box" style="background-color: #dbeafe;">
+                                    <div class="calc-box-label" style="color: #1e40af;">Tax Before Credits</div>
+                                    <div id="visual-pre-credit-tax-2" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box" style="background-color: #dcfce7;">
+                                    <div class="calc-box-label" style="color: #166534;">Credits</div>
+                                    <div id="visual-credits" class="calc-box-value" style="color: #14532d;">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box" style="background-color: #dbeafe;">
+                                    <div class="calc-box-label" style="color: #1e40af;">Total Federal Tax</div>
+                                    <div id="visual-total-tax" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Step 5: Gross Income - Total Federal Tax = Final Take-Home Pay -->
-                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
-                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-slate-600 dark:text-slate-400">Gross Income</div>
-                                <div id="visual-gross-income-2" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
-                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-blue-700 dark:text-blue-300">Total Federal Tax</div>
-                                <div id="visual-total-tax-2" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
-                            <div class="bg-emerald-200 dark:bg-emerald-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-emerald-700 dark:text-emerald-300">Final Take-Home Pay</div>
-                                <div id="visual-take-home" class="font-semibold text-emerald-900 dark:text-emerald-100">$0</div>
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box">
+                                    <div class="calc-box-label">Gross Income</div>
+                                    <div id="visual-gross-income-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box" style="background-color: #dbeafe;">
+                                    <div class="calc-box-label" style="color: #1e40af;">Total Federal Tax</div>
+                                    <div id="visual-total-tax-2" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box" style="background-color: #d1fae5;">
+                                    <div class="calc-box-label" style="color: #065f46;">Final Take-Home Pay</div>
+                                    <div id="visual-take-home" class="calc-box-value" style="color: #064e3b;">$0</div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Step 6: Total Federal Tax ÷ Gross Income = Effective Rate (on Gross) -->
-                        <div class="border-t border-slate-300 dark:border-slate-600 pt-4">
-                            <div class="flex items-center justify-center flex-wrap gap-2">
-                                <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
-                                    <div class="text-xs text-blue-700 dark:text-blue-300">Total Federal Tax</div>
-                                    <div id="visual-total-tax-3" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                        <div class="calc-step" style="border-top: 1px solid #e2e8f0; margin-top: 1rem; padding-top: 1rem;">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box" style="background-color: #dbeafe;">
+                                    <div class="calc-box-label" style="color: #1e40af;">Total Federal Tax</div>
+                                    <div id="visual-total-tax-3" class="calc-box-value" style="color: #1e3a8a;">$0</div>
                                 </div>
-                                <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">÷</div>
-                                <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
-                                    <div class="text-xs text-slate-600 dark:text-slate-400">Gross Income</div>
-                                    <div id="visual-gross-income-3" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
+                                <div class="calc-operator">÷</div>
+                                <div class="calc-box">
+                                    <div class="calc-box-label">Gross Income</div>
+                                    <div id="visual-gross-income-3" class="calc-box-value">$0</div>
                                 </div>
-                                <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
-                                <div class="bg-emerald-200 dark:bg-emerald-800 p-3 rounded-lg text-center min-w-[120px]">
-                                    <div class="text-xs text-emerald-700 dark:text-emerald-300">Effective Rate (on Gross)</div>
-                                    <div id="visual-effective-rate" class="font-semibold text-emerald-900 dark:text-emerald-100">0.00%</div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box" style="background-color: #d1fae5;">
+                                    <div class="calc-box-label" style="color: #065f46;">Effective Rate (on Gross)</div>
+                                    <div id="visual-effective-rate" class="calc-box-value" style="color: #064e3b;">0.00%</div>
                                 </div>
                             </div>
                         </div>
@@ -416,120 +374,130 @@
                 </div>
 
                 <!-- Baseline Comparison -->
-                <div class="mb-8">
-                    <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4 text-center">Baseline Comparison</h2>
-                    <p class="text-slate-600 dark:text-slate-400 text-center mb-6">Your gross income with $0 adjustments, $0 credits, and the standard deduction.</p>
+                <div style="margin-bottom: 2rem;">
+                    <h2 class="section-heading" style="text-align: center;">Baseline Comparison</h2>
+                    <p style="color: #64748b; text-align: center; margin-bottom: 1.5rem;">Your gross income with $0 adjustments, $0 credits, and the standard deduction.</p>
                     
                     <!-- Federal Baseline Calculation Flow -->
-                    <div class="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700">
-                        <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-6 text-center">Federal Tax Calculation</h3>
+                    <div class="calculation-container">
+                        <h3 class="calculation-title">Federal Tax Calculation</h3>
                         
                         <!-- Step 1: Gross Income - Adjustments = AGI -->
-                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
-                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-slate-600 dark:text-slate-400">Gross Income</div>
-                                <div id="baseline-gross-income" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
-                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-slate-600 dark:text-slate-400">Adjustments</div>
-                                <div id="baseline-adjustments" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
-                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-amber-700 dark:text-amber-300">AGI</div>
-                                <div id="baseline-agi" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box">
+                                    <div class="calc-box-label">Gross Income</div>
+                                    <div id="baseline-gross-income" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box">
+                                    <div class="calc-box-label">Adjustments</div>
+                                    <div id="baseline-adjustments" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-result">
+                                    <div class="calc-box-label">AGI</div>
+                                    <div id="baseline-agi" class="calc-box-value">$0</div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Step 2: AGI - Deductions = Taxable Income -->
-                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
-                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-amber-700 dark:text-amber-300">AGI</div>
-                                <div id="baseline-agi-2" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
-                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-slate-600 dark:text-slate-400">Deductions</div>
-                                <div id="baseline-deductions" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
-                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-amber-700 dark:text-amber-300">Taxable Income</div>
-                                <div id="baseline-taxable-income" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-result">
+                                    <div class="calc-box-label">AGI</div>
+                                    <div id="baseline-agi-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box">
+                                    <div class="calc-box-label">Deductions</div>
+                                    <div id="baseline-deductions" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-result">
+                                    <div class="calc-box-label">Taxable Income</div>
+                                    <div id="baseline-taxable-income" class="calc-box-value">$0</div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Step 3: Taxable Income × Effective Tax Rate = Tax Before Credits -->
-                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
-                            <div class="bg-amber-200 dark:bg-amber-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-amber-700 dark:text-amber-300">Taxable Income</div>
-                                <div id="baseline-taxable-income-2" class="font-semibold text-amber-900 dark:text-amber-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">×</div>
-                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-blue-700 dark:text-blue-300">Effective Tax Rate</div>
-                                <div id="baseline-tax-rate" class="font-semibold text-blue-900 dark:text-blue-100">0.00%</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
-                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-blue-700 dark:text-blue-300">Tax Before Credits</div>
-                                <div id="baseline-pre-credit-tax" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-result">
+                                    <div class="calc-box-label">Taxable Income</div>
+                                    <div id="baseline-taxable-income-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">×</div>
+                                <div class="calc-box" style="background-color: #dbeafe;">
+                                    <div class="calc-box-label" style="color: #1e40af;">Effective Tax Rate</div>
+                                    <div id="baseline-tax-rate" class="calc-box-value" style="color: #1e3a8a;">0.00%</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box" style="background-color: #dbeafe;">
+                                    <div class="calc-box-label" style="color: #1e40af;">Tax Before Credits</div>
+                                    <div id="baseline-pre-credit-tax" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Step 4: Tax Before Credits - Credits = Total Federal Tax -->
-                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
-                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-blue-700 dark:text-blue-300">Tax Before Credits</div>
-                                <div id="baseline-pre-credit-tax-2" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
-                            <div class="bg-green-200 dark:bg-green-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-green-700 dark:text-green-300">Credits</div>
-                                <div id="baseline-credits" class="font-semibold text-green-900 dark:text-green-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
-                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-blue-700 dark:text-blue-300">Total Federal Tax</div>
-                                <div id="baseline-total-tax" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box" style="background-color: #dbeafe;">
+                                    <div class="calc-box-label" style="color: #1e40af;">Tax Before Credits</div>
+                                    <div id="baseline-pre-credit-tax-2" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box" style="background-color: #dcfce7;">
+                                    <div class="calc-box-label" style="color: #166534;">Credits</div>
+                                    <div id="baseline-credits" class="calc-box-value" style="color: #14532d;">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box" style="background-color: #dbeafe;">
+                                    <div class="calc-box-label" style="color: #1e40af;">Total Federal Tax</div>
+                                    <div id="baseline-total-tax" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Step 5: Gross Income - Total Federal Tax = Final Take-Home Pay -->
-                        <div class="flex items-center justify-center mb-4 flex-wrap gap-2">
-                            <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-slate-600 dark:text-slate-400">Gross Income</div>
-                                <div id="baseline-gross-income-2" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">−</div>
-                            <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-blue-700 dark:text-blue-300">Total Federal Tax</div>
-                                <div id="baseline-total-tax-2" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
-                            </div>
-                            <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
-                            <div class="bg-emerald-200 dark:bg-emerald-800 p-3 rounded-lg text-center min-w-[120px]">
-                                <div class="text-xs text-emerald-700 dark:text-emerald-300">Final Take-Home Pay</div>
-                                <div id="baseline-take-home" class="font-semibold text-emerald-900 dark:text-emerald-100">$0</div>
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box">
+                                    <div class="calc-box-label">Gross Income</div>
+                                    <div id="baseline-gross-income-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box" style="background-color: #dbeafe;">
+                                    <div class="calc-box-label" style="color: #1e40af;">Total Federal Tax</div>
+                                    <div id="baseline-total-tax-2" class="calc-box-value" style="color: #1e3a8a;">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box" style="background-color: #d1fae5;">
+                                    <div class="calc-box-label" style="color: #065f46;">Final Take-Home Pay</div>
+                                    <div id="baseline-take-home" class="calc-box-value" style="color: #064e3b;">$0</div>
+                                </div>
                             </div>
                         </div>
 
                         <!-- Step 6: Total Federal Tax ÷ Gross Income = Effective Rate (on Gross) -->
-                        <div class="border-t border-slate-300 dark:border-slate-600 pt-4">
-                            <div class="flex items-center justify-center flex-wrap gap-2">
-                                <div class="bg-blue-200 dark:bg-blue-800 p-3 rounded-lg text-center min-w-[120px]">
-                                    <div class="text-xs text-blue-700 dark:text-blue-300">Total Federal Tax</div>
-                                    <div id="baseline-total-tax-3" class="font-semibold text-blue-900 dark:text-blue-100">$0</div>
+                        <div class="calc-step" style="border-top: 1px solid #e2e8f0; margin-top: 1rem; padding-top: 1rem;">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box" style="background-color: #dbeafe;">
+                                    <div class="calc-box-label" style="color: #1e40af;">Total Federal Tax</div>
+                                    <div id="baseline-total-tax-3" class="calc-box-value" style="color: #1e3a8a;">$0</div>
                                 </div>
-                                <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">÷</div>
-                                <div class="bg-slate-200 dark:bg-slate-700 p-3 rounded-lg text-center min-w-[120px]">
-                                    <div class="text-xs text-slate-600 dark:text-slate-400">Gross Income</div>
-                                    <div id="baseline-gross-income-3" class="font-semibold text-slate-900 dark:text-slate-100">$0</div>
+                                <div class="calc-operator">÷</div>
+                                <div class="calc-box">
+                                    <div class="calc-box-label">Gross Income</div>
+                                    <div id="baseline-gross-income-3" class="calc-box-value">$0</div>
                                 </div>
-                                <div class="text-2xl font-bold text-slate-600 dark:text-slate-400 mx-2">=</div>
-                                <div class="bg-emerald-200 dark:bg-emerald-800 p-3 rounded-lg text-center min-w-[120px]">
-                                    <div class="text-xs text-emerald-700 dark:text-emerald-300">Effective Rate (on Gross)</div>
-                                    <div id="baseline-effective-rate" class="font-semibold text-emerald-900 dark:text-emerald-100">0.00%</div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box" style="background-color: #d1fae5;">
+                                    <div class="calc-box-label" style="color: #065f46;">Effective Rate (on Gross)</div>
+                                    <div id="baseline-effective-rate" class="calc-box-value" style="color: #064e3b;">0.00%</div>
                                 </div>
                             </div>
                         </div>

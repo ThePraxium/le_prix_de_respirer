@@ -1,0 +1,689 @@
+/**
+ * Mobile-First Responsive CSS for Tax Calculator
+ * Replacing Tailwind CDN with local styles optimized for mobile devices
+ */
+
+/* Reset and base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px; /* Base font size for mobile */
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #1e293b; /* slate-800 */
+    background-color: #f8fafc; /* slate-50 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 672px; /* max-w-2xl */
+    margin: 0 auto;
+    padding: 1rem; /* p-4 */
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 2rem; /* mb-8 */
+    position: relative;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: #e2e8f0; /* slate-200 */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.theme-toggle:hover {
+    background-color: #cbd5e1; /* slate-300 */
+}
+
+.theme-toggle svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.main-title {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700;
+    color: #0f172a; /* slate-900 */
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #64748b; /* slate-600 */
+    font-size: 1rem;
+}
+
+/* Main content area */
+.main-content {
+    background-color: white;
+    padding: 1.5rem; /* p-6 */
+    border-radius: 1rem; /* rounded-2xl */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+}
+
+/* Controls section */
+.controls-section {
+    margin-bottom: 2rem;
+}
+
+.control-group {
+    margin-bottom: 1.5rem;
+}
+
+.control-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151; /* slate-700 */
+    margin-bottom: 0.5rem;
+}
+
+/* Filing status radio buttons */
+.filing-status {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filing-status label {
+    flex: 1;
+    min-width: 120px;
+}
+
+.filing-status input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.filing-status-option {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background-color: #f1f5f9; /* slate-100 */
+    color: #64748b; /* slate-600 */
+    transition: all 0.2s;
+    border: 2px solid transparent;
+    font-weight: 500;
+    min-height: 48px; /* Minimum touch target size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filing-status input[type="radio"]:checked + .filing-status-option {
+    background-color: #4f46e5; /* indigo-600 */
+    color: white;
+    border-color: #4f46e5;
+}
+
+/* Tax sections */
+.tax-section {
+    border: 2px solid;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.federal-section {
+    border-color: #bfdbfe; /* blue-200 */
+}
+
+.state-section {
+    border-color: #bbf7d0; /* green-200 */
+}
+
+.section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.federal-title {
+    color: #1e40af; /* blue-800 */
+}
+
+.state-title {
+    color: #166534; /* green-800 */
+}
+
+/* Input controls */
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+    flex-wrap: wrap;
+}
+
+/* Sliders */
+.slider {
+    flex: 1;
+    min-width: 200px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e2e8f0; /* slate-200 */
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: #4f46e5; /* indigo-600 */
+    cursor: pointer;
+    border-radius: 50%;
+    margin-top: -8px;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: #4f46e5;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Number inputs */
+.number-input {
+    width: 140px;
+    padding: 0.75rem 0.5rem;
+    background-color: white;
+    border: 1px solid #d1d5db; /* slate-300 */
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: all 0.2s;
+    min-height: 44px; /* Touch target size */
+}
+
+.number-input:focus {
+    outline: none;
+    border-color: #4f46e5; /* indigo-500 */
+    box-shadow: 0 0 0 1px #4f46e5;
+}
+
+/* Hide number input spinners */
+.number-input::-webkit-outer-spin-button,
+.number-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.number-input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+/* Display boxes */
+.display-box {
+    background-color: #fef3c7; /* amber-100 */
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.display-label {
+    font-size: 0.875rem;
+    color: #d97706; /* amber-600 */
+    margin-bottom: 0.25rem;
+}
+
+.display-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #92400e; /* amber-800 */
+}
+
+/* Visualization section */
+.visualization-section {
+    margin-bottom: 2rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 2rem;
+}
+
+.section-heading {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a; /* slate-900 */
+    margin-bottom: 1rem;
+}
+
+.tax-bar-container {
+    width: 100%;
+    height: 48px; /* Larger for mobile */
+    background-color: #f1f5f9; /* slate-100 */
+    border-radius: 0.5rem;
+    display: flex;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.tax-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+    min-width: 0;
+}
+
+.bar-take-home { background-color: #10b981; } /* emerald-500 */
+.bar-federal { background-color: #0ea5e9; } /* sky-500 */
+.bar-state { background-color: #22c55e; } /* green-500 */
+.bar-county { background-color: #a855f7; } /* purple-500 */
+
+/* Legend */
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+/* Summary sections */
+.summary-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.summary-card {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid;
+}
+
+.federal-summary {
+    background-color: #eff6ff; /* blue-50 */
+    border-color: #bfdbfe; /* blue-200 */
+}
+
+.state-summary {
+    background-color: #f0fdf4; /* green-50 */
+    border-color: #bbf7d0; /* green-200 */
+}
+
+.summary-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
+}
+
+.summary-label {
+    font-size: 0.875rem;
+    color: #64748b; /* slate-600 */
+    flex: 1;
+}
+
+.summary-value {
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.summary-divider {
+    border-top: 1px solid;
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+/* Total summary */
+.total-summary {
+    background-color: #f1f5f9; /* slate-100 */
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 2px solid #cbd5e1; /* slate-300 */
+}
+
+.total-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.total-item {
+    padding: 0.5rem;
+}
+
+.total-label {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-bottom: 0.25rem;
+}
+
+.total-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.total-main {
+    border-top: 1px solid #cbd5e1;
+    padding-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    text-align: center;
+}
+
+.total-main-item {
+    padding: 0.5rem;
+}
+
+.total-main-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Calculation flow sections */
+.calculation-section {
+    margin-top: 3rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 2rem;
+}
+
+.calculation-container {
+    background-color: #f8fafc; /* slate-50 */
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 1.5rem;
+}
+
+.calculation-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1e40af; /* blue-800 */
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Mobile-optimized calculation flow */
+.calc-step {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.calc-step-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.calc-box {
+    background-color: #f1f5f9; /* slate-200 */
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    min-width: 120px;
+    flex: 1;
+    max-width: 200px;
+}
+
+.calc-box-label {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-bottom: 0.25rem;
+}
+
+.calc-box-value {
+    font-weight: 600;
+    color: #0f172a;
+    font-size: 1rem;
+}
+
+.calc-operator {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #64748b;
+    margin: 0.5rem 0;
+}
+
+.calc-result {
+    background-color: #fef3c7; /* amber-200 */
+}
+
+.calc-result .calc-box-label {
+    color: #d97706; /* amber-700 */
+}
+
+.calc-result .calc-box-value {
+    color: #92400e; /* amber-900 */
+}
+
+/* Dark mode support */
+.dark {
+    color-scheme: dark;
+}
+
+.dark body {
+    background-color: #0f172a; /* slate-900 */
+    color: #e2e8f0; /* slate-200 */
+}
+
+.dark .main-content {
+    background-color: #1e293b; /* slate-800 */
+}
+
+.dark .theme-toggle {
+    background-color: #374151; /* slate-700 */
+}
+
+.dark .theme-toggle:hover {
+    background-color: #4b5563; /* slate-600 */
+}
+
+.dark .calc-box {
+    background-color: #374151; /* slate-700 */
+}
+
+.dark .calc-box-value {
+    color: #e2e8f0; /* slate-200 */
+}
+
+/* Hidden by default */
+.hidden {
+    display: none;
+}
+
+/* Responsive breakpoints */
+
+/* Small mobile devices (320px and up) */
+@media (min-width: 320px) {
+    .container {
+        padding: 0.75rem;
+    }
+    
+    .input-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .slider {
+        min-width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .number-input {
+        width: 100%;
+    }
+}
+
+/* Medium mobile devices (375px and up) */
+@media (min-width: 375px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .input-row {
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .slider {
+        min-width: 200px;
+    }
+    
+    .number-input {
+        width: 140px;
+    }
+}
+
+/* Large mobile devices (425px and up) */
+@media (min-width: 425px) {
+    .total-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Tablets (768px and up) */
+@media (min-width: 768px) {
+    .container {
+        padding: 2rem;
+    }
+    
+    .main-content {
+        padding: 2rem;
+    }
+    
+    .main-title {
+        font-size: 2.25rem; /* text-4xl */
+    }
+    
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .tax-bar-container {
+        height: 48px;
+    }
+    
+    .calc-step-mobile {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .calc-operator {
+        margin: 0 0.5rem;
+    }
+    
+    .total-main {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop (1024px and up) */
+@media (min-width: 1024px) {
+    .calc-step-mobile {
+        flex-wrap: nowrap;
+    }
+}
+
+/* Focus states for accessibility */
+.slider:focus,
+.number-input:focus,
+.filing-status input[type="radio"]:focus + .filing-status-option,
+.theme-toggle:focus {
+    outline: 2px solid #4f46e5;
+    outline-offset: 2px;
+}
+
+/* Ensure text is readable */
+@media (max-width: 374px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .main-title {
+        font-size: 1.5rem;
+    }
+    
+    .subtitle {
+        font-size: 0.875rem;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .calc-box {
+        border: 2px solid #000;
+    }
+    
+    .dark .calc-box {
+        border: 2px solid #fff;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
