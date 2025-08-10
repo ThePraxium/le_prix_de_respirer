@@ -85,7 +85,59 @@ export class DisplayManager {
             baselineTakeHome: document.getElementById('baseline-take-home'),
             baselineTotalTax3: document.getElementById('baseline-total-tax-3'),
             baselineGrossIncome3: document.getElementById('baseline-gross-income-3'),
-            baselineEffectiveRate: document.getElementById('baseline-effective-rate')
+            baselineEffectiveRate: document.getElementById('baseline-effective-rate'),
+
+            // Maryland visual calculation elements - Custom
+            marylandVisualGrossIncome: document.getElementById('maryland-visual-gross-income'),
+            marylandVisualAdjustments: document.getElementById('maryland-visual-adjustments'),
+            marylandVisualAgi: document.getElementById('maryland-visual-agi'),
+            marylandVisualAgi2: document.getElementById('maryland-visual-agi-2'),
+            marylandVisualDeductions: document.getElementById('maryland-visual-deductions'),
+            marylandVisualTaxableIncome: document.getElementById('maryland-visual-taxable-income'),
+            marylandVisualTaxableIncome2: document.getElementById('maryland-visual-taxable-income-2'),
+            marylandVisualTaxableIncome3: document.getElementById('maryland-visual-taxable-income-3'),
+            marylandVisualStateTaxRate: document.getElementById('maryland-visual-state-tax-rate'),
+            marylandVisualStatePreCreditTax: document.getElementById('maryland-visual-state-pre-credit-tax'),
+            marylandVisualCountyTaxRate: document.getElementById('maryland-visual-county-tax-rate'),
+            marylandVisualCountyTax: document.getElementById('maryland-visual-county-tax'),
+            marylandVisualStatePreCreditTax2: document.getElementById('maryland-visual-state-pre-credit-tax-2'),
+            marylandVisualCredits: document.getElementById('maryland-visual-credits'),
+            marylandVisualTotalStateTax: document.getElementById('maryland-visual-total-state-tax'),
+            marylandVisualTotalStateTax2: document.getElementById('maryland-visual-total-state-tax-2'),
+            marylandVisualCountyTax2: document.getElementById('maryland-visual-county-tax-2'),
+            marylandVisualCombinedTax: document.getElementById('maryland-visual-combined-tax'),
+            marylandVisualGrossIncome2: document.getElementById('maryland-visual-gross-income-2'),
+            marylandVisualCombinedTax2: document.getElementById('maryland-visual-combined-tax-2'),
+            marylandVisualTakeHome: document.getElementById('maryland-visual-take-home'),
+            marylandVisualCombinedTax3: document.getElementById('maryland-visual-combined-tax-3'),
+            marylandVisualGrossIncome3: document.getElementById('maryland-visual-gross-income-3'),
+            marylandVisualEffectiveRate: document.getElementById('maryland-visual-effective-rate'),
+
+            // Maryland visual calculation elements - Baseline
+            marylandBaselineGrossIncome: document.getElementById('maryland-baseline-gross-income'),
+            marylandBaselineAdjustments: document.getElementById('maryland-baseline-adjustments'),
+            marylandBaselineAgi: document.getElementById('maryland-baseline-agi'),
+            marylandBaselineAgi2: document.getElementById('maryland-baseline-agi-2'),
+            marylandBaselineDeductions: document.getElementById('maryland-baseline-deductions'),
+            marylandBaselineTaxableIncome: document.getElementById('maryland-baseline-taxable-income'),
+            marylandBaselineTaxableIncome2: document.getElementById('maryland-baseline-taxable-income-2'),
+            marylandBaselineTaxableIncome3: document.getElementById('maryland-baseline-taxable-income-3'),
+            marylandBaselineStateTaxRate: document.getElementById('maryland-baseline-state-tax-rate'),
+            marylandBaselineStatePreCreditTax: document.getElementById('maryland-baseline-state-pre-credit-tax'),
+            marylandBaselineCountyTaxRate: document.getElementById('maryland-baseline-county-tax-rate'),
+            marylandBaselineCountyTax: document.getElementById('maryland-baseline-county-tax'),
+            marylandBaselineStatePreCreditTax2: document.getElementById('maryland-baseline-state-pre-credit-tax-2'),
+            marylandBaselineCredits: document.getElementById('maryland-baseline-credits'),
+            marylandBaselineTotalStateTax: document.getElementById('maryland-baseline-total-state-tax'),
+            marylandBaselineTotalStateTax2: document.getElementById('maryland-baseline-total-state-tax-2'),
+            marylandBaselineCountyTax2: document.getElementById('maryland-baseline-county-tax-2'),
+            marylandBaselineCombinedTax: document.getElementById('maryland-baseline-combined-tax'),
+            marylandBaselineGrossIncome2: document.getElementById('maryland-baseline-gross-income-2'),
+            marylandBaselineCombinedTax2: document.getElementById('maryland-baseline-combined-tax-2'),
+            marylandBaselineTakeHome: document.getElementById('maryland-baseline-take-home'),
+            marylandBaselineCombinedTax3: document.getElementById('maryland-baseline-combined-tax-3'),
+            marylandBaselineGrossIncome3: document.getElementById('maryland-baseline-gross-income-3'),
+            marylandBaselineEffectiveRate: document.getElementById('maryland-baseline-effective-rate')
         };
     }
 
@@ -301,6 +353,238 @@ export class DisplayManager {
     }
 
     /**
+     * Update Maryland visual calculation displays for custom scenario
+     * @param {Object} calculation - Tax calculation results
+     * @param {Object} inputs - Input values
+     */
+    updateMarylandVisualCalculations(calculation, inputs) {
+        const { state, county } = calculation;
+        
+        // Step 1: Gross Income - Adjustments = AGI
+        if (this.elements.marylandVisualGrossIncome) {
+            this.elements.marylandVisualGrossIncome.textContent = this.formatCurrency(inputs.stateIncome || 0);
+        }
+        if (this.elements.marylandVisualAdjustments) {
+            this.elements.marylandVisualAdjustments.textContent = this.formatCurrency(inputs.stateAdjustments || 0);
+        }
+        if (this.elements.marylandVisualAgi) {
+            this.elements.marylandVisualAgi.textContent = this.formatCurrency(state.agi);
+        }
+        if (this.elements.marylandVisualAgi2) {
+            this.elements.marylandVisualAgi2.textContent = this.formatCurrency(state.agi);
+        }
+
+        // Step 2: AGI - Deductions = Taxable Income
+        if (this.elements.marylandVisualDeductions) {
+            this.elements.marylandVisualDeductions.textContent = this.formatCurrency(inputs.stateDeductions || 0);
+        }
+        if (this.elements.marylandVisualTaxableIncome) {
+            this.elements.marylandVisualTaxableIncome.textContent = this.formatCurrency(state.taxableIncome);
+        }
+        if (this.elements.marylandVisualTaxableIncome2) {
+            this.elements.marylandVisualTaxableIncome2.textContent = this.formatCurrency(state.taxableIncome);
+        }
+        if (this.elements.marylandVisualTaxableIncome3) {
+            this.elements.marylandVisualTaxableIncome3.textContent = this.formatCurrency(state.taxableIncome);
+        }
+
+        // Step 3: Taxable Income × State Tax Rate = State Tax Before Credits
+        const stateTaxableEffectiveRate = state.taxableIncome > 0 ? (state.preCreditTax / state.taxableIncome) * 100 : 0;
+        if (this.elements.marylandVisualStateTaxRate) {
+            this.elements.marylandVisualStateTaxRate.textContent = this.formatPercentage(stateTaxableEffectiveRate);
+        }
+        if (this.elements.marylandVisualStatePreCreditTax) {
+            this.elements.marylandVisualStatePreCreditTax.textContent = this.formatCurrency(state.preCreditTax);
+        }
+        if (this.elements.marylandVisualStatePreCreditTax2) {
+            this.elements.marylandVisualStatePreCreditTax2.textContent = this.formatCurrency(state.preCreditTax);
+        }
+
+        // Step 4: Taxable Income × County Tax Rate = County Tax
+        const countyTaxableEffectiveRate = state.taxableIncome > 0 ? (county.totalTax / state.taxableIncome) * 100 : 0;
+        if (this.elements.marylandVisualCountyTaxRate) {
+            this.elements.marylandVisualCountyTaxRate.textContent = this.formatPercentage(countyTaxableEffectiveRate);
+        }
+        if (this.elements.marylandVisualCountyTax) {
+            this.elements.marylandVisualCountyTax.textContent = this.formatCurrency(county.totalTax);
+        }
+        if (this.elements.marylandVisualCountyTax2) {
+            this.elements.marylandVisualCountyTax2.textContent = this.formatCurrency(county.totalTax);
+        }
+
+        // Step 5: State Tax Before Credits - Credits = Total State Tax
+        if (this.elements.marylandVisualCredits) {
+            this.elements.marylandVisualCredits.textContent = this.formatCurrency(inputs.stateCredits || 0);
+        }
+        if (this.elements.marylandVisualTotalStateTax) {
+            this.elements.marylandVisualTotalStateTax.textContent = this.formatCurrency(state.totalTax);
+        }
+        if (this.elements.marylandVisualTotalStateTax2) {
+            this.elements.marylandVisualTotalStateTax2.textContent = this.formatCurrency(state.totalTax);
+        }
+
+        // Step 6: Total State Tax + County Tax = Combined Maryland Tax
+        const combinedMarylandTax = state.totalTax + county.totalTax;
+        if (this.elements.marylandVisualCombinedTax) {
+            this.elements.marylandVisualCombinedTax.textContent = this.formatCurrency(combinedMarylandTax);
+        }
+        if (this.elements.marylandVisualCombinedTax2) {
+            this.elements.marylandVisualCombinedTax2.textContent = this.formatCurrency(combinedMarylandTax);
+        }
+        if (this.elements.marylandVisualCombinedTax3) {
+            this.elements.marylandVisualCombinedTax3.textContent = this.formatCurrency(combinedMarylandTax);
+        }
+
+        // Step 7: Gross Income - Combined Maryland Tax = Take-Home Pay
+        if (this.elements.marylandVisualGrossIncome2) {
+            this.elements.marylandVisualGrossIncome2.textContent = this.formatCurrency(inputs.stateIncome || 0);
+        }
+        if (this.elements.marylandVisualGrossIncome3) {
+            this.elements.marylandVisualGrossIncome3.textContent = this.formatCurrency(inputs.stateIncome || 0);
+        }
+        const takeHomePay = (inputs.stateIncome || 0) - combinedMarylandTax;
+        if (this.elements.marylandVisualTakeHome) {
+            this.elements.marylandVisualTakeHome.textContent = this.formatCurrency(takeHomePay);
+        }
+
+        // Step 8: Effective Rate
+        const combinedEffectiveRate = (inputs.stateIncome || 0) > 0 ? (combinedMarylandTax / (inputs.stateIncome || 0)) * 100 : 0;
+        if (this.elements.marylandVisualEffectiveRate) {
+            this.elements.marylandVisualEffectiveRate.textContent = this.formatPercentage(combinedEffectiveRate);
+        }
+    }
+
+    /**
+     * Update Maryland visual calculation displays for baseline scenario
+     * @param {Object} marylandBaselineCalculation - Maryland baseline tax calculation results
+     * @param {number} grossIncome - Gross income amount
+     * @param {number} standardDeduction - Standard deduction amount
+     */
+    updateMarylandBaselineVisualCalculations(marylandBaselineCalculation, grossIncome, standardDeduction) {
+        const { state, county, combined } = marylandBaselineCalculation;
+        
+        // Step 1: Gross Income - Adjustments = AGI
+        if (this.elements.marylandBaselineGrossIncome) {
+            this.elements.marylandBaselineGrossIncome.textContent = this.formatCurrency(grossIncome);
+        }
+        if (this.elements.marylandBaselineAdjustments) {
+            this.elements.marylandBaselineAdjustments.textContent = this.formatCurrency(0);
+        }
+        if (this.elements.marylandBaselineAgi) {
+            this.elements.marylandBaselineAgi.textContent = this.formatCurrency(state.agi);
+        }
+        if (this.elements.marylandBaselineAgi2) {
+            this.elements.marylandBaselineAgi2.textContent = this.formatCurrency(state.agi);
+        }
+
+        // Step 2: AGI - Deductions = Taxable Income
+        if (this.elements.marylandBaselineDeductions) {
+            this.elements.marylandBaselineDeductions.textContent = this.formatCurrency(standardDeduction);
+        }
+        if (this.elements.marylandBaselineTaxableIncome) {
+            this.elements.marylandBaselineTaxableIncome.textContent = this.formatCurrency(state.taxableIncome);
+        }
+        if (this.elements.marylandBaselineTaxableIncome2) {
+            this.elements.marylandBaselineTaxableIncome2.textContent = this.formatCurrency(state.taxableIncome);
+        }
+        if (this.elements.marylandBaselineTaxableIncome3) {
+            this.elements.marylandBaselineTaxableIncome3.textContent = this.formatCurrency(state.taxableIncome);
+        }
+
+        // Step 3: Taxable Income × State Tax Rate = State Tax Before Credits
+        const stateTaxableEffectiveRate = state.taxableIncome > 0 ? (state.preCreditTax / state.taxableIncome) * 100 : 0;
+        if (this.elements.marylandBaselineStateTaxRate) {
+            this.elements.marylandBaselineStateTaxRate.textContent = this.formatPercentage(stateTaxableEffectiveRate);
+        }
+        if (this.elements.marylandBaselineStatePreCreditTax) {
+            this.elements.marylandBaselineStatePreCreditTax.textContent = this.formatCurrency(state.preCreditTax);
+        }
+        if (this.elements.marylandBaselineStatePreCreditTax2) {
+            this.elements.marylandBaselineStatePreCreditTax2.textContent = this.formatCurrency(state.preCreditTax);
+        }
+
+        // Step 4: Taxable Income × County Tax Rate = County Tax
+        const countyTaxableEffectiveRate = state.taxableIncome > 0 ? (county.totalTax / state.taxableIncome) * 100 : 0;
+        if (this.elements.marylandBaselineCountyTaxRate) {
+            this.elements.marylandBaselineCountyTaxRate.textContent = this.formatPercentage(countyTaxableEffectiveRate);
+        }
+        if (this.elements.marylandBaselineCountyTax) {
+            this.elements.marylandBaselineCountyTax.textContent = this.formatCurrency(county.totalTax);
+        }
+        if (this.elements.marylandBaselineCountyTax2) {
+            this.elements.marylandBaselineCountyTax2.textContent = this.formatCurrency(county.totalTax);
+        }
+
+        // Step 5: State Tax Before Credits - Credits = Total State Tax
+        if (this.elements.marylandBaselineCredits) {
+            this.elements.marylandBaselineCredits.textContent = this.formatCurrency(0);
+        }
+        if (this.elements.marylandBaselineTotalStateTax) {
+            this.elements.marylandBaselineTotalStateTax.textContent = this.formatCurrency(state.totalTax);
+        }
+        if (this.elements.marylandBaselineTotalStateTax2) {
+            this.elements.marylandBaselineTotalStateTax2.textContent = this.formatCurrency(state.totalTax);
+        }
+
+        // Step 6: Total State Tax + County Tax = Combined Maryland Tax
+        if (this.elements.marylandBaselineCombinedTax) {
+            this.elements.marylandBaselineCombinedTax.textContent = this.formatCurrency(combined.totalTax);
+        }
+        if (this.elements.marylandBaselineCombinedTax2) {
+            this.elements.marylandBaselineCombinedTax2.textContent = this.formatCurrency(combined.totalTax);
+        }
+        if (this.elements.marylandBaselineCombinedTax3) {
+            this.elements.marylandBaselineCombinedTax3.textContent = this.formatCurrency(combined.totalTax);
+        }
+
+        // Step 7: Gross Income - Combined Maryland Tax = Take-Home Pay
+        if (this.elements.marylandBaselineGrossIncome2) {
+            this.elements.marylandBaselineGrossIncome2.textContent = this.formatCurrency(grossIncome);
+        }
+        if (this.elements.marylandBaselineGrossIncome3) {
+            this.elements.marylandBaselineGrossIncome3.textContent = this.formatCurrency(grossIncome);
+        }
+        if (this.elements.marylandBaselineTakeHome) {
+            this.elements.marylandBaselineTakeHome.textContent = this.formatCurrency(combined.postTaxIncome);
+        }
+
+        // Step 8: Effective Rate
+        if (this.elements.marylandBaselineEffectiveRate) {
+            this.elements.marylandBaselineEffectiveRate.textContent = this.formatPercentage(combined.effectiveRate);
+        }
+    }
+
+    /**
+     * Clear Maryland baseline visual calculations when no income
+     */
+    clearMarylandBaselineVisualCalculations() {
+        const elementsToUpdate = [
+            'marylandBaselineGrossIncome', 'marylandBaselineAdjustments', 'marylandBaselineAgi', 'marylandBaselineAgi2',
+            'marylandBaselineDeductions', 'marylandBaselineTaxableIncome', 'marylandBaselineTaxableIncome2', 'marylandBaselineTaxableIncome3',
+            'marylandBaselineStatePreCreditTax', 'marylandBaselineStatePreCreditTax2', 'marylandBaselineCountyTax', 'marylandBaselineCountyTax2',
+            'marylandBaselineCredits', 'marylandBaselineTotalStateTax', 'marylandBaselineTotalStateTax2',
+            'marylandBaselineCombinedTax', 'marylandBaselineCombinedTax2', 'marylandBaselineCombinedTax3',
+            'marylandBaselineGrossIncome2', 'marylandBaselineGrossIncome3', 'marylandBaselineTakeHome'
+        ];
+
+        elementsToUpdate.forEach(elementName => {
+            if (this.elements[elementName]) {
+                this.elements[elementName].textContent = this.formatCurrency(0);
+            }
+        });
+
+        const percentageElements = [
+            'marylandBaselineStateTaxRate', 'marylandBaselineCountyTaxRate', 'marylandBaselineEffectiveRate'
+        ];
+
+        percentageElements.forEach(elementName => {
+            if (this.elements[elementName]) {
+                this.elements[elementName].textContent = this.formatPercentage(0);
+            }
+        });
+    }
+
+    /**
      * Update visual calculation displays for baseline scenario
      * @param {Object} baselineCalculation - Baseline tax calculation results
      * @param {number} grossIncome - Gross income amount
@@ -416,6 +700,7 @@ export class DisplayManager {
         
         // Update visual calculations
         this.updateVisualCalculations(calculation, inputs);
+        this.updateMarylandVisualCalculations(calculation, inputs);
         
         // Update baseline if provided and income > 0
         if (baselineCalculation && (inputs.federalIncome || 0) > 0) {
@@ -424,6 +709,19 @@ export class DisplayManager {
         } else {
             // Clear baseline when no income
             this.clearBaselineVisualCalculations();
+        }
+
+        // Update Maryland baseline if provided and state income > 0
+        const stateGrossIncome = inputs.stateIncome || 0;
+        if (stateGrossIncome > 0) {
+            // Calculate Maryland baseline
+            const marylandBaselineCalculation = window.taxCalculatorApp?.taxCalculator?.calculateMarylandBaseline(stateGrossIncome, inputs.filingStatus || 2);
+            if (marylandBaselineCalculation) {
+                this.updateMarylandBaselineVisualCalculations(marylandBaselineCalculation, stateGrossIncome, standardDeduction);
+            }
+        } else {
+            // Clear Maryland baseline when no income
+            this.clearMarylandBaselineVisualCalculations();
         }
     }
 }

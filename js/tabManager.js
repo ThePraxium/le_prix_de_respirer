@@ -23,6 +23,7 @@ export class TabManager {
     bindTabEvents() {
         const calculatorTab = document.getElementById('calculator-tab');
         const customCalcTab = document.getElementById('custom-calc-tab');
+        const marylandCalcTab = document.getElementById('maryland-calc-tab');
 
         if (calculatorTab) {
             calculatorTab.addEventListener('click', () => this.setActiveTab('calculator'));
@@ -30,6 +31,10 @@ export class TabManager {
 
         if (customCalcTab) {
             customCalcTab.addEventListener('click', () => this.setActiveTab('custom-calc'));
+        }
+
+        if (marylandCalcTab) {
+            marylandCalcTab.addEventListener('click', () => this.setActiveTab('maryland-calc'));
         }
 
         // Handle keyboard navigation
@@ -43,6 +48,10 @@ export class TabManager {
                     case '2':
                         e.preventDefault();
                         this.setActiveTab('custom-calc');
+                        break;
+                    case '3':
+                        e.preventDefault();
+                        this.setActiveTab('maryland-calc');
                         break;
                 }
             }
@@ -102,6 +111,8 @@ export class TabManager {
     nextTab() {
         if (this.activeTab === 'calculator') {
             this.setActiveTab('custom-calc');
+        } else if (this.activeTab === 'custom-calc') {
+            this.setActiveTab('maryland-calc');
         } else {
             this.setActiveTab('calculator');
         }
@@ -111,6 +122,12 @@ export class TabManager {
      * Switch to previous tab
      */
     previousTab() {
-        this.nextTab(); // Since we only have 2 tabs, next and previous are the same
+        if (this.activeTab === 'calculator') {
+            this.setActiveTab('maryland-calc');
+        } else if (this.activeTab === 'custom-calc') {
+            this.setActiveTab('calculator');
+        } else {
+            this.setActiveTab('custom-calc');
+        }
     }
 }

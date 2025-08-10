@@ -223,4 +223,37 @@ export class TaxCalculator {
             filingStatus
         });
     }
+
+    /**
+     * Calculate Maryland baseline scenario (standard deduction, no adjustments/credits)
+     * @param {number} income - Gross income
+     * @param {number} filingStatus - Filing status
+     * @returns {Object} Maryland baseline calculation results
+     */
+    calculateMarylandBaseline(income, filingStatus) {
+        const inputs = {
+            federalIncome: 0,
+            federalAdjustments: 0,
+            federalDeductions: 0,
+            federalCredits: 0,
+            stateIncome: income,
+            stateAdjustments: 0,
+            stateDeductions: this.getStandardDeduction(filingStatus),
+            stateCredits: 0,
+            filingStatus
+        };
+        
+        const fullCalculation = this.calculateAllTaxes(inputs);
+        
+        // Return only the state and county portions
+        return {
+            state: fullCalculation.state,
+            county: fullCalculation.county,
+            combined: {
+                totalTax: fullCalculation.state.totalTax + fullCalculation.county.totalTax,
+                postTaxIncome: income - (fullCalculation.state.totalTax + fullCalculation.county.totalTax),
+                effectiveRate: income > 0 ? ((fullCalculation.state.totalTax + fullCalculation.county.totalTax) / income) * 100 : 0
+            }
+        };
+    }
 }
