@@ -31,9 +31,20 @@
             <p class="subtitle">Visualize your tax breakdown with federal, Maryland state, and Anne Arundel County taxes.</p>
         </header>
 
-        <main class="main-content">
+        <!-- TAB NAVIGATION -->
+        <nav class="tab-navigation">
+            <button id="calculator-tab" class="tab-button active" aria-selected="true">
+                Calculator
+            </button>
+            <button id="custom-calc-tab" class="tab-button" aria-selected="false">
+                Maryland Tax Graphs
+            </button>
+        </nav>
 
-            <!-- CONTROLS SECTION -->
+        <main class="main-content">
+            <!-- TAB CONTENT: CALCULATOR VIEW -->
+            <div id="calculator-content" class="tab-content active">
+                <!-- CONTROLS SECTION -->
             <div class="controls-section">
                 <div class="control-group">
                     <label class="control-label">Filing Status</label>
@@ -240,12 +251,15 @@
                     </div>
                 </div>
             </div>
+            </div>
 
-            <!-- VISUAL CALCULATIONS SECTION -->
-            <div class="calculation-section">
-                <!-- Your Custom Calculation -->
-                <div style="margin-bottom: 3rem;">
-                    <h2 class="section-heading" style="text-align: center;">Your Custom Calculation</h2>
+            <!-- TAB CONTENT: CUSTOM CALCULATION VIEW -->
+            <div id="custom-calc-content" class="tab-content">
+                <!-- VISUAL CALCULATIONS SECTION -->
+                <div class="calculation-section">
+                    <!-- Your Custom Calculation -->
+                    <div style="margin-bottom: 3rem;">
+                        <h2 class="section-heading" style="text-align: center;">Your Custom Calculation</h2>
                     
                     <!-- Federal Custom Calculation Flow -->
                     <div class="calculation-container">
@@ -503,6 +517,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
 
         </main>
