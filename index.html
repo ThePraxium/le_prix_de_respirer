@@ -39,6 +39,9 @@
             <button id="custom-calc-tab" class="tab-button" aria-selected="false">
                 Federal Tax Graphs
             </button>
+            <button id="maryland-calc-tab" class="tab-button" aria-selected="false">
+                Maryland Tax Graphs
+            </button>
         </nav>
 
         <main class="main-content">
@@ -512,6 +515,353 @@
                                 <div class="calc-box calc-effective-rate">
                                     <div class="calc-box-label">Effective Rate (on Gross)</div>
                                     <div id="baseline-effective-rate" class="calc-box-value">0.00%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <!-- TAB CONTENT: MARYLAND CALCULATION VIEW -->
+            <div id="maryland-calc-content" class="tab-content">
+                <!-- MARYLAND VISUAL CALCULATIONS SECTION -->
+                <div class="calculation-section">
+                    <!-- Your Custom Maryland Calculation -->
+                    <div style="margin-bottom: 3rem;">
+                        <h2 class="section-heading" style="text-align: center;">Your Custom Maryland Calculation</h2>
+                    
+                    <!-- Maryland Custom Calculation Flow -->
+                    <div class="calculation-container">
+                        <h3 class="calculation-title">Maryland State Tax Calculation</h3>
+                        
+                        <!-- Step 1: Gross Income - Adjustments = AGI -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-gross-income">
+                                    <div class="calc-box-label">Gross Income</div>
+                                    <div id="maryland-visual-gross-income" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box calc-adjustments">
+                                    <div class="calc-box-label">Adjustments</div>
+                                    <div id="maryland-visual-adjustments" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-result concept-agi">
+                                    <div class="calc-box-label">AGI</div>
+                                    <div id="maryland-visual-agi" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: AGI - Deductions = Taxable Income -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-result concept-agi">
+                                    <div class="calc-box-label">AGI</div>
+                                    <div id="maryland-visual-agi-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box calc-deductions">
+                                    <div class="calc-box-label">Deductions</div>
+                                    <div id="maryland-visual-deductions" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-result concept-taxable-income">
+                                    <div class="calc-box-label">Taxable Income</div>
+                                    <div id="maryland-visual-taxable-income" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Taxable Income × State Tax Rate = State Tax Before Credits -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-result concept-taxable-income">
+                                    <div class="calc-box-label">Taxable Income</div>
+                                    <div id="maryland-visual-taxable-income-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">×</div>
+                                <div class="calc-box calc-tax-rate">
+                                    <div class="calc-box-label">State Tax Rate</div>
+                                    <div id="maryland-visual-state-tax-rate" class="calc-box-value">0.00%</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-pre-credit-tax">
+                                    <div class="calc-box-label">State Tax Before Credits</div>
+                                    <div id="maryland-visual-state-pre-credit-tax" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Taxable Income × County Tax Rate = County Tax -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-result concept-taxable-income">
+                                    <div class="calc-box-label">Taxable Income</div>
+                                    <div id="maryland-visual-taxable-income-3" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">×</div>
+                                <div class="calc-box calc-tax-rate">
+                                    <div class="calc-box-label">County Tax Rate</div>
+                                    <div id="maryland-visual-county-tax-rate" class="calc-box-value">0.00%</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-pre-credit-tax" style="background-color: #f3e8ff;">
+                                    <div class="calc-box-label">County Tax</div>
+                                    <div id="maryland-visual-county-tax" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: State Tax Before Credits - Credits = Total State Tax -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-pre-credit-tax">
+                                    <div class="calc-box-label">State Tax Before Credits</div>
+                                    <div id="maryland-visual-state-pre-credit-tax-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box calc-credits">
+                                    <div class="calc-box-label">Credits</div>
+                                    <div id="maryland-visual-credits" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-total-tax">
+                                    <div class="calc-box-label">Total State Tax</div>
+                                    <div id="maryland-visual-total-state-tax" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 6: Total State Tax + County Tax = Combined Maryland Tax -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-total-tax">
+                                    <div class="calc-box-label">Total State Tax</div>
+                                    <div id="maryland-visual-total-state-tax-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">+</div>
+                                <div class="calc-box calc-pre-credit-tax" style="background-color: #f3e8ff;">
+                                    <div class="calc-box-label">County Tax</div>
+                                    <div id="maryland-visual-county-tax-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-total-tax" style="background-color: #dcfce7;">
+                                    <div class="calc-box-label">Combined Maryland Tax</div>
+                                    <div id="maryland-visual-combined-tax" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 7: Gross Income - Combined Maryland Tax = Take-Home Pay -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-gross-income">
+                                    <div class="calc-box-label">Gross Income</div>
+                                    <div id="maryland-visual-gross-income-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box calc-total-tax" style="background-color: #dcfce7;">
+                                    <div class="calc-box-label">Combined Maryland Tax</div>
+                                    <div id="maryland-visual-combined-tax-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-take-home">
+                                    <div class="calc-box-label">Final Take-Home Pay</div>
+                                    <div id="maryland-visual-take-home" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 8: Combined Maryland Tax ÷ Gross Income = Effective Rate (on Gross) -->
+                        <div class="calc-step" style="border-top: 1px solid #e2e8f0; margin-top: 1rem; padding-top: 1rem;">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-total-tax" style="background-color: #dcfce7;">
+                                    <div class="calc-box-label">Combined Maryland Tax</div>
+                                    <div id="maryland-visual-combined-tax-3" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">÷</div>
+                                <div class="calc-box calc-gross-income">
+                                    <div class="calc-box-label">Gross Income</div>
+                                    <div id="maryland-visual-gross-income-3" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-effective-rate">
+                                    <div class="calc-box-label">Effective Rate (on Gross)</div>
+                                    <div id="maryland-visual-effective-rate" class="calc-box-value">0.00%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Maryland Baseline Comparison -->
+                <div style="margin-bottom: 2rem;">
+                    <h2 class="section-heading" style="text-align: center;">Baseline Comparison</h2>
+                    <p style="color: #64748b; text-align: center; margin-bottom: 1.5rem;">Your gross income with $0 adjustments, $0 credits, and the standard deduction.</p>
+                    
+                    <!-- Maryland Baseline Calculation Flow -->
+                    <div class="calculation-container">
+                        <h3 class="calculation-title">Maryland State Tax Calculation</h3>
+                        
+                        <!-- Step 1: Gross Income - Adjustments = AGI -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-gross-income">
+                                    <div class="calc-box-label">Gross Income</div>
+                                    <div id="maryland-baseline-gross-income" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box calc-adjustments">
+                                    <div class="calc-box-label">Adjustments</div>
+                                    <div id="maryland-baseline-adjustments" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-result concept-agi">
+                                    <div class="calc-box-label">AGI</div>
+                                    <div id="maryland-baseline-agi" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: AGI - Deductions = Taxable Income -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-result concept-agi">
+                                    <div class="calc-box-label">AGI</div>
+                                    <div id="maryland-baseline-agi-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box calc-deductions">
+                                    <div class="calc-box-label">Deductions</div>
+                                    <div id="maryland-baseline-deductions" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-result concept-taxable-income">
+                                    <div class="calc-box-label">Taxable Income</div>
+                                    <div id="maryland-baseline-taxable-income" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Taxable Income × State Tax Rate = State Tax Before Credits -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-result concept-taxable-income">
+                                    <div class="calc-box-label">Taxable Income</div>
+                                    <div id="maryland-baseline-taxable-income-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">×</div>
+                                <div class="calc-box calc-tax-rate">
+                                    <div class="calc-box-label">State Tax Rate</div>
+                                    <div id="maryland-baseline-state-tax-rate" class="calc-box-value">0.00%</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-pre-credit-tax">
+                                    <div class="calc-box-label">State Tax Before Credits</div>
+                                    <div id="maryland-baseline-state-pre-credit-tax" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Taxable Income × County Tax Rate = County Tax -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-result concept-taxable-income">
+                                    <div class="calc-box-label">Taxable Income</div>
+                                    <div id="maryland-baseline-taxable-income-3" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">×</div>
+                                <div class="calc-box calc-tax-rate">
+                                    <div class="calc-box-label">County Tax Rate</div>
+                                    <div id="maryland-baseline-county-tax-rate" class="calc-box-value">0.00%</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-pre-credit-tax" style="background-color: #f3e8ff;">
+                                    <div class="calc-box-label">County Tax</div>
+                                    <div id="maryland-baseline-county-tax" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: State Tax Before Credits - Credits = Total State Tax -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-pre-credit-tax">
+                                    <div class="calc-box-label">State Tax Before Credits</div>
+                                    <div id="maryland-baseline-state-pre-credit-tax-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box calc-credits">
+                                    <div class="calc-box-label">Credits</div>
+                                    <div id="maryland-baseline-credits" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-total-tax">
+                                    <div class="calc-box-label">Total State Tax</div>
+                                    <div id="maryland-baseline-total-state-tax" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 6: Total State Tax + County Tax = Combined Maryland Tax -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-total-tax">
+                                    <div class="calc-box-label">Total State Tax</div>
+                                    <div id="maryland-baseline-total-state-tax-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">+</div>
+                                <div class="calc-box calc-pre-credit-tax" style="background-color: #f3e8ff;">
+                                    <div class="calc-box-label">County Tax</div>
+                                    <div id="maryland-baseline-county-tax-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-total-tax" style="background-color: #dcfce7;">
+                                    <div class="calc-box-label">Combined Maryland Tax</div>
+                                    <div id="maryland-baseline-combined-tax" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 7: Gross Income - Combined Maryland Tax = Take-Home Pay -->
+                        <div class="calc-step">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-gross-income">
+                                    <div class="calc-box-label">Gross Income</div>
+                                    <div id="maryland-baseline-gross-income-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">−</div>
+                                <div class="calc-box calc-total-tax" style="background-color: #dcfce7;">
+                                    <div class="calc-box-label">Combined Maryland Tax</div>
+                                    <div id="maryland-baseline-combined-tax-2" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-take-home">
+                                    <div class="calc-box-label">Final Take-Home Pay</div>
+                                    <div id="maryland-baseline-take-home" class="calc-box-value">$0</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 8: Combined Maryland Tax ÷ Gross Income = Effective Rate (on Gross) -->
+                        <div class="calc-step" style="border-top: 1px solid #e2e8f0; margin-top: 1rem; padding-top: 1rem;">
+                            <div class="calc-step-mobile">
+                                <div class="calc-box calc-total-tax" style="background-color: #dcfce7;">
+                                    <div class="calc-box-label">Combined Maryland Tax</div>
+                                    <div id="maryland-baseline-combined-tax-3" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">÷</div>
+                                <div class="calc-box calc-gross-income">
+                                    <div class="calc-box-label">Gross Income</div>
+                                    <div id="maryland-baseline-gross-income-3" class="calc-box-value">$0</div>
+                                </div>
+                                <div class="calc-operator">=</div>
+                                <div class="calc-box calc-effective-rate">
+                                    <div class="calc-box-label">Effective Rate (on Gross)</div>
+                                    <div id="maryland-baseline-effective-rate" class="calc-box-value">0.00%</div>
                                 </div>
                             </div>
                         </div>
