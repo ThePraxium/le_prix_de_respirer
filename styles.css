@@ -287,12 +287,13 @@ body {
 
 .tax-bar-container {
     width: 100%;
-    height: 48px; /* Larger for mobile */
+    height: 56px; /* Slightly larger for better percentage visibility */
     background-color: #f1f5f9; /* slate-100 */
     border-radius: 0.5rem;
     display: flex;
     overflow: hidden;
     margin-bottom: 1rem;
+    border: 2px solid #e2e8f0; /* Add border for better definition */
 }
 
 .tax-bar {
@@ -300,15 +301,17 @@ body {
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 0.875rem; /* Slightly larger font */
+    font-weight: 700; /* Bolder text */
     transition: all 0.3s ease-in-out;
     min-width: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Add text shadow for better readability */
+    position: relative;
 }
 
 .bar-take-home { background-color: #10b981; } /* emerald-500 */
-.bar-federal { background-color: #0ea5e9; } /* sky-500 */
-.bar-state { background-color: #22c55e; } /* green-500 */
+.bar-federal { background-color: #3b82f6; } /* blue-500 */
+.bar-state { background-color: #eab308; } /* yellow-500 */
 .bar-county { background-color: #a855f7; } /* purple-500 */
 
 /* Legend */
@@ -917,6 +920,7 @@ body {
 /* Visualization section */
 .dark .tax-bar-container {
     background-color: #374151; /* slate-700 */
+    border-color: #4b5563; /* slate-600 */
 }
 
 .dark .legend {
