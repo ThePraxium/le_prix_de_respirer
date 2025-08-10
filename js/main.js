@@ -7,12 +7,14 @@ import { TaxCalculator } from './taxCalculator.js';
 import { UIControls } from './uiControls.js';
 import { DisplayManager } from './displayManager.js';
 import { ThemeManager } from './themeManager.js';
+import { TabManager } from './tabManager.js';
 
 export class TaxCalculatorApp {
     constructor() {
         this.taxCalculator = new TaxCalculator();
         this.displayManager = new DisplayManager();
         this.themeManager = new ThemeManager();
+        this.tabManager = new TabManager();
         
         // Initialize UI controls with update callback
         this.uiControls = new UIControls(() => this.updateCalculations());
