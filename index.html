@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Federal & State Tax Calculator</title>
+    <title>Interactive Federal & Maryland Tax Visualization Tool</title>
     <!-- Local CSS for mobile-friendly styling -->
     <link rel="stylesheet" href="styles.css">
     <!-- Google Fonts: Inter (with fallback) -->
@@ -27,8 +27,8 @@
                     </svg>
                 </button>
             </div>
-            <h1 class="main-title">Federal & State Tax Calculator</h1>
-            <p class="subtitle">Visualize your tax breakdown with federal, Maryland state, and Anne Arundel County taxes.</p>
+            <h1 class="main-title">Federal & Maryland Tax Visualization Tool</h1>
+            <p class="subtitle">Tool to help me understand taxes. Would love support to expand it to every state/county</p>
         </header>
 
         <!-- TAB NAVIGATION -->
@@ -37,10 +37,10 @@
                 Calculator
             </button>
             <button id="custom-calc-tab" class="tab-button" aria-selected="false">
-                Federal Tax Graphs
+                Federal Tax Math
             </button>
             <button id="maryland-calc-tab" class="tab-button" aria-selected="false">
-                Maryland Tax Graphs
+                Maryland Tax Math
             </button>
             <button id="bracket-breakdown-tab" class="tab-button" aria-selected="false">
                 Tax Bracket Breakdown
@@ -992,6 +992,15 @@
             </div>
 
         </main>
+
+        <!-- Legal Disclaimer -->
+        <footer class="disclaimer-section">
+            <div class="disclaimer-content">
+                <p class="disclaimer-text">
+                    <strong>Disclaimer:</strong> This tool is for educational and informational purposes only. The calculations and tax information provided are not professional tax advice and should not be considered as such. This tool was created for personal learning and understanding. For official tax advice, please consult a qualified tax professional, certified public accountant (CPA), or the appropriate tax authorities. The accuracy of calculations cannot be guaranteed, and users are responsible for verifying all tax-related information with official sources.
+                </p>
+            </div>
+        </footer>
     </div>
 
     <!-- Import the main calculator application -->
