@@ -202,7 +202,10 @@ export class DisplayManager {
             const federalPercent = federal.effectiveRate;
             const statePercent = state.effectiveRate;
             const countyPercent = county.effectiveRate;
-            const takeHomePercent = Math.max(0, 100 - federalPercent - statePercent - countyPercent);
+            
+            // Calculate combined state+county rate to match Tax Summary exactly
+            const combinedStateCountyPercent = state.effectiveRate + county.effectiveRate;
+            const takeHomePercent = Math.max(0, 100 - federalPercent - combinedStateCountyPercent);
 
             // Update bar widths
             this.elements.barTakeHome.style.width = `${takeHomePercent}%`;
