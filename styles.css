@@ -1872,3 +1872,41 @@ body {
 .dark .bracket-table-container:has(#anne-arundel-bracket-table) h3 {
     color: #c084fc; /* purple-400 */
 }
+
+/* Disclaimer Section */
+.disclaimer-section {
+    margin-top: 3rem;
+    padding: 1.5rem;
+    background-color: #f1f5f9; /* slate-100 */
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0; /* slate-200 */
+}
+
+.disclaimer-content {
+    text-align: center;
+}
+
+.disclaimer-text {
+    font-size: 0.875rem; /* text-sm */
+    color: #64748b; /* slate-500 */
+    line-height: 1.5;
+    margin: 0;
+}
+
+.disclaimer-text strong {
+    color: #475569; /* slate-600 */
+}
+
+/* Dark mode disclaimer styles */
+.dark .disclaimer-section {
+    background-color: #1e293b; /* slate-800 */
+    border-color: #334155; /* slate-700 */
+}
+
+.dark .disclaimer-text {
+    color: #94a3b8; /* slate-400 */
+}
+
+.dark .disclaimer-text strong {
+    color: #cbd5e1; /* slate-300 */
+}
